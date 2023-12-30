@@ -5,12 +5,14 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "cleanup": "rimraf node_modules packages/*/node_modules apps/*/node_modules"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "prettier": "^3.1.0",
+    "rimraf": "^5.0.5",
     "turbo": "latest"
   },
   "engines": {
