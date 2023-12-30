@@ -1,32 +1,22 @@
-@import "~reset-css/sass/reset";
+@import '~reset-css/sass/reset';
 
-@font-face {
-  font-family: 'Rubik';
-  src: url('assets/fonts/Rubik/static/Rubik-Regular.ttf') format('ttf'),
-  url('assets/fonts/Rubik/static/Rubik-Regular.ttf') format('truetype');
+@mixin font-face($font-name, $font-file-name, $font-format-one: 'ttf', $font-format-two: 'truetype') {
+  @font-face {
+    font-family: $font-name;
+    src: url('assets/fonts/Rubik/static/#{$font-file-name}.ttf') format($font-format-one),
+    url('assets/fonts/Rubik/static/#{$font-file-name}.ttf') format($font-format-two);
+  }
 }
 
-@font-face {
-  font-family: 'RubikLight';
-  src: url('assets/fonts/Rubik/static/Rubik-Light.ttf') format('ttf'),
-  url('assets/fonts/Rubik/static/Rubik-Light.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'RubikThin';
-  src: url('assets/fonts/Rubik/static/Rubik-Light.ttf') format('ttf'),
-  url('assets/fonts/Rubik/static/Rubik-Light.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'RubikBold';
-  src: url('assets/fonts/Rubik/static/Rubik-Bold.ttf') format('ttf'),
-  url('assets/fonts/Rubik/static/Rubik-Bold.ttf') format('truetype');
-}
+@include font-face('Rubik', 'Rubik-Regular');
+@include font-face('RubikLight', 'Rubik-Light');
+@include font-face('RubikLightThin', 'Rubik-Light');
+@include font-face('RubikBold', 'Rubik-Bold');
 
 body {
   font-family: "Rubik", sans-serif;
 }
+
 * {
   font-family: "Rubik", sans-serif !important;
 }
