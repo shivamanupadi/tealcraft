@@ -18,113 +18,113 @@ export const warningLightColor = "#FBBEA7";
 export const errorLightColor = "#FABEA7";
 
 export const theme = createTheme({
-    shape: {
-        borderRadius: 5,
+  shape: {
+    borderRadius: 5,
+  },
+  palette: {
+    primary: {
+      main: primaryColor,
+      contrastText: whiteColor,
     },
-    palette: {
-        primary: {
-            main: primaryColor,
-            contrastText: whiteColor,
-        },
-        secondary: {
-            main: secondaryColor,
-            contrastText: whiteColor,
-        },
-        info: {
-            main: infoColor,
-            contrastText: whiteColor,
-        },
-        warning: {
-            main: warningColor,
-            contrastText: whiteColor,
-        },
-        error: {
-            main: errorColor,
-            contrastText: whiteColor,
-        },
+    secondary: {
+      main: secondaryColor,
+      contrastText: whiteColor,
     },
-    typography: {
-        button: {
-            textTransform: "none",
-        },
+    info: {
+      main: infoColor,
+      contrastText: whiteColor,
     },
-    components: {
-        MuiTooltip: {
-            styleOverrides: {
-                tooltip: {
-                    background: blackColor,
-                },
-            },
-        },
-        MuiButton: {
-            styleOverrides: {
-                root: {
-                    boxShadow: "none",
-                    ":hover": {
-                        boxShadow: "none",
-                    },
-                },
-                contained: {
-                    "&.primary-light-button": {
-                        background: primaryLightColor,
-                        color: blackColor,
-                    },
-                    "&.secondary-light-button": {
-                        background: secondaryLightColor,
-                        color: blackColor,
-                    },
-                    "&.error-light-button": {
-                        background: errorLightColor,
-                        color: blackColor,
-                    },
-                    "&.black-button": {
-                        background: blackColor,
-                        color: whiteColor,
-                    },
-                    "&.grey-button": {
-                        background: lightGreyColor,
-                        color: darkGreyColor,
-                    },
-                },
-                outlined: {
-                    "&.black-button": {
-                        borderColor: blackColor,
-                        color: blackColor,
-                        background: whiteColor,
-                    },
-                },
-            },
-        },
-        MuiAlert: {
-            styleOverrides: {
-                root: {
-                    "&.mini-alert": {
-                        padding: "0px 10px",
-                        borderRadius: "5px",
-                        display: "inline-block",
-                        fontSize: "12px",
-                        fontWeight: "bold",
-                        textAlign: "center",
-                        ".MuiAlert-message": {},
-                    },
-                    "&.primary-light-alert": {
-                        backgroundColor: primaryLightColor,
-                        color: `#58595B`,
-                    },
-                    "&.secondary-light-alert": {
-                        backgroundColor: secondaryLightColor,
-                        color: `#58595B`,
-                    },
-                    "&.primary-light-alert-info": {
-                        backgroundColor: primaryLightColor,
-                        color: blackColor,
-                    },
-                    "&.warning-light-alert-info": {
-                        backgroundColor: warningLightColor,
-                        color: blackColor,
-                    },
-                },
-            },
-        },
+    warning: {
+      main: warningColor,
+      contrastText: whiteColor,
     },
+    error: {
+      main: errorColor,
+      contrastText: whiteColor,
+    },
+  },
+  typography: {
+    button: {
+      textTransform: "none",
+    },
+  },
+  components: {
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          background: blackColor,
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          boxShadow: "none",
+          ":hover": {
+            boxShadow: "none",
+          },
+        },
+        contained: {
+          "&.primary-light-button": {
+            background: primaryLightColor,
+            color: blackColor,
+          },
+          "&.secondary-light-button": {
+            background: secondaryLightColor,
+            color: blackColor,
+          },
+          "&.error-light-button": {
+            background: errorLightColor,
+            color: blackColor,
+          },
+          "&.black-button": {
+            background: blackColor,
+            color: whiteColor,
+          },
+          "&.grey-button": {
+            background: lightGreyColor,
+            color: darkGreyColor,
+          },
+        },
+        outlined: {
+          "&.black-button": {
+            borderColor: blackColor,
+            color: blackColor,
+            background: whiteColor,
+          },
+        },
+      },
+    },
+    MuiAlert: {
+      styleOverrides: {
+        root: {
+          "&.mini-alert": {
+            padding: "0px 10px",
+            borderRadius: "5px",
+            display: "inline-block",
+            fontSize: "12px",
+            fontWeight: "bold",
+            textAlign: "center",
+            ".MuiAlert-message": {},
+          },
+          "&.primary-light-alert": {
+            backgroundColor: primaryLightColor,
+            color: `#58595B`,
+          },
+          "&.secondary-light-alert": {
+            backgroundColor: secondaryLightColor,
+            color: `#58595B`,
+          },
+          "&.primary-light-alert-info": {
+            backgroundColor: primaryLightColor,
+            color: blackColor,
+          },
+          "&.warning-light-alert-info": {
+            backgroundColor: warningLightColor,
+            color: blackColor,
+          },
+        },
+      },
+    },
+  },
 });
