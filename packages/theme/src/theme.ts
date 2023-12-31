@@ -1,21 +1,20 @@
 import { createTheme } from "@mui/material";
 
-export const whiteColor = "#FFFFFF";
-export const blackColor = "#000000";
-
-export const lightGreyColor = "#f2f2f2";
-export const darkGreyColor = "#666666";
-
-export const primaryColor = "#9B95C9";
-export const secondaryColor = "#82CA9C";
-export const infoColor = "#00C0F3";
-export const warningColor = "#FFE293";
-export const errorColor = "#F69679";
-
-export const primaryLightColor = "#E0DEF0";
-export const secondaryLightColor = "#D8EDDD";
-export const warningLightColor = "#FBBEA7";
-export const errorLightColor = "#FABEA7";
+export const ThemeColors = {
+  White: "#FFFFFF",
+  Black: "#000000",
+  LightGrey: "#f2f2f2",
+  DarkGrey: "#666666",
+  Primary: "#9B95C9",
+  Secondary: "#82CA9C",
+  Info: "#00C0F3",
+  Warning: "#FFE293",
+  Error: "#F69679",
+  PrimaryLight: "#E0DEF0",
+  SecondaryLight: "#D8EDDD",
+  WarningLight: "#FBBEA7",
+  ErrorLight: "#FABEA7",
+};
 
 export const theme = createTheme({
   shape: {
@@ -23,24 +22,24 @@ export const theme = createTheme({
   },
   palette: {
     primary: {
-      main: primaryColor,
-      contrastText: whiteColor,
+      main: ThemeColors.Primary,
+      contrastText: ThemeColors.White,
     },
     secondary: {
-      main: secondaryColor,
-      contrastText: whiteColor,
+      main: ThemeColors.Secondary,
+      contrastText: ThemeColors.White,
     },
     info: {
-      main: infoColor,
-      contrastText: whiteColor,
+      main: ThemeColors.Info,
+      contrastText: ThemeColors.White,
     },
     warning: {
-      main: warningColor,
-      contrastText: whiteColor,
+      main: ThemeColors.Warning,
+      contrastText: ThemeColors.White,
     },
     error: {
-      main: errorColor,
-      contrastText: whiteColor,
+      main: ThemeColors.Error,
+      contrastText: ThemeColors.White,
     },
   },
   typography: {
@@ -52,7 +51,7 @@ export const theme = createTheme({
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
-          background: blackColor,
+          background: ThemeColors.Black,
         },
       },
     },
@@ -66,31 +65,31 @@ export const theme = createTheme({
         },
         contained: {
           "&.primary-light-button": {
-            background: primaryLightColor,
-            color: blackColor,
+            background: ThemeColors.PrimaryLight,
+            color: ThemeColors.Black,
           },
           "&.secondary-light-button": {
-            background: secondaryLightColor,
-            color: blackColor,
+            background: ThemeColors.SecondaryLight,
+            color: ThemeColors.Black,
           },
           "&.error-light-button": {
-            background: errorLightColor,
-            color: blackColor,
+            background: ThemeColors.ErrorLight,
+            color: ThemeColors.Black,
           },
           "&.black-button": {
-            background: blackColor,
-            color: whiteColor,
+            background: ThemeColors.Black,
+            color: ThemeColors.White,
           },
           "&.grey-button": {
-            background: lightGreyColor,
-            color: darkGreyColor,
+            background: ThemeColors.LightGrey,
+            color: ThemeColors.DarkGrey,
           },
         },
         outlined: {
           "&.black-button": {
-            borderColor: blackColor,
-            color: blackColor,
-            background: whiteColor,
+            borderColor: ThemeColors.Black,
+            color: ThemeColors.Black,
+            background: ThemeColors.White,
           },
         },
       },
@@ -108,20 +107,20 @@ export const theme = createTheme({
             ".MuiAlert-message": {},
           },
           "&.primary-light-alert": {
-            backgroundColor: primaryLightColor,
+            backgroundColor: ThemeColors.PrimaryLight,
             color: `#58595B`,
           },
           "&.secondary-light-alert": {
-            backgroundColor: secondaryLightColor,
+            backgroundColor: ThemeColors.SecondaryLight,
             color: `#58595B`,
           },
           "&.primary-light-alert-info": {
-            backgroundColor: primaryLightColor,
-            color: blackColor,
+            backgroundColor: ThemeColors.PrimaryLight,
+            color: ThemeColors.Black,
           },
           "&.warning-light-alert-info": {
-            backgroundColor: warningLightColor,
-            color: blackColor,
+            backgroundColor: ThemeColors.WarningLight,
+            color: ThemeColors.Black,
           },
         },
       },

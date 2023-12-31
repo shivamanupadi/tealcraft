@@ -1,16 +1,18 @@
-$white-color: #ffffff;
-$black-color: #000000;
+$colors: (
+  "white": #ffffff,
+  "black": #000000,
+  "primary": #9b95c9,
+  "secondary": #82ca9c,
+  "info": #00c0f3,
+  "warning": #ffe293,
+  "error": #f69679,
+  "light-grey": #f2f2f2,
+  "dark-grey": #666666,
+);
 
-$lightGrey-color: #f2f2f2;
-$darkGrey-color: #666666;
-
-$primary-color: #9b95c9;
-$secondary-color: #82ca9c;
-$info-color: #00c0f3;
-$warning-color: #ffe293;
-$error-color: #f69679;
-
-$primaryLight-color: #e0def0;
-$secondaryLight-color: #d8eddd;
-$warningLight-color: #fbbea7;
-$errorLight-color: #fabea7;
+$light-colors: (
+  "primary": #e0def0,
+  "secondary": #d8eddd,
+  "warning": #fbbea7,
+  "error": #fabea7,
+);

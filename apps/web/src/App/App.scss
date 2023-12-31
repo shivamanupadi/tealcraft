@@ -2,6 +2,6 @@
 
 .app-root {
   .app-container {
-    color: $primary-color;
+    color: map-get($colors, "secondary");
   }
 }
