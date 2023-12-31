@@ -24,7 +24,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "dev": "craco start",
+    "dev": "BROWSER=none craco start",
     "build": "GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true craco build --verbose"
   },
   "eslintConfig": {
