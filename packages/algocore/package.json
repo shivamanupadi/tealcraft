@@ -1,0 +1,25 @@
+{
+  "name": "@repo/algocore",
+  "version": "1.0.0",
+  "license": "ISC",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0"
+  },
+  "dependencies": {
+    "algosdk": "^2.7.0",
+    "reset-css": "^5.0.2"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/eslint": "^8.44.7",
+    "eslint": "^8.53.0",
+    "typescript": "^5.2.2"
+  }
+}
