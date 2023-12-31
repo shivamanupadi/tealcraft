@@ -6,7 +6,7 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "cleanup": "rimraf node_modules packages/*/node_modules apps/*/node_modules"
+    "clean": "rimraf node_modules packages/*/node_modules apps/*/node_modules yarn.lock"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
