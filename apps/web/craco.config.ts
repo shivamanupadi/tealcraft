@@ -1,9 +1,8 @@
 import webpack from "webpack";
 import path from "path";
-import "react-scripts/config/env";
-import * as fs from "fs";
+import { realpathSync } from "node:fs";
 
-const appDirectory = fs.realpathSync(process.cwd());
+const appDirectory = realpathSync(process.cwd());
 const resolveApp = (relativePath: string) =>
   path.resolve(appDirectory, relativePath);
 
