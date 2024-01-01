@@ -5,7 +5,6 @@ export class CoreAccount {
 
   constructor(account: A_AccountInformation) {
     this.account = account;
-    console.log(account);
   }
 
   balance(): number {

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "ISC",
   "private": true,
-  "main": "./src/styles.scss",
+  "main": "src/index.scss",
   "scripts": {
   },
   "dependencies": {
