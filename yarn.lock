@@ -4172,6 +4172,11 @@ cosmiconfig@^7, cosmiconfig@^7.0.0, cosmiconfig@^7.0.1:
     path-type "^4.0.0"
     yaml "^1.10.0"
 
+craco-babel-loader@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/craco-babel-loader/-/craco-babel-loader-1.0.4.tgz#b887dff41f4ad1e8be84f90c1277af16475ada78"
+  integrity sha512-qoCsRWV/cMcucuIe+m09GRudCwAWtEhZl830MR2N0/weXBK+0VybsL19pUQtH0TwC33v9ll4myu/4TGBxnqZeA==
+
 create-require@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
@@ -11603,6 +11608,7 @@ workbox-window@6.6.1:
     workbox-core "6.6.1"
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==

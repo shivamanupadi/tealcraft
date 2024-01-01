@@ -2,6 +2,7 @@ import { HashRouter } from "react-router-dom";
 import { ReactElement } from "react";
 import { Button } from "@mui/material";
 import { A_AccountInformation, CoreAccount } from "@repo/algocore";
+import { ThemeColors } from "@repo/theme";
 
 function AppRouter(): ReactElement {
   const test: A_AccountInformation = {
@@ -33,6 +34,7 @@ function AppRouter(): ReactElement {
   };
   const y = new CoreAccount(test);
   console.log(y.balance());
+  console.log(ThemeColors);
   return (
     <div>
       <HashRouter>

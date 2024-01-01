@@ -1,20 +1,20 @@
 import { createTheme } from "@mui/material";
 
-export const ThemeColors = {
-  White: "#FFFFFF",
-  Black: "#000000",
-  LightGrey: "#f2f2f2",
-  DarkGrey: "#666666",
-  Primary: "#9B95C9",
-  Secondary: "#82CA9C",
-  Info: "#00C0F3",
-  Warning: "#FFE293",
-  Error: "#F69679",
-  PrimaryLight: "#E0DEF0",
-  SecondaryLight: "#D8EDDD",
-  WarningLight: "#FBBEA7",
-  ErrorLight: "#FABEA7",
-};
+export enum ThemeColors {
+  White = "#FFFFFF",
+  Black = "#000000",
+  LightGrey = "#f2f2f2",
+  DarkGrey = "#666666",
+  Primary = "#9B95C9",
+  Secondary = "#82CA9C",
+  Info = "#00C0F3",
+  Warning = "#FFE293",
+  Error = "#F69679",
+  PrimaryLight = "#E0DEF0",
+  SecondaryLight = "#D8EDDD",
+  WarningLight = "#FBBEA7",
+  ErrorLight = "#FABEA7",
+}
 
 export const theme = createTheme({
   shape: {
