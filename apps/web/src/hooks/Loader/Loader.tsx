@@ -2,16 +2,19 @@ import { createContext, useContext, useState } from "react";
 import loaderImg from "../../assets/images/loader.gif";
 import "./Loader.scss";
 
-const LoaderContext = createContext<
-  | {
-      loader: { count: number; message: string };
-      showLoader: (message?: string) => void;
-      hideLoader: () => void;
-    }
-  | undefined
->(undefined);
+interface LoaderState {
+  visible: boolean;
+  message: string;
+}
 
-// Custom hook for using loader context
+interface LoaderContextType {
+  loader: LoaderState;
+  showLoader: (message?: string) => void;
+  hideLoader: () => void;
+}
+
+const LoaderContext = createContext<LoaderContextType | undefined>(undefined);
+
 export const useLoader = () => {
   const context = useContext(LoaderContext);
   if (context === undefined) {
@@ -20,20 +23,21 @@ export const useLoader = () => {
   return context;
 };
 
-// Hook component with provider
 export default function LoaderProvider({ children }: any) {
-  const [loader, setLoader] = useState({ count: 0, message: "" });
+  const [loader, setLoader] = useState<LoaderState>({
+    visible: false,
+    message: "",
+  });
 
   const showLoader = (message = "Loading...") => {
-    setLoader({ count: 1, message: message });
+    setLoader({ visible: true, message });
   };
 
   const hideLoader = () => {
-    setLoader({ count: 0, message: "" });
+    setLoader({ visible: false, message: "" });
   };
 
-  // Loader UI
-  const loaderUI = loader.count ? (
+  const loaderUI = loader.visible ? (
     <div>
       <div className="loading-box">
         <div className="progress-bar">
