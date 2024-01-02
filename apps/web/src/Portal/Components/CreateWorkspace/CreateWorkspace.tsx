@@ -13,8 +13,8 @@ import { ModalGrowTransition, ShadedInput } from "@repo/theme";
 import { useAppDispatch } from "../../../Redux/store";
 import { showSnack } from "../../../Redux/app/snackbarReducer";
 import { A_Workspace, WorkspaceClient } from "@repo/tealcraft-sdk";
-import { handleException } from "../../../Redux/app/exceptionReducer";
 import { useLoader } from "../../../hooks/Loader/Loader";
+import { getExceptionMsg } from "@repo/utils";
 
 interface CreateWorkspaceProps {
   show: boolean;
@@ -124,6 +124,7 @@ function CreateWorkspace({
                             showLoader(
                               "Checking if workspace already exists...",
                             );
+
                             const exists =
                               await new WorkspaceClient().nameExists(name);
                             hideLoader();
@@ -156,7 +157,15 @@ function CreateWorkspace({
                             );
                           } catch (e) {
                             hideLoader();
-                            dispatch(handleException(e));
+                            const msg = getExceptionMsg(e);
+                            if (msg) {
+                              dispatch(
+                                showSnack({
+                                  severity: "error",
+                                  message: msg,
+                                }),
+                              );
+                            }
                           }
                         }}
                       >

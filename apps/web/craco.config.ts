@@ -18,6 +18,7 @@ export default {
           resolveApp("../../packages/algocore"),
           resolveApp("../../packages/theme"),
           resolveApp("../../packages/tealcraft-sdk"),
+          resolveApp("../../packages/utils"),
         ],
       },
     },
