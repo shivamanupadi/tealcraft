@@ -13,8 +13,8 @@ import { ModalGrowTransition, ShadedInput } from "@repo/theme";
 import { useAppDispatch } from "../../../Redux/store";
 import { showSnack } from "../../../Redux/app/snackbarReducer";
 import { A_Workspace, WorkspaceClient } from "@repo/tealcraft-sdk";
-import { hideLoader, showLoader } from "../../../Redux/app/loaderReducer";
 import { handleException } from "../../../Redux/app/exceptionReducer";
+import { useLoader } from "../../../hooks/Loader/Loader";
 
 interface CreateWorkspaceProps {
   show: boolean;
@@ -28,6 +28,7 @@ function CreateWorkspace({
   onSuccess,
 }: CreateWorkspaceProps): ReactElement {
   const dispatch = useAppDispatch();
+  const { showLoader, hideLoader } = useLoader();
   const [name, setName] = useState<string>("");
 
   const clearState = () => {
@@ -120,14 +121,12 @@ function CreateWorkspace({
                             return;
                           }
                           try {
-                            dispatch(
-                              showLoader(
-                                "Checking if workspace already exists...",
-                              ),
+                            showLoader(
+                              "Checking if workspace already exists...",
                             );
                             const exists =
                               await new WorkspaceClient().nameExists(name);
-                            dispatch(hideLoader());
+                            hideLoader();
 
                             if (exists) {
                               dispatch(
@@ -140,11 +139,11 @@ function CreateWorkspace({
                               return;
                             }
 
-                            dispatch(showLoader("Creating workspace..."));
+                            showLoader("Creating workspace...");
                             const workspace = await new WorkspaceClient().save(
                               name,
                             );
-                            dispatch(hideLoader());
+                            hideLoader();
                             handleClose();
                             if (workspace) {
                               onSuccess(workspace);
@@ -156,7 +155,7 @@ function CreateWorkspace({
                               }),
                             );
                           } catch (e) {
-                            dispatch(hideLoader());
+                            hideLoader();
                             dispatch(handleException(e));
                           }
                         }}

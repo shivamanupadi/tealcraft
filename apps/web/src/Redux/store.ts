@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import appReducer from "./app/appReducer";
 import portalReducer from "./portal/portalReducer";
 import snackbarReducer from "./app/snackbarReducer";
-import loaderReducer from "./app/loaderReducer";
 import exceptionReducer from "./app/exceptionReducer";
 
 export const store = configureStore({
@@ -11,7 +10,6 @@ export const store = configureStore({
     app: appReducer,
     portal: portalReducer,
     snackbar: snackbarReducer,
-    loader: loaderReducer,
     exception: exceptionReducer,
   },
 });

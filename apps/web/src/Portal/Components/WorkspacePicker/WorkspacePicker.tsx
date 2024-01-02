@@ -15,14 +15,15 @@ import CreateWorkspace from "../CreateWorkspace/CreateWorkspace";
 import { loadWorkspaces } from "../../../Redux/portal/portalReducer";
 import { useConfirm } from "material-ui-confirm";
 import { confirmationProps } from "@repo/theme";
-import { hideLoader, showLoader } from "../../../Redux/app/loaderReducer";
 import { handleException } from "../../../Redux/app/exceptionReducer";
 import { showSnack } from "../../../Redux/app/snackbarReducer";
+import { useLoader } from "../../../hooks/Loader/Loader";
 
 function WorkspacePicker(): ReactElement {
   const dispatch = useAppDispatch();
   const confirmation = useConfirm();
 
+  const { showLoader, hideLoader } = useLoader();
   const [workspaceAnchorEl, setWorkspaceAnchorEl] =
     useState<null | HTMLElement>(null);
   const [isWorkspaceCreationVisible, setWorkspaceCreationVisibility] =
@@ -83,9 +84,9 @@ function WorkspacePicker(): ReactElement {
                     })
                       .then(async () => {
                         try {
-                          dispatch(showLoader("Deleting workspace..."));
+                          showLoader("Deleting workspace...");
                           await new WorkspaceClient().delete(workspace.id);
-                          dispatch(hideLoader());
+                          hideLoader();
                           dispatch(
                             showSnack({
                               severity: "success",
@@ -94,7 +95,7 @@ function WorkspacePicker(): ReactElement {
                           );
                           dispatch(loadWorkspaces());
                         } catch (e) {
-                          dispatch(hideLoader());
+                          hideLoader();
                           dispatch(handleException(e));
                         }
                       })
