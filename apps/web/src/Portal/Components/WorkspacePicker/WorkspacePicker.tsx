@@ -10,12 +10,18 @@ import {
 import { DeleteOutlined, UnfoldMore } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../Redux/store";
-import { CoreWorkspace } from "@repo/tealcraft-sdk";
+import { CoreWorkspace, WorkspaceClient } from "@repo/tealcraft-sdk";
 import CreateWorkspace from "../CreateWorkspace/CreateWorkspace";
 import { loadWorkspaces } from "../../../Redux/portal/portalReducer";
+import { useConfirm } from "material-ui-confirm";
+import { confirmationProps } from "@repo/theme";
+import { hideLoader, showLoader } from "../../../Redux/app/loaderReducer";
+import { handleException } from "../../../Redux/app/exceptionReducer";
+import { showSnack } from "../../../Redux/app/snackbarReducer";
 
 function WorkspacePicker(): ReactElement {
   const dispatch = useAppDispatch();
+  const confirmation = useConfirm();
 
   const [workspaceAnchorEl, setWorkspaceAnchorEl] =
     useState<null | HTMLElement>(null);
@@ -67,9 +73,32 @@ function WorkspacePicker(): ReactElement {
                 <DeleteOutlined
                   fontSize="small"
                   color={"error"}
-                  onClick={(e) => {
+                  onClick={async (e) => {
                     e.stopPropagation();
                     e.preventDefault();
+
+                    confirmation({
+                      ...confirmationProps,
+                      description: `You are trying to delete the workspace - ${workspace.name}`,
+                    })
+                      .then(async () => {
+                        try {
+                          dispatch(showLoader("Deleting workspace..."));
+                          await new WorkspaceClient().delete(workspace.id);
+                          dispatch(hideLoader());
+                          dispatch(
+                            showSnack({
+                              severity: "success",
+                              message: "Workspace deleted",
+                            }),
+                          );
+                          dispatch(loadWorkspaces());
+                        } catch (e) {
+                          dispatch(hideLoader());
+                          dispatch(handleException(e));
+                        }
+                      })
+                      .catch(() => {});
                   }}
                 />
               </MenuItem>
@@ -99,9 +128,8 @@ function WorkspacePicker(): ReactElement {
           onClose={() => {
             setWorkspaceCreationVisibility(false);
           }}
-          onSuccess={(workspace) => {
+          onSuccess={() => {
             setWorkspaceCreationVisibility(false);
-            console.log(workspace);
             dispatch(loadWorkspaces());
           }}
         ></CreateWorkspace>

@@ -14,7 +14,7 @@ const initialState: PortalState = {
   workspaces: [],
 };
 
-export const initPortal: any = createAsyncThunk(
+export const initPortal: AsyncThunk<void, void, {}> = createAsyncThunk(
   "portal/initPortal",
   async (_, thunkAPI) => {
     const { dispatch } = thunkAPI;

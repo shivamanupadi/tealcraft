@@ -19,7 +19,7 @@ export class WorkspaceClient {
     });
   }
 
-  async delete(id: number): Promise<boolean> {
+  async delete(id: string | undefined): Promise<boolean> {
     await dataStore.workspaces
       .where({
         id: id,

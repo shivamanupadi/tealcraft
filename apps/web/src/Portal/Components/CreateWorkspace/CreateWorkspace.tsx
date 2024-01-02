@@ -13,6 +13,8 @@ import { ModalGrowTransition, ShadedInput } from "@repo/theme";
 import { useAppDispatch } from "../../../Redux/store";
 import { showSnack } from "../../../Redux/app/snackbarReducer";
 import { DB_Workspace, WorkspaceClient } from "@repo/tealcraft-sdk";
+import { hideLoader, showLoader } from "../../../Redux/app/loaderReducer";
+import { handleException } from "../../../Redux/app/exceptionReducer";
 
 interface CreateWorkspaceProps {
   show: boolean;
@@ -96,9 +98,11 @@ function CreateWorkspace({
                           }
 
                           try {
+                            dispatch(showLoader("Creating workspace..."));
                             const workspace = await new WorkspaceClient().save(
                               name,
                             );
+                            dispatch(hideLoader());
                             handleClose();
                             if (workspace) {
                               onSuccess(workspace);
@@ -109,7 +113,10 @@ function CreateWorkspace({
                                 message: "Workspace created successfully",
                               }),
                             );
-                          } catch (e) {}
+                          } catch (e) {
+                            dispatch(hideLoader());
+                            dispatch(handleException(e));
+                          }
                         }}
                       >
                         Save
