@@ -12,14 +12,14 @@ import { Close } from "@mui/icons-material";
 import { ModalGrowTransition, ShadedInput } from "@repo/theme";
 import { useAppDispatch } from "../../../Redux/store";
 import { showSnack } from "../../../Redux/app/snackbarReducer";
-import { DB_Workspace, WorkspaceClient } from "@repo/tealcraft-sdk";
+import { A_Workspace, WorkspaceClient } from "@repo/tealcraft-sdk";
 import { hideLoader, showLoader } from "../../../Redux/app/loaderReducer";
 import { handleException } from "../../../Redux/app/exceptionReducer";
 
 interface CreateWorkspaceProps {
   show: boolean;
   onClose: () => void;
-  onSuccess: (workspace: DB_Workspace) => void;
+  onSuccess: (workspace: A_Workspace) => void;
 }
 
 function CreateWorkspace({
@@ -84,9 +84,12 @@ function CreateWorkspace({
                       <Button
                         color={"primary"}
                         fullWidth
+                        type="submit"
                         variant={"contained"}
                         sx={{ marginTop: "20px" }}
                         onClick={async () => {
+                          const minLength = 5;
+                          const maxLength = 30;
                           if (!name) {
                             dispatch(
                               showSnack({
@@ -97,7 +100,46 @@ function CreateWorkspace({
                             return;
                           }
 
+                          if (name.length < minLength) {
+                            dispatch(
+                              showSnack({
+                                severity: "error",
+                                message: `Workspace name should be at least ${minLength} chars`,
+                              }),
+                            );
+                            return;
+                          }
+
+                          if (name.length > maxLength) {
+                            dispatch(
+                              showSnack({
+                                severity: "error",
+                                message: `Workspace name cannot be more than ${maxLength} chars`,
+                              }),
+                            );
+                            return;
+                          }
                           try {
+                            dispatch(
+                              showLoader(
+                                "Checking if workspace already exists...",
+                              ),
+                            );
+                            const exists =
+                              await new WorkspaceClient().nameExists(name);
+                            dispatch(hideLoader());
+
+                            if (exists) {
+                              dispatch(
+                                showSnack({
+                                  severity: "error",
+                                  message:
+                                    "Workspace with this name exists already",
+                                }),
+                              );
+                              return;
+                            }
+
                             dispatch(showLoader("Creating workspace..."));
                             const workspace = await new WorkspaceClient().save(
                               name,

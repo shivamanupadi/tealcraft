@@ -1,9 +1,9 @@
 import { dataStore } from "../database/datastore";
-import { DB_Workspace } from "../types";
+import { A_Workspace } from "../types";
 import { v4 } from "uuid";
 
 export class WorkspaceClient {
-  async save(name: string): Promise<DB_Workspace | undefined> {
+  async save(name: string): Promise<A_Workspace | undefined> {
     const id = await dataStore.workspaces.add({
       id: v4(),
       timestamp: Date.now(),
@@ -13,7 +13,7 @@ export class WorkspaceClient {
     return this.get(id);
   }
 
-  async get(id: number): Promise<DB_Workspace | undefined> {
+  async get(id: number): Promise<A_Workspace | undefined> {
     return dataStore.workspaces.get({
       id: id,
     });
@@ -29,7 +29,15 @@ export class WorkspaceClient {
     return true;
   }
 
-  async findAll(): Promise<DB_Workspace[]> {
+  async findAll(): Promise<A_Workspace[]> {
     return dataStore.workspaces.toArray();
+  }
+
+  async nameExists(name: string): Promise<boolean> {
+    const numberOfWorkspacesWithName = await dataStore.workspaces
+      .where({ name })
+      .limit(1)
+      .count();
+    return numberOfWorkspacesWithName > 0;
   }
 }

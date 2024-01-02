@@ -1,4 +1,4 @@
-export type DB_Workspace = {
+export type A_Workspace = {
   id: string;
   timestamp: number;
   name: string;

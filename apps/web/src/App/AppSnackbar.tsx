@@ -12,10 +12,10 @@ const getExtraClass = (severity: string): string => {
 };
 
 function AppSnackbar(): ReactElement {
+  const dispatch = useDispatch();
+
   const snackbar = useSelector((state: RootState) => state.snackbar);
   const { show, severity, duration, message } = snackbar;
-
-  const dispatch = useDispatch();
 
   const extraClass = getExtraClass(severity);
 

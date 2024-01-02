@@ -1,7 +1,7 @@
 import "./Loader.scss";
 import { useSelector } from "react-redux";
-import loaderImg from "../../../assets/images/loader.gif";
-import { RootState } from "../../../Redux/store";
+import loaderImg from "../../assets/images/loader.gif";
+import { RootState } from "../../Redux/store";
 import { ReactElement } from "react";
 
 function Loader(): ReactElement {

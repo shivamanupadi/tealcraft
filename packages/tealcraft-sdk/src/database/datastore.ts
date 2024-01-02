@@ -1,8 +1,8 @@
 import Dexie, { Table } from "dexie";
-import { DB_Workspace } from "../types";
+import { A_Workspace } from "../types";
 
 export class TealCraftDatabase extends Dexie {
-  workspaces!: Table<DB_Workspace, number>;
+  workspaces!: Table<A_Workspace, number>;
 
   constructor() {
     super("tealcraft");

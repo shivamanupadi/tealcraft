@@ -1,9 +1,9 @@
-import { DB_Workspace } from "../types";
+import { A_Workspace } from "../types";
 
 export class CoreWorkspace {
-  private workspace: DB_Workspace;
+  private workspace: A_Workspace;
 
-  constructor(workspace: DB_Workspace) {
+  constructor(workspace: A_Workspace) {
     this.workspace = workspace;
   }
 

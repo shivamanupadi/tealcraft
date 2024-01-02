@@ -4,10 +4,10 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import { DB_Workspace, WorkspaceClient } from "@repo/tealcraft-sdk";
+import { A_Workspace, WorkspaceClient } from "@repo/tealcraft-sdk";
 
 export type PortalState = {
-  workspaces: DB_Workspace[];
+  workspaces: A_Workspace[];
 };
 
 const initialState: PortalState = {
@@ -22,10 +22,10 @@ export const initPortal: AsyncThunk<void, void, {}> = createAsyncThunk(
   },
 );
 
-export const loadWorkspaces: AsyncThunk<DB_Workspace[], void, {}> =
+export const loadWorkspaces: AsyncThunk<A_Workspace[], void, {}> =
   createAsyncThunk(
     "portal/loadWorkspaces",
-    async (): Promise<DB_Workspace[]> => {
+    async (): Promise<A_Workspace[]> => {
       return new WorkspaceClient().findAll();
     },
   );
@@ -39,7 +39,7 @@ export const portalSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       loadWorkspaces.fulfilled,
-      (state, action: PayloadAction<DB_Workspace[]>) => {
+      (state, action: PayloadAction<A_Workspace[]>) => {
         if (action.payload) {
           state.workspaces = action.payload;
         }
