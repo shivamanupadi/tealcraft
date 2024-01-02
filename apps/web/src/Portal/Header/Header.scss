@@ -1,0 +1,24 @@
+@import "@repo/styles";
+@import "../../scss/constants";
+
+.header-wrapper {
+  .header-container {
+    border-bottom: 1px solid map-get($grey-colors, "light-grey");
+    height: $header-height;
+    .left-section {
+      padding: 20px 50px;
+      display: flex;
+      justify-content: flex-start;
+      vertical-align: center;
+      column-gap: 15px;
+      .greyed {
+        color: map-get($grey-colors, "dark-grey");
+      }
+      .logo {
+        color: map-get($base-colors, "black");
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+  }
+}

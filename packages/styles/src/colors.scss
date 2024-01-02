@@ -1,18 +1,23 @@
-$colors: (
+$base-colors: (
   "white": #ffffff,
   "black": #000000,
+);
+
+$theme-colors: (
   "primary": #9b95c9,
   "secondary": #82ca9c,
   "info": #00c0f3,
   "warning": #ffe293,
   "error": #f69679,
-  "light-grey": #f2f2f2,
-  "dark-grey": #666666,
+  "primary-light": #e0def0,
+  "secondary-light": #d8eddd,
+  "warning-light": #fbbea7,
+  "error-light": #fabea7,
 );
 
-$light-colors: (
-  "primary": #e0def0,
-  "secondary": #d8eddd,
-  "warning": #fbbea7,
-  "error": #fabea7,
+$grey-colors: (
+  "light-grey": #f2f2f2,
+  "dark-grey": #666666,
+  "form-label": "#808285",
+  "form-value": "#58595B",
 );
