@@ -57,7 +57,7 @@ function WorkspacePicker(): ReactElement {
             const workspaceInstance = new CoreWorkspace(workspace);
             return (
               <MenuItem
-                key={`${workspaceInstance.getName()}-${index}`}
+                key={`${workspaceInstance.getId()}-${index}`}
                 selected={false}
                 onClick={(e) => {
                   e.preventDefault();
