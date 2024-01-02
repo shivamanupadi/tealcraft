@@ -9,6 +9,7 @@
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
+    "material-ui-confirm": "^3.0.9",
     "react": "^18.2.0",
     "reset-css": "^5.0.2"
   },

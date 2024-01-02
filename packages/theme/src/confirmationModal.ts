@@ -1,7 +1,8 @@
 import { ModalGrowTransition } from "./modalTransitions";
 import { GreyColors } from "./colors";
+import { ConfirmOptions } from "material-ui-confirm";
 
-export const confirmationProps = {
+export const confirmationProps: ConfirmOptions = {
   description: "",
   confirmationText: "Confirm",
   confirmationButtonProps: {
@@ -13,31 +14,30 @@ export const confirmationProps = {
     color: "inherit",
     variant: "contained",
     className: "grey-button",
+    sx: {
+      marginRight: "5px",
+    },
   },
   dialogProps: {
     maxWidth: "xs",
     className: "confirmation-modal",
-    top: "100px",
     TransitionComponent: ModalGrowTransition,
     sx: {
+      textAlign: "center",
       ".MuiDialogTitle-root": {
-        color: GreyColors.GreyDark,
-        textAlign: "center",
+        color: GreyColors.FormLabel,
         marginTop: "10px",
       },
       ".MuiDialogContentText-root": {
         fontSize: "14px",
-        color: GreyColors.GreyDark,
-        textAlign: "center",
+        color: GreyColors.FormLabel,
+      },
+      ".MuiDialogActions-root": {
+        display: "block",
+        marginTop: "10px",
+        marginBottom: "30px",
       },
     },
   },
-  dialogActionsProps: {
-    sx: {
-      display: "block",
-      marginTop: "10px",
-      marginBottom: "30px",
-      textAlign: "center",
-    },
-  },
+  dialogActionsProps: {},
 };

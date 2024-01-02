@@ -4,8 +4,10 @@ export enum BaseColors {
 }
 
 export enum GreyColors {
-  GreyLight = "#f2f2f2",
-  GreyDark = "#666666",
+  LightGrey = "#f2f2f2",
+  DarkGrey = "#666666",
+  FormLabel = "#808285",
+  FormValue = "#58595B",
 }
 
 export enum ThemeColors {

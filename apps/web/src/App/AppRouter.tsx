@@ -49,7 +49,6 @@ function AppRouter(): ReactElement {
             color={"primary"}
             onClick={() => {
               console.log(confirmationProps);
-              // @ts-ignore
               confirmation({
                 ...confirmationProps,
                 description: "You are trying to uninstall a node.",
