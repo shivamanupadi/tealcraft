@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { createTheme, styled, InputBase, InputBaseProps } from "@mui/material";
 import { BaseColors, GreyColors, ThemeColors } from "./colors";
 
 export const theme = createTheme({
@@ -99,16 +99,59 @@ export const theme = createTheme({
             backgroundColor: ThemeColors.SecondaryLight,
             color: `#58595B`,
           },
-          "&.primary-light-alert-info": {
+          "&.success-snack-bar": {
             backgroundColor: ThemeColors.PrimaryLight,
             color: BaseColors.Black,
           },
-          "&.warning-light-alert-info": {
+          "&.error-snack-bar": {
             backgroundColor: ThemeColors.WarningLight,
             color: BaseColors.Black,
           },
         },
       },
     },
+    MuiModal: {
+      styleOverrides: {
+        root: {
+          "&.classic-modal": {
+            ".MuiDialogTitle-root": {
+              color: GreyColors.DarkGrey,
+              fontSize: 18,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "middle",
+              ".close-modal": {
+                "&:hover": {
+                  cursor: "pointer",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          "&.classic-label": {
+            fontSize: "14px",
+            fontWeight: "bold",
+            color: GreyColors.FormLabel,
+          },
+        },
+      },
+    },
   },
+});
+
+export const ShadedInput = styled(InputBase)<InputBaseProps>(() => {
+  return {
+    padding: 5,
+    paddingLeft: 10,
+    marginTop: 5,
+    border: "none",
+    fontSize: "14px",
+    background: "#F1F2F2",
+    borderRadius: 5,
+  };
 });

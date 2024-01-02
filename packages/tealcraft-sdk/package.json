@@ -1,5 +1,5 @@
 {
-  "name": "@repo/algocore",
+  "name": "@repo/tealcraft-sdk",
   "version": "1.0.0",
   "license": "ISC",
   "private": true,
@@ -9,7 +9,10 @@
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
-    "algosdk": "^2.7.0"
+    "@types/dexie": "^1.3.1",
+    "@types/uuid": "^9.0.7",
+    "dexie": "^3.2.4",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

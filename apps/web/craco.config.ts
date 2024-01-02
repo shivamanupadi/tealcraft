@@ -17,6 +17,7 @@ export default {
         includes: [
           resolveApp("../../packages/algocore"),
           resolveApp("../../packages/theme"),
+          resolveApp("../../packages/tealcraft-sdk"),
         ],
       },
     },
