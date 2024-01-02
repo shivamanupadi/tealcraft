@@ -1,20 +1,5 @@
 import { createTheme } from "@mui/material";
-
-export enum ThemeColors {
-  White = "#FFFFFF",
-  Black = "#000000",
-  LightGrey = "#f2f2f2",
-  DarkGrey = "#666666",
-  Primary = "#9B95C9",
-  Secondary = "#82CA9C",
-  Info = "#00C0F3",
-  Warning = "#FFE293",
-  Error = "#F69679",
-  PrimaryLight = "#E0DEF0",
-  SecondaryLight = "#D8EDDD",
-  WarningLight = "#FBBEA7",
-  ErrorLight = "#FABEA7",
-}
+import { BaseColors, GreyColors, ThemeColors } from "./colors";
 
 export const theme = createTheme({
   shape: {
@@ -23,23 +8,23 @@ export const theme = createTheme({
   palette: {
     primary: {
       main: ThemeColors.Primary,
-      contrastText: ThemeColors.White,
+      contrastText: BaseColors.White,
     },
     secondary: {
       main: ThemeColors.Secondary,
-      contrastText: ThemeColors.White,
+      contrastText: BaseColors.White,
     },
     info: {
       main: ThemeColors.Info,
-      contrastText: ThemeColors.White,
+      contrastText: BaseColors.White,
     },
     warning: {
       main: ThemeColors.Warning,
-      contrastText: ThemeColors.White,
+      contrastText: BaseColors.White,
     },
     error: {
       main: ThemeColors.Error,
-      contrastText: ThemeColors.White,
+      contrastText: BaseColors.White,
     },
   },
   typography: {
@@ -51,7 +36,7 @@ export const theme = createTheme({
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
-          background: ThemeColors.Black,
+          background: BaseColors.Black,
         },
       },
     },
@@ -66,30 +51,30 @@ export const theme = createTheme({
         contained: {
           "&.primary-light-button": {
             background: ThemeColors.PrimaryLight,
-            color: ThemeColors.Black,
+            color: BaseColors.Black,
           },
           "&.secondary-light-button": {
             background: ThemeColors.SecondaryLight,
-            color: ThemeColors.Black,
+            color: BaseColors.Black,
           },
           "&.error-light-button": {
             background: ThemeColors.ErrorLight,
-            color: ThemeColors.Black,
+            color: BaseColors.Black,
           },
           "&.black-button": {
-            background: ThemeColors.Black,
-            color: ThemeColors.White,
+            background: BaseColors.Black,
+            color: BaseColors.White,
           },
           "&.grey-button": {
-            background: ThemeColors.LightGrey,
-            color: ThemeColors.DarkGrey,
+            background: GreyColors.GreyLight,
+            color: GreyColors.GreyDark,
           },
         },
         outlined: {
           "&.black-button": {
-            borderColor: ThemeColors.Black,
-            color: ThemeColors.Black,
-            background: ThemeColors.White,
+            borderColor: BaseColors.Black,
+            color: BaseColors.Black,
+            background: BaseColors.White,
           },
         },
       },
@@ -116,11 +101,11 @@ export const theme = createTheme({
           },
           "&.primary-light-alert-info": {
             backgroundColor: ThemeColors.PrimaryLight,
-            color: ThemeColors.Black,
+            color: BaseColors.Black,
           },
           "&.warning-light-alert-info": {
             backgroundColor: ThemeColors.WarningLight,
-            color: ThemeColors.Black,
+            color: BaseColors.Black,
           },
         },
       },

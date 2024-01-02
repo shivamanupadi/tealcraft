@@ -3,6 +3,7 @@ import "./index.scss";
 import App from "./App/App";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "@repo/theme";
+import { ConfirmProvider } from "material-ui-confirm";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -10,6 +11,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <ThemeProvider theme={theme}>
-    <App></App>
+    <ConfirmProvider>
+      <App></App>
+    </ConfirmProvider>
   </ThemeProvider>,
 );

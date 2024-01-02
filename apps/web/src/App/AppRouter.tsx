@@ -2,9 +2,12 @@ import { HashRouter } from "react-router-dom";
 import { ReactElement } from "react";
 import { Button } from "@mui/material";
 import { A_AccountInformation, CoreAccount } from "@repo/algocore";
-import { ThemeColors } from "@repo/theme";
+import { confirmationProps, ThemeColors } from "@repo/theme";
+import { useConfirm } from "material-ui-confirm";
 
 function AppRouter(): ReactElement {
+  const confirmation = useConfirm();
+
   const test: A_AccountInformation = {
     "apps-total-schema": {
       "num-byte-slice": 0,
@@ -35,12 +38,26 @@ function AppRouter(): ReactElement {
   const y = new CoreAccount(test);
   console.log(y.balance());
   console.log(ThemeColors);
+
   return (
     <div>
       <HashRouter>
         <div className="app-wrapper">
           <div className="app-container">hello world ! welcome</div>
-          <Button variant={"contained"} color={"primary"}>
+          <Button
+            variant={"contained"}
+            color={"primary"}
+            onClick={() => {
+              console.log(confirmationProps);
+              // @ts-ignore
+              confirmation({
+                ...confirmationProps,
+                description: "You are trying to uninstall a node.",
+              })
+                .then(async () => {})
+                .catch(() => {});
+            }}
+          >
             click me
           </Button>
           <Button variant={"contained"} color={"secondary"}>
