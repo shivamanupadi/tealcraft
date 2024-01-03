@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import "./Header.scss";
 
-import WorkspacePicker from "../Components/WorkspacePicker/WorkspacePicker";
+import WorkspacePicker from "../WorkspacePicker/WorkspacePicker";
 
 function Header(): ReactElement {
   return (

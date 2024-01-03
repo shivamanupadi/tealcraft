@@ -1,6 +1,6 @@
 import { ReactElement, useEffect } from "react";
 import "./App.scss";
-import AppRouter from "./AppRouter";
+import AppRouter from "./Router/AppRouter";
 import { useAppDispatch } from "../Redux/store";
 import { initApp } from "../Redux/app/appReducer";
 

@@ -1,6 +1,6 @@
 import { ReactElement, useEffect } from "react";
 import "./Portal.scss";
-import Header from "./Header/Header";
+import Header from "../Components/Header/Header";
 import { useAppDispatch } from "../Redux/store";
 import { initPortal } from "../Redux/portal/portalReducer";
 import { Outlet, useNavigate, useParams } from "react-router-dom";

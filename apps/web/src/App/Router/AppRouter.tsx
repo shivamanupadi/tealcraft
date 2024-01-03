@@ -1,6 +1,7 @@
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ReactElement } from "react";
-import Portal from "../Portal/Portal";
+import Portal from "../../Portal/Portal";
+import Workspace from "../../Components/Workspace/Workspace";
 
 function AppRouter(): ReactElement {
   return (
@@ -9,7 +10,7 @@ function AppRouter(): ReactElement {
         <Route path="/portal" element={<Portal></Portal>}>
           <Route
             path="workspace/:workspaceId"
-            element={<div>workspace</div>}
+            element={<Workspace></Workspace>}
           ></Route>
           <Route path="" element={<Navigate to="/portal" replace />} />
         </Route>

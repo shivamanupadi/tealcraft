@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { DeleteOutlined, Done, UnfoldMore } from "@mui/icons-material";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../../../Redux/store";
+import { RootState, useAppDispatch } from "../../Redux/store";
 import {
   A_Workspace,
   CoreWorkspace,
@@ -18,7 +18,7 @@ import {
   WorkspaceClient,
 } from "@repo/tealcraft-sdk";
 import CreateWorkspace from "../CreateWorkspace/CreateWorkspace";
-import { loadWorkspaces } from "../../../Redux/portal/portalReducer";
+import { loadWorkspaces } from "../../Redux/portal/portalReducer";
 import { useConfirm } from "material-ui-confirm";
 import { confirmationProps, theme } from "@repo/theme";
 import { useLoader, useSnackbar } from "@repo/ui";

@@ -4,8 +4,9 @@ import { v4 } from "uuid";
 
 export class WorkspaceClient {
   async save(name: string): Promise<A_Workspace | undefined> {
-    const id = await dataStore.workspaces.add({
-      id: v4(),
+    const id = v4();
+    await dataStore.workspaces.add({
+      id,
       timestamp: Date.now(),
       name: name,
     });
@@ -13,7 +14,7 @@ export class WorkspaceClient {
     return this.get(id);
   }
 
-  async get(id: number): Promise<A_Workspace | undefined> {
+  async get(id: string): Promise<A_Workspace | undefined> {
     return dataStore.workspaces.get({
       id: id,
     });
