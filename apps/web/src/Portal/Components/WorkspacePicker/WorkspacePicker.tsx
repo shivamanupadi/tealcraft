@@ -2,23 +2,25 @@ import { ReactElement, useEffect, useState } from "react";
 import "./WorkspacePicker.scss";
 import {
   Button,
+  ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
   Typography,
 } from "@mui/material";
-import { DeleteOutlined, UnfoldMore } from "@mui/icons-material";
+import { DeleteOutlined, Done, UnfoldMore } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../Redux/store";
 import {
   A_Workspace,
   CoreWorkspace,
+  TealCraft,
   WorkspaceClient,
 } from "@repo/tealcraft-sdk";
 import CreateWorkspace from "../CreateWorkspace/CreateWorkspace";
 import { loadWorkspaces } from "../../../Redux/portal/portalReducer";
 import { useConfirm } from "material-ui-confirm";
-import { confirmationProps } from "@repo/theme";
+import { confirmationProps, theme } from "@repo/theme";
 import { useLoader, useSnackbar } from "@repo/ui";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -42,7 +44,7 @@ function WorkspacePicker(): ReactElement {
   const { workspaces } = useSelector((state: RootState) => state.portal);
 
   const params = useParams();
-  const { id: workspaceId } = params;
+  const { workspaceId } = params;
 
   useEffect(() => {
     if (workspaceId) {
@@ -50,6 +52,11 @@ function WorkspacePicker(): ReactElement {
         return workspace.id === workspaceId;
       });
       setCurrentWorkspace(workspace || null);
+      if (workspace) {
+        new TealCraft().saveWorkspaceId(workspace.id);
+      }
+    } else {
+      setCurrentWorkspace(null);
     }
   }, [workspaceId, workspaces]);
 
@@ -86,9 +93,24 @@ function WorkspacePicker(): ReactElement {
                   e.preventDefault();
                   e.stopPropagation();
                   setWorkspaceAnchorEl(null);
+                  new TealCraft().saveWorkspaceId(workspaceInstance.getId());
                   navigate(`/portal/workspace/${workspaceInstance.getId()}`);
                 }}
               >
+                {currentWorkspace ? (
+                  <ListItemIcon>
+                    {currentWorkspace.id === workspace.id ? (
+                      <Done
+                        fontSize="small"
+                        sx={{ color: theme.palette.common.black }}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </ListItemIcon>
+                ) : (
+                  ""
+                )}
                 <ListItemText>
                   <Typography color="text.primary">
                     {workspaceInstance.getName()}
@@ -116,6 +138,7 @@ function WorkspacePicker(): ReactElement {
                           dispatch(loadWorkspaces());
                           if (workspace.id === currentWorkspace?.id) {
                             setCurrentWorkspace(null);
+                            new TealCraft().removeWorkspaceId();
                             navigate("/portal");
                           }
                         } catch (e) {
@@ -156,6 +179,7 @@ function WorkspacePicker(): ReactElement {
           onSuccess={(workspace: A_Workspace) => {
             setWorkspaceCreationVisibility(false);
             dispatch(loadWorkspaces());
+            new TealCraft().saveWorkspaceId(workspace.id);
             navigate(`/portal/workspace/${workspace.id}`);
           }}
         ></CreateWorkspace>

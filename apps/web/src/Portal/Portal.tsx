@@ -3,12 +3,25 @@ import "./Portal.scss";
 import Header from "./Header/Header";
 import { useAppDispatch } from "../Redux/store";
 import { initPortal } from "../Redux/portal/portalReducer";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { TealCraft } from "@repo/tealcraft-sdk";
 
 function Portal(): ReactElement {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const params = useParams();
+  const { workspaceId } = params;
+
   useEffect(() => {
     dispatch(initPortal());
+  }, []);
+
+  useEffect(() => {
+    const id = new TealCraft().getWorkspaceId();
+    if (id && !workspaceId) {
+      navigate(`/portal/workspace/${id}`);
+    }
   }, []);
 
   return (

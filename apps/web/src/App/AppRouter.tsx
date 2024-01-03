@@ -7,7 +7,10 @@ function AppRouter(): ReactElement {
     <HashRouter>
       <Routes>
         <Route path="/portal" element={<Portal></Portal>}>
-          <Route path="workspace/:id" element={<div>workspace</div>}></Route>
+          <Route
+            path="workspace/:workspaceId"
+            element={<div>workspace</div>}
+          ></Route>
           <Route path="" element={<Navigate to="/portal" replace />} />
         </Route>
 
