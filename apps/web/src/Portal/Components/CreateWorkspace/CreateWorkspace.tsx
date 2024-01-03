@@ -10,11 +10,9 @@ import {
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { ModalGrowTransition, ShadedInput } from "@repo/theme";
-import { useAppDispatch } from "../../../Redux/store";
-import { showSnack } from "../../../Redux/app/snackbarReducer";
 import { A_Workspace, WorkspaceClient } from "@repo/tealcraft-sdk";
 import { useLoader } from "../../../hooks/Loader/Loader";
-import { getExceptionMsg } from "@repo/utils";
+import { useSnackbar } from "../../../hooks/Snackbar/Snackbar";
 
 interface CreateWorkspaceProps {
   show: boolean;
@@ -27,8 +25,8 @@ function CreateWorkspace({
   onClose,
   onSuccess,
 }: CreateWorkspaceProps): ReactElement {
-  const dispatch = useAppDispatch();
   const { showLoader, hideLoader } = useLoader();
+  const { showSnack, showException } = useSnackbar();
   const [name, setName] = useState<string>("");
 
   const clearState = () => {
@@ -92,31 +90,22 @@ function CreateWorkspace({
                           const minLength = 5;
                           const maxLength = 30;
                           if (!name) {
-                            dispatch(
-                              showSnack({
-                                severity: "error",
-                                message: "Invalid workspace name",
-                              }),
-                            );
+                            showSnack("Invalid workspace name", "error");
                             return;
                           }
 
                           if (name.length < minLength) {
-                            dispatch(
-                              showSnack({
-                                severity: "error",
-                                message: `Workspace name should be at least ${minLength} chars`,
-                              }),
+                            showSnack(
+                              `Workspace name should be at least ${minLength} chars`,
+                              "error",
                             );
                             return;
                           }
 
                           if (name.length > maxLength) {
-                            dispatch(
-                              showSnack({
-                                severity: "error",
-                                message: `Workspace name cannot be more than ${maxLength} chars`,
-                              }),
+                            showSnack(
+                              `Workspace name cannot be more than ${maxLength} chars`,
+                              "error",
                             );
                             return;
                           }
@@ -130,12 +119,9 @@ function CreateWorkspace({
                             hideLoader();
 
                             if (exists) {
-                              dispatch(
-                                showSnack({
-                                  severity: "error",
-                                  message:
-                                    "Workspace with this name exists already",
-                                }),
+                              showSnack(
+                                "Workspace with this name exists already",
+                                "error",
                               );
                               return;
                             }
@@ -149,23 +135,14 @@ function CreateWorkspace({
                             if (workspace) {
                               onSuccess(workspace);
                             }
-                            dispatch(
-                              showSnack({
-                                severity: "success",
-                                message: "Workspace created successfully",
-                              }),
+
+                            showSnack(
+                              "Workspace created successfully",
+                              "success",
                             );
                           } catch (e) {
                             hideLoader();
-                            const msg = getExceptionMsg(e);
-                            if (msg) {
-                              dispatch(
-                                showSnack({
-                                  severity: "error",
-                                  message: msg,
-                                }),
-                              );
-                            }
+                            showException(e);
                           }
                         }}
                       >

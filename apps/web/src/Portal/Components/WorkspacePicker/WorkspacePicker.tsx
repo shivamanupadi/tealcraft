@@ -15,15 +15,15 @@ import CreateWorkspace from "../CreateWorkspace/CreateWorkspace";
 import { loadWorkspaces } from "../../../Redux/portal/portalReducer";
 import { useConfirm } from "material-ui-confirm";
 import { confirmationProps } from "@repo/theme";
-import { showSnack } from "../../../Redux/app/snackbarReducer";
 import { useLoader } from "../../../hooks/Loader/Loader";
-import { getExceptionMsg } from "@repo/utils";
+import { useSnackbar } from "../../../hooks/Snackbar/Snackbar";
 
 function WorkspacePicker(): ReactElement {
   const dispatch = useAppDispatch();
   const confirmation = useConfirm();
 
   const { showLoader, hideLoader } = useLoader();
+  const { showSnack, showException } = useSnackbar();
   const [workspaceAnchorEl, setWorkspaceAnchorEl] =
     useState<null | HTMLElement>(null);
   const [isWorkspaceCreationVisible, setWorkspaceCreationVisibility] =
@@ -87,24 +87,11 @@ function WorkspacePicker(): ReactElement {
                           showLoader("Deleting workspace...");
                           await new WorkspaceClient().delete(workspace.id);
                           hideLoader();
-                          dispatch(
-                            showSnack({
-                              severity: "success",
-                              message: "Workspace deleted",
-                            }),
-                          );
+                          showSnack("Workspace deleted", "success");
                           dispatch(loadWorkspaces());
                         } catch (e) {
                           hideLoader();
-                          const msg = getExceptionMsg(e);
-                          if (msg) {
-                            dispatch(
-                              showSnack({
-                                severity: "error",
-                                message: msg,
-                              }),
-                            );
-                          }
+                          showException(e);
                         }
                       })
                       .catch(() => {});

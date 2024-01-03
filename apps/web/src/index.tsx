@@ -7,6 +7,7 @@ import { ConfirmProvider } from "material-ui-confirm";
 import { Provider } from "react-redux";
 import { store } from "./Redux/store";
 import LoaderProvider from "./hooks/Loader/Loader";
+import SnackbarProvider from "./hooks/Snackbar/Snackbar";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -16,9 +17,11 @@ root.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <ConfirmProvider>
-        <LoaderProvider>
-          <App></App>
-        </LoaderProvider>
+        <SnackbarProvider>
+          <LoaderProvider>
+            <App></App>
+          </LoaderProvider>
+        </SnackbarProvider>
       </ConfirmProvider>
     </ThemeProvider>
   </Provider>,

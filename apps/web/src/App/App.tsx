@@ -3,7 +3,6 @@ import "./App.scss";
 import AppRouter from "./AppRouter";
 import { useAppDispatch } from "../Redux/store";
 import { initApp } from "../Redux/app/appReducer";
-import AppSnackbar from "./AppSnackbar";
 
 function App(): ReactElement {
   const dispatch = useAppDispatch();
@@ -16,7 +15,6 @@ function App(): ReactElement {
       <div className="app-wrapper">
         <div className="app-container">
           <AppRouter></AppRouter>
-          <AppSnackbar></AppSnackbar>
         </div>
       </div>
     </div>
