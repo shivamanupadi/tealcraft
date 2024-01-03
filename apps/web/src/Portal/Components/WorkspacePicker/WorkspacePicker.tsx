@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import "./WorkspacePicker.scss";
 import {
   Button,
@@ -10,25 +10,48 @@ import {
 import { DeleteOutlined, UnfoldMore } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../Redux/store";
-import { CoreWorkspace, WorkspaceClient } from "@repo/tealcraft-sdk";
+import {
+  A_Workspace,
+  CoreWorkspace,
+  WorkspaceClient,
+} from "@repo/tealcraft-sdk";
 import CreateWorkspace from "../CreateWorkspace/CreateWorkspace";
 import { loadWorkspaces } from "../../../Redux/portal/portalReducer";
 import { useConfirm } from "material-ui-confirm";
 import { confirmationProps } from "@repo/theme";
 import { useLoader, useSnackbar } from "@repo/ui";
+import { useNavigate, useParams } from "react-router-dom";
 
 function WorkspacePicker(): ReactElement {
   const dispatch = useAppDispatch();
   const confirmation = useConfirm();
+  const navigate = useNavigate();
 
   const { showLoader, hideLoader } = useLoader();
   const { showSnack, showException } = useSnackbar();
+
   const [workspaceAnchorEl, setWorkspaceAnchorEl] =
     useState<null | HTMLElement>(null);
   const [isWorkspaceCreationVisible, setWorkspaceCreationVisibility] =
     useState<boolean>(false);
 
+  const [currentWorkspace, setCurrentWorkspace] = useState<null | A_Workspace>(
+    null,
+  );
+
   const { workspaces } = useSelector((state: RootState) => state.portal);
+
+  const params = useParams();
+  const { id: workspaceId } = params;
+
+  useEffect(() => {
+    if (workspaceId) {
+      const workspace = workspaces.find((workspace) => {
+        return workspace.id === workspaceId;
+      });
+      setCurrentWorkspace(workspace || null);
+    }
+  }, [workspaceId, workspaces]);
 
   return (
     <div className="workspace-picker-wrapper">
@@ -43,7 +66,7 @@ function WorkspacePicker(): ReactElement {
             setWorkspaceAnchorEl(ev.currentTarget);
           }}
         >
-          Select workspace
+          {currentWorkspace ? currentWorkspace.name : "Select workspace"}
         </Button>
         <Menu
           anchorEl={workspaceAnchorEl}
@@ -62,6 +85,8 @@ function WorkspacePicker(): ReactElement {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
+                  setWorkspaceAnchorEl(null);
+                  navigate(`/portal/workspace/${workspaceInstance.getId()}`);
                 }}
               >
                 <ListItemText>
@@ -76,6 +101,7 @@ function WorkspacePicker(): ReactElement {
                   onClick={async (e) => {
                     e.stopPropagation();
                     e.preventDefault();
+                    setWorkspaceAnchorEl(null);
 
                     confirmation({
                       ...confirmationProps,
@@ -88,6 +114,10 @@ function WorkspacePicker(): ReactElement {
                           hideLoader();
                           showSnack("Workspace deleted", "success");
                           dispatch(loadWorkspaces());
+                          if (workspace.id === currentWorkspace?.id) {
+                            setCurrentWorkspace(null);
+                            navigate("/portal");
+                          }
                         } catch (e) {
                           hideLoader();
                           showException(e);
@@ -123,9 +153,10 @@ function WorkspacePicker(): ReactElement {
           onClose={() => {
             setWorkspaceCreationVisibility(false);
           }}
-          onSuccess={() => {
+          onSuccess={(workspace: A_Workspace) => {
             setWorkspaceCreationVisibility(false);
             dispatch(loadWorkspaces());
+            navigate(`/portal/workspace/${workspace.id}`);
           }}
         ></CreateWorkspace>
       </div>

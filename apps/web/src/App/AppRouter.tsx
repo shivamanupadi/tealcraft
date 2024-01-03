@@ -6,7 +6,11 @@ function AppRouter(): ReactElement {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/portal" element={<Portal></Portal>}></Route>
+        <Route path="/portal" element={<Portal></Portal>}>
+          <Route path="workspace/:id" element={<div>workspace</div>}></Route>
+          <Route path="" element={<Navigate to="/portal" replace />} />
+        </Route>
+
         <Route path="*" element={<Navigate to="/portal" replace />} />
       </Routes>
     </HashRouter>
