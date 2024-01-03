@@ -19,6 +19,7 @@ export default {
           resolveApp("../../packages/theme"),
           resolveApp("../../packages/tealcraft-sdk"),
           resolveApp("../../packages/utils"),
+          resolveApp("../../packages/ui"),
         ],
       },
     },

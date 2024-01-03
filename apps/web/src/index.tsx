@@ -7,7 +7,7 @@ import { ConfirmProvider } from "material-ui-confirm";
 import { Provider } from "react-redux";
 import { store } from "./Redux/store";
 import LoaderProvider from "./hooks/Loader/Loader";
-import SnackbarProvider from "./hooks/Snackbar/Snackbar";
+import { SnackbarProvider } from "@repo/ui";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,

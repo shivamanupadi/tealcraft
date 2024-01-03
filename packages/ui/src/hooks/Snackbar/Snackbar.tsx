@@ -36,7 +36,7 @@ const getExtraClass = (severity: string): string => {
   return "";
 };
 
-export default function SnackbarProvider({ children }: any) {
+export function SnackbarProvider({ children }: any) {
   const [snackbar, setSnackbar] = useState<SnackbarState>({
     visible: false,
     message: "",
