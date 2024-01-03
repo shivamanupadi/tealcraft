@@ -11,7 +11,8 @@
   "dependencies": {
     "@mui/material": "^5.15.2",
     "react": "^18.2.0",
-    "@repo/utils": "*"
+    "@repo/utils": "*",
+    "@repo/styles": "*"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

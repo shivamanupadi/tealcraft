@@ -15,8 +15,7 @@ import CreateWorkspace from "../CreateWorkspace/CreateWorkspace";
 import { loadWorkspaces } from "../../../Redux/portal/portalReducer";
 import { useConfirm } from "material-ui-confirm";
 import { confirmationProps } from "@repo/theme";
-import { useLoader } from "../../../hooks/Loader/Loader";
-import { useSnackbar } from "@repo/ui";
+import { useLoader, useSnackbar } from "@repo/ui";
 
 function WorkspacePicker(): ReactElement {
   const dispatch = useAppDispatch();

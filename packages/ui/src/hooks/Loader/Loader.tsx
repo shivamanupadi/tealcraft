@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
-import loaderImg from "../../assets/images/loader.gif";
+// @ts-ignore
+import loaderImg from "./loader.gif";
 import "./Loader.scss";
 
 interface LoaderState {
@@ -23,7 +24,7 @@ export const useLoader = () => {
   return context;
 };
 
-export default function LoaderProvider({ children }: any) {
+export function LoaderProvider({ children }: any) {
   const [loader, setLoader] = useState<LoaderState>({
     visible: false,
     message: "",

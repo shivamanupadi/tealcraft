@@ -11,8 +11,7 @@ import {
 import { Close } from "@mui/icons-material";
 import { ModalGrowTransition, ShadedInput } from "@repo/theme";
 import { A_Workspace, WorkspaceClient } from "@repo/tealcraft-sdk";
-import { useLoader } from "../../../hooks/Loader/Loader";
-import { useSnackbar } from "@repo/ui";
+import { useLoader, useSnackbar } from "@repo/ui";
 
 interface CreateWorkspaceProps {
   show: boolean;
