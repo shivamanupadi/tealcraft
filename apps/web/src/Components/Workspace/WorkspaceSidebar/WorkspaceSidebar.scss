@@ -8,7 +8,7 @@
     border-right: 1px solid map-get($grey-colors, "light-grey");
     overflow-y: auto;
     .workspace-menu {
-      padding: 20px;
+      margin-top: 25px;
       .contracts-header {
         display: flex;
         justify-content: space-between;

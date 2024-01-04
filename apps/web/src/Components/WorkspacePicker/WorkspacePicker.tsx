@@ -119,6 +119,7 @@ function WorkspacePicker(): ReactElement {
                 <DeleteOutlined
                   fontSize="small"
                   color={"error"}
+                  sx={{ marginLeft: "15px" }}
                   onClick={async (e) => {
                     e.stopPropagation();
                     e.preventDefault();
@@ -160,6 +161,7 @@ function WorkspacePicker(): ReactElement {
               color={"primary"}
               variant={"contained"}
               size={"small"}
+              fullWidth
               onClick={async () => {
                 setWorkspaceAnchorEl(null);
                 setWorkspaceCreationVisibility(true);
