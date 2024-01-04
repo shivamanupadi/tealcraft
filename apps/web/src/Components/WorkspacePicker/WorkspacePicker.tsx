@@ -67,7 +67,6 @@ function WorkspacePicker(): ReactElement {
           color={"primary"}
           variant={"contained"}
           className="grey-button"
-          size={"small"}
           endIcon={<UnfoldMore />}
           onClick={(ev) => {
             setWorkspaceAnchorEl(ev.currentTarget);
@@ -127,14 +126,14 @@ function WorkspacePicker(): ReactElement {
 
                     confirmation({
                       ...confirmationProps,
-                      description: `You are trying to delete the workspace - ${workspace.name}`,
+                      description: `You are trying to delete the workspace - ${workspace.name}. All the associated contracts will be deleted.`,
                     })
                       .then(async () => {
                         try {
                           showLoader("Deleting workspace...");
                           await new WorkspaceClient().delete(workspace.id);
                           hideLoader();
-                          showSnack("Workspace deleted", "success");
+                          showSnack("WorkspaceSidebar deleted", "success");
                           dispatch(loadWorkspaces());
                           if (workspace.id === currentWorkspace?.id) {
                             setCurrentWorkspace(null);

@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import "./CreateWorkspace.scss";
+import "./CreateContract.scss";
 import {
   Button,
   Dialog,
@@ -10,20 +10,22 @@ import {
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { ModalGrowTransition, ShadedInput } from "@repo/theme";
-import { A_Workspace, WorkspaceClient } from "@repo/tealcraft-sdk";
+import { A_Contract, A_Workspace, ContractClient } from "@repo/tealcraft-sdk";
 import { useLoader, useSnackbar } from "@repo/ui";
 
-interface CreateWorkspaceProps {
+interface CreateContractProps {
   show: boolean;
   onClose: () => void;
-  onSuccess: (workspace: A_Workspace) => void;
+  onSuccess: (contract: A_Contract) => void;
+  workspace: A_Workspace;
 }
 
-function CreateWorkspace({
+function CreateContract({
   show,
   onClose,
   onSuccess,
-}: CreateWorkspaceProps): ReactElement {
+  workspace,
+}: CreateContractProps): ReactElement {
   const { showLoader, hideLoader } = useLoader();
   const { showSnack, showException } = useSnackbar();
   const [name, setName] = useState<string>("");
@@ -49,14 +51,14 @@ function CreateWorkspace({
           className="classic-modal"
         >
           <DialogTitle>
-            <div>Create workspace</div>
+            <div>Create contract</div>
             <div>
               <Close onClick={handleClose} className="close-modal" />
             </div>
           </DialogTitle>
           <DialogContent>
-            <div className="create-workspace-wrapper">
-              <div className="create-workspace-container">
+            <div className="create-contract-wrapper">
+              <div className="create-contract-container">
                 <form
                   onSubmit={async (event) => {
                     event.preventDefault();
@@ -66,12 +68,12 @@ function CreateWorkspace({
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                       <FormLabel className="classic-label">
-                        Workspace name
+                        Contract name
                       </FormLabel>
                       <ShadedInput
                         autoFocus
                         value={name}
-                        placeholder="My project"
+                        placeholder="My contract"
                         onChange={(ev: any) => {
                           setName(ev.target.value);
                         }}
@@ -89,13 +91,13 @@ function CreateWorkspace({
                           const minLength = 5;
                           const maxLength = 30;
                           if (!name) {
-                            showSnack("Invalid workspace name", "error");
+                            showSnack("Invalid contract name", "error");
                             return;
                           }
 
                           if (name.length < minLength) {
                             showSnack(
-                              `Workspace name should be at least ${minLength} chars`,
+                              `Contract name should be at least ${minLength} chars`,
                               "error",
                             );
                             return;
@@ -103,7 +105,7 @@ function CreateWorkspace({
 
                           if (name.length > maxLength) {
                             showSnack(
-                              `Workspace name cannot be more than ${maxLength} chars`,
+                              `Contract name cannot be more than ${maxLength} chars`,
                               "error",
                             );
                             return;
@@ -114,29 +116,33 @@ function CreateWorkspace({
                             );
 
                             const exists =
-                              await new WorkspaceClient().nameExists(name);
+                              await new ContractClient().nameExists(
+                                workspace.id,
+                                name,
+                              );
                             hideLoader();
 
                             if (exists) {
                               showSnack(
-                                "WorkspaceSidebar with this name exists already",
+                                "Contract with this name exists already",
                                 "error",
                               );
                               return;
                             }
 
-                            showLoader("Creating workspace...");
-                            const workspace = await new WorkspaceClient().save(
+                            showLoader("Creating contract...");
+                            const contract = await new ContractClient().save(
+                              workspace.id,
                               name,
                             );
                             hideLoader();
                             handleClose();
-                            if (workspace) {
-                              onSuccess(workspace);
+                            if (contract) {
+                              onSuccess(contract);
                             }
 
                             showSnack(
-                              "WorkspaceSidebar created successfully",
+                              "Contract created successfully",
                               "success",
                             );
                           } catch (e) {
@@ -161,4 +167,4 @@ function CreateWorkspace({
   );
 }
 
-export default CreateWorkspace;
+export default CreateContract;

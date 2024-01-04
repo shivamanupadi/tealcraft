@@ -1,0 +1,20 @@
+@import "@repo/styles";
+@import "../../../scss/constants";
+
+.workspace-sidebar-wrapper {
+  .workspace-sidebar-container {
+    width: 240px;
+    height: calc(100vh - $header-height);
+    border-right: 1px solid map-get($grey-colors, "light-grey");
+    overflow-y: auto;
+    scrollbar-width: thin;
+    .workspace-menu {
+      padding: 20px;
+      .contracts-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  }
+}

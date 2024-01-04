@@ -1,26 +1,31 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect } from "react";
 import "./Workspace.scss";
-import { A_Workspace, WorkspaceClient } from "@repo/tealcraft-sdk";
+
 import { useParams } from "react-router-dom";
+import WorkspaceSidebar from "./WorkspaceSidebar/WorkspaceSidebar";
+import { useAppDispatch } from "../../Redux/store";
+import { loadWorkspace } from "../../Redux/portal/workspaceReducer";
 
 function Workspace(): ReactElement {
+  const dispatch = useAppDispatch();
+
   const params = useParams();
   const { workspaceId } = params;
 
-  const [workspace, setWorkspace] = useState<null | A_Workspace>(null);
-
-  async function loadWorkspace(workspaceId: string) {
-    const workspace = await new WorkspaceClient().get(workspaceId);
-    setWorkspace(workspace || null);
-  }
-
   useEffect(() => {
-    loadWorkspace(workspaceId || "");
+    if (workspaceId) {
+      dispatch(loadWorkspace(workspaceId));
+    }
   }, [workspaceId]);
 
   return (
     <div className="workspace-wrapper">
-      <div className="workspace-container">{workspace?.name}</div>
+      <div className="workspace-container">
+        <div className="workspace-sidebar">
+          <WorkspaceSidebar></WorkspaceSidebar>
+        </div>
+        <div className="workspace-content"></div>
+      </div>
     </div>
   );
 }

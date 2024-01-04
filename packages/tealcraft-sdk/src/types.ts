@@ -3,3 +3,11 @@ export type A_Workspace = {
   timestamp: number;
   name: string;
 };
+
+export type A_Contract = {
+  id: string;
+  timestamp: number;
+  workspaceId: string;
+  name: string;
+  source: string;
+};

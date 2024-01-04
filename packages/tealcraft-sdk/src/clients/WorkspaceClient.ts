@@ -1,6 +1,7 @@
 import { dataStore } from "../database/datastore";
 import { A_Workspace } from "../types";
 import { v4 } from "uuid";
+import { ContractClient } from "./ContractClient";
 
 export class WorkspaceClient {
   async save(name: string): Promise<A_Workspace | undefined> {
@@ -21,6 +22,7 @@ export class WorkspaceClient {
   }
 
   async delete(id: string | undefined): Promise<boolean> {
+    await new ContractClient().deleteByWorkspace(id);
     await dataStore.workspaces
       .where({
         id: id,

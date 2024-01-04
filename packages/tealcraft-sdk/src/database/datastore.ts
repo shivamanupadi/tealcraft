@@ -1,13 +1,15 @@
 import Dexie, { Table } from "dexie";
-import { A_Workspace } from "../types";
+import { A_Contract, A_Workspace } from "../types";
 
 export class TealCraftDatabase extends Dexie {
-  workspaces!: Table<A_Workspace, number>;
+  workspaces!: Table<A_Workspace, string>;
+  contracts!: Table<A_Contract, string>;
 
   constructor() {
     super("tealcraft");
-    this.version(1).stores({
+    this.version(2).stores({
       workspaces: "id, timestamp, name",
+      contracts: "id, timestamp, workspaceId, name, source",
     });
   }
 }

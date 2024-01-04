@@ -11,7 +11,7 @@ function Header(): ReactElement {
           <div className="logo">TealCraft</div>
           <div className="greyed">/</div>
           <div className="greyed">Workspaces</div>
-          <div style={{ marginTop: -5 }}>
+          <div>
             <WorkspacePicker></WorkspacePicker>
           </div>
         </div>
