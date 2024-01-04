@@ -9,6 +9,10 @@ import { loadContracts } from "../../../Redux/portal/workspaceReducer";
 import { A_Contract, CoreContract, CoreWorkspace } from "@repo/tealcraft-sdk";
 import { useNavigate, useParams } from "react-router-dom";
 
+function getContractNodeId(contractId: string | undefined): string {
+  return `contract-${contractId}`;
+}
+
 function WorkspaceSidebar(): ReactElement {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -20,7 +24,6 @@ function WorkspaceSidebar(): ReactElement {
   const params = useParams();
   const { contractId } = params;
 
-  console.log(contractId);
   const [isContractCreationVisible, setContractCreationVisibility] =
     useState<boolean>(false);
 
@@ -32,6 +35,8 @@ function WorkspaceSidebar(): ReactElement {
             defaultCollapseIcon={<ExpandMore />}
             defaultExpandIcon={<ChevronRight />}
             defaultExpanded={["contracts"]}
+            selected={getContractNodeId(contractId)}
+            multiSelect={false}
           >
             <TreeItem
               nodeId="contracts"
@@ -59,8 +64,8 @@ function WorkspaceSidebar(): ReactElement {
                 }
                 return (
                   <TreeItem
-                    key={`contract-${contractInstance.getId()}`}
-                    nodeId={`contract-${contractInstance.getId()}`}
+                    key={getContractNodeId(contractInstance.getId())}
+                    nodeId={getContractNodeId(contractInstance.getId())}
                     label={contractInstance.getNameWithExtension()}
                     onClick={() => {
                       navigate(
