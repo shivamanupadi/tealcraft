@@ -130,7 +130,7 @@ function CreateContract({
                               return;
                             }
 
-                            showLoader("Creating contract...");
+                            showLoader("Creating contract ...");
                             const contract = await new ContractClient().save(
                               workspace.id,
                               name,

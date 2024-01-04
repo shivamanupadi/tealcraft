@@ -33,7 +33,7 @@ export class WorkspaceClient {
   }
 
   async findAll(): Promise<A_Workspace[]> {
-    return dataStore.workspaces.toArray();
+    return dataStore.workspaces.orderBy("timestamp").toArray();
   }
 
   async nameExists(name: string): Promise<boolean> {

@@ -6,6 +6,7 @@ import CreateContract from "../../CreateContract/CreateContract";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../Redux/store";
 import { loadContracts } from "../../../Redux/portal/workspaceReducer";
+import { CoreContract } from "@repo/tealcraft-sdk";
 
 function WorkspaceSidebar(): ReactElement {
   const dispatch = useAppDispatch();
@@ -45,11 +46,12 @@ function WorkspaceSidebar(): ReactElement {
               }
             >
               {contracts.map((contract) => {
+                const contractInstance = new CoreContract(contract);
                 return (
                   <TreeItem
-                    key={`contract-${contract.id}`}
-                    nodeId={`contract-${contract.id}`}
-                    label={contract.name}
+                    key={`contract-${contractInstance.getId()}`}
+                    nodeId={`contract-${contractInstance.getId()}`}
+                    label={contractInstance.getNameWithExtension()}
                   ></TreeItem>
                 );
               })}

@@ -50,7 +50,7 @@ export class ContractClient {
       .where({
         workspaceId,
       })
-      .toArray();
+      .sortBy("timestamp");
   }
 
   async nameExists(workspaceId: string, name: string): Promise<boolean> {
