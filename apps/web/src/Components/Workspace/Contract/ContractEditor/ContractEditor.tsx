@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { Editor, Monaco } from "@monaco-editor/react";
 import { monacoLightTheme } from "./themes/light";
 // @ts-ignore
-import customTypings from "!!raw-loader!./typings/types/global.d.ts";
+import customTypings from "!!raw-loader!@algorandfoundation/tealscript/types/global.d.ts";
 
 function ContractEditor(): ReactElement {
   const { contract } = useSelector((state: RootState) => state.contract);
