@@ -1,7 +1,7 @@
 import { ReactElement, useEffect } from "react";
 import "./Workspace.scss";
 
-import { useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import WorkspaceSidebar from "./WorkspaceSidebar/WorkspaceSidebar";
 import { useAppDispatch } from "../../Redux/store";
 import { loadWorkspace } from "../../Redux/portal/workspaceReducer";
@@ -24,7 +24,9 @@ function Workspace(): ReactElement {
         <div className="workspace-sidebar">
           <WorkspaceSidebar></WorkspaceSidebar>
         </div>
-        <div className="workspace-content"></div>
+        <div className="workspace-content">
+          <Outlet></Outlet>
+        </div>
       </div>
     </div>
   );

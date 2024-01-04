@@ -3,12 +3,14 @@ import { useDispatch } from "react-redux";
 import appReducer from "./app/appReducer";
 import portalReducer from "./portal/portalReducer";
 import workspaceReducer from "./portal/workspaceReducer";
+import contractReducer from "./portal/contractReducer";
 
 export const store = configureStore({
   reducer: {
     app: appReducer,
     portal: portalReducer,
     workspace: workspaceReducer,
+    contract: contractReducer,
   },
 });
 

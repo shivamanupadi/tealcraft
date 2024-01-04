@@ -6,15 +6,21 @@ import CreateContract from "../../CreateContract/CreateContract";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../Redux/store";
 import { loadContracts } from "../../../Redux/portal/workspaceReducer";
-import { CoreContract } from "@repo/tealcraft-sdk";
+import { A_Contract, CoreContract, CoreWorkspace } from "@repo/tealcraft-sdk";
+import { useNavigate, useParams } from "react-router-dom";
 
 function WorkspaceSidebar(): ReactElement {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { workspace, contracts } = useSelector(
     (state: RootState) => state.workspace,
   );
 
+  const params = useParams();
+  const { contractId } = params;
+
+  console.log(contractId);
   const [isContractCreationVisible, setContractCreationVisibility] =
     useState<boolean>(false);
 
@@ -47,11 +53,20 @@ function WorkspaceSidebar(): ReactElement {
             >
               {contracts.map((contract) => {
                 const contractInstance = new CoreContract(contract);
+                let workspaceInstance: CoreWorkspace;
+                if (workspace) {
+                  workspaceInstance = new CoreWorkspace(workspace);
+                }
                 return (
                   <TreeItem
                     key={`contract-${contractInstance.getId()}`}
                     nodeId={`contract-${contractInstance.getId()}`}
                     label={contractInstance.getNameWithExtension()}
+                    onClick={() => {
+                      navigate(
+                        `/portal/workspace/${workspaceInstance.getId()}/contract/${contractInstance.getId()}`,
+                      );
+                    }}
                   ></TreeItem>
                 );
               })}
@@ -65,9 +80,12 @@ function WorkspaceSidebar(): ReactElement {
             onClose={() => {
               setContractCreationVisibility(false);
             }}
-            onSuccess={() => {
+            onSuccess={(contract: A_Contract) => {
               setContractCreationVisibility(false);
               dispatch(loadContracts(workspace));
+              navigate(
+                `/portal/workspace/${workspace.id}/contract/${contract.id}`,
+              );
             }}
             workspace={workspace}
           ></CreateContract>
