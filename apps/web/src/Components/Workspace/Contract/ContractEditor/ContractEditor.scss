@@ -1,0 +1,11 @@
+@import "@repo/styles";
+@import "../../../../scss/constants";
+
+.contract-editor-wrapper {
+  .contract-editor-container {
+    height: calc(100vh - $header-height);
+    overflow-y: auto;
+    width: 100%;
+    background: #fbfcfd;
+  }
+}

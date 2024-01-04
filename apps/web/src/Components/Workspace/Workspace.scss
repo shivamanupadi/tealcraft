@@ -6,5 +6,8 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    .workspace-content {
+      width: 100%;
+    }
   }
 }

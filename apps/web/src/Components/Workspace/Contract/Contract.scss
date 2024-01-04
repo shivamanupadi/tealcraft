@@ -3,8 +3,13 @@
 
 .contract-wrapper {
   .contract-container {
-    width: 240px;
-    height: calc(100vh - $header-height);
-    overflow-y: auto;
+    display: flex;
+    width: 100%;
+    .contract-editor {
+      flex-grow: 7;
+    }
+    .contract-actions {
+      flex-grow: 3;
+    }
   }
 }
