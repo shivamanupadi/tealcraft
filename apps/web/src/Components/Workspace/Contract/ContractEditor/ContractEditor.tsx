@@ -58,26 +58,28 @@ function ContractEditor(): ReactElement {
   return (
     <div className="contract-editor-wrapper">
       <div className="contract-editor-container">
-        <Editor
-          width={"600px"}
-          language="typescript"
-          theme="classic-theme"
-          defaultValue={source}
-          options={{
-            fontSize: 13,
-            minimap: {
-              enabled: false,
-            },
-            tabSize: 8,
-            autoIndent: "advanced",
-            detectIndentation: false,
-            formatOnPaste: true,
-            formatOnType: true,
-            lineHeight: 1.2,
-          }}
-          onMount={editorMounted}
-          onChange={handleEditorChange}
-        ></Editor>
+        <div className="custom-monaco-editor">
+          <Editor
+            width={"100%"}
+            height={"100%"}
+            language="typescript"
+            theme="classic-theme"
+            defaultValue={source}
+            options={{
+              fontSize: 13,
+              minimap: {
+                enabled: false,
+              },
+              detectIndentation: false,
+              formatOnPaste: true,
+              formatOnType: true,
+              lineHeight: 1.2,
+              automaticLayout: true,
+            }}
+            onMount={editorMounted}
+            onChange={handleEditorChange}
+          ></Editor>
+        </div>
       </div>
     </div>
   );

@@ -5,7 +5,12 @@
   .contract-editor-container {
     height: calc(100vh - $header-height);
     overflow-y: auto;
-    width: 100%;
     background: #fbfcfd;
+    .custom-monaco-editor {
+      height: 100%;
+      * {
+        font-family: JetBrainsMono, sans-serif !important;
+      }
+    }
   }
 }

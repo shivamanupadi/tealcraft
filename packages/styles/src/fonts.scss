@@ -26,3 +26,20 @@ body {
 * {
   font-family: "Rubik", sans-serif !important;
 }
+
+@mixin font-face(
+  $font-name,
+  $font-file-name,
+  $font-format-one: "ttf",
+  $font-format-two: "truetype"
+) {
+  @font-face {
+    font-family: $font-name;
+    src:
+      url("assets/fonts/JetBrainsMono/fonts/ttf/#{$font-file-name}.ttf")
+        format($font-format-one),
+      url("assets/fonts/JetBrainsMono/fonts/ttf/#{$font-file-name}.ttf")
+        format($font-format-two);
+  }
+}
+@include font-face("JetBrainsMono", "JetBrainsMono-Regular");
