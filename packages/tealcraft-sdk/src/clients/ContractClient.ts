@@ -25,6 +25,16 @@ export class ContractClient {
     });
   }
 
+  async updateSource(id: string, source: string): Promise<number> {
+    return dataStore.contracts
+      .where({
+        id,
+      })
+      .modify({
+        source,
+      });
+  }
+
   async delete(id: string | undefined): Promise<boolean> {
     await dataStore.contracts
       .where({

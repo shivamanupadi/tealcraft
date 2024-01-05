@@ -26,6 +26,7 @@
     "@types/react-redux": "^7.1.33",
     "buffer": "^6.0.3",
     "immer": "^10.0.3",
+    "lodash.debounce": "^4.0.8",
     "material-ui-confirm": "^3.0.9",
     "raw-loader": "^4.0.2",
     "react": "^18.2.0",

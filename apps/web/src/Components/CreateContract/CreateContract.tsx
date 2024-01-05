@@ -140,11 +140,6 @@ function CreateContract({
                             if (contract) {
                               onSuccess(contract);
                             }
-
-                            showSnack(
-                              "Contract created successfully",
-                              "success",
-                            );
                           } catch (e) {
                             hideLoader();
                             showException(e);

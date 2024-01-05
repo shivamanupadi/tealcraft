@@ -20,6 +20,23 @@ export const loadContract: AsyncThunk<A_Contract | undefined, string, {}> =
     },
   );
 
+export const updateContractSource: AsyncThunk<
+  void,
+  { contractId: string; source: string },
+  {}
+> = createAsyncThunk(
+  "contract/updateContractSource",
+  async ({
+    contractId,
+    source,
+  }: {
+    contractId: string;
+    source: string;
+  }): Promise<void> => {
+    await new ContractClient().updateSource(contractId, source);
+  },
+);
+
 export const contractSlice = createSlice({
   name: "contract",
   initialState: {
