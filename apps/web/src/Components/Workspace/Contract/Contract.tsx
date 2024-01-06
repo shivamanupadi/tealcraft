@@ -10,13 +10,15 @@ function Contract(): ReactElement {
   const dispatch = useAppDispatch();
 
   const params = useParams();
-  const { contractId } = params;
+  const { contractId, workspaceId } = params;
 
   useEffect(() => {
-    if (contractId) {
-      dispatch(loadContract(contractId));
+    if (workspaceId && contractId) {
+      dispatch(
+        loadContract({ workspaceId: workspaceId, contractId: contractId }),
+      );
     }
-  }, [contractId]);
+  }, [workspaceId, contractId]);
 
   return (
     <div className="contract-wrapper">

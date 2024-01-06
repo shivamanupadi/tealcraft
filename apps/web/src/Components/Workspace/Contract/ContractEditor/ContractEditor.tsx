@@ -19,6 +19,9 @@ function ContractEditor(): ReactElement {
     if (contract && editorRef && editorRef.current) {
       // @ts-ignore
       editorRef.current.setValue(contract.source);
+    } else {
+      // @ts-ignore
+      editorRef.current?.setValue("");
     }
   }, [contract]);
 

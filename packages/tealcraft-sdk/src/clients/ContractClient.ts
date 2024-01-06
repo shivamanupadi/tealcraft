@@ -25,6 +25,16 @@ export class ContractClient {
     });
   }
 
+  async getByWorkspace(
+    workspaceId: string,
+    id: string,
+  ): Promise<A_Contract | undefined> {
+    return dataStore.contracts.get({
+      workspaceId,
+      id: id,
+    });
+  }
+
   async updateSource(id: string, source: string): Promise<number> {
     return dataStore.contracts
       .where({

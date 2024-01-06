@@ -15,16 +15,26 @@ const initialState: ContractState = {
   source: "",
 };
 
-export const loadContract: AsyncThunk<A_Contract | undefined, string, {}> =
-  createAsyncThunk(
-    "contract/loadContract",
-    async (contractId: string, thunkAPI): Promise<A_Contract | undefined> => {
-      const { dispatch } = thunkAPI;
-      const contract = await new ContractClient().get(contractId);
-      dispatch(setContractSource(contract?.source || ""));
-      return contract;
-    },
-  );
+export const loadContract: AsyncThunk<
+  A_Contract | undefined,
+  { workspaceId: string; contractId: string },
+  {}
+> = createAsyncThunk(
+  "contract/loadContract",
+  async (
+    { workspaceId, contractId }: { workspaceId: string; contractId: string },
+    thunkAPI,
+  ): Promise<A_Contract | undefined> => {
+    const { dispatch } = thunkAPI;
+    dispatch(resetContract());
+    const contract = await new ContractClient().getByWorkspace(
+      workspaceId,
+      contractId,
+    );
+    dispatch(setContractSource(contract?.source || ""));
+    return contract;
+  },
+);
 
 export const updateContractSource: AsyncThunk<
   void,
@@ -54,6 +64,7 @@ export const contractSlice = createSlice({
     ...initialState,
   },
   reducers: {
+    resetContract: () => initialState,
     setContractSource: (state, action: PayloadAction<string>) => {
       state.source = action.payload;
     },
@@ -62,13 +73,11 @@ export const contractSlice = createSlice({
     builder.addCase(
       loadContract.fulfilled,
       (state, action: PayloadAction<A_Contract | undefined>) => {
-        if (action.payload) {
-          state.contract = action.payload;
-        }
+        state.contract = action.payload;
       },
     );
   },
 });
 
-export const { setContractSource } = contractSlice.actions;
+export const { setContractSource, resetContract } = contractSlice.actions;
 export default contractSlice.reducer;

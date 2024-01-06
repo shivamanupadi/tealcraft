@@ -33,6 +33,7 @@ export const loadWorkspace: AsyncThunk<A_Workspace | undefined, string, {}> =
     "workspace/loadWorkspace",
     async (workspaceId: string, thunkAPI): Promise<A_Workspace | undefined> => {
       const { dispatch } = thunkAPI;
+      dispatch(resetWorkspace());
       const workspace = await new WorkspaceClient().get(workspaceId);
       if (workspace) {
         dispatch(loadContracts(workspace));
@@ -46,7 +47,9 @@ export const workspaceSlice = createSlice({
   initialState: {
     ...initialState,
   },
-  reducers: {},
+  reducers: {
+    resetWorkspace: () => initialState,
+  },
   extraReducers: (builder) => {
     builder.addCase(
       loadContracts.fulfilled,
@@ -60,12 +63,11 @@ export const workspaceSlice = createSlice({
     builder.addCase(
       loadWorkspace.fulfilled,
       (state, action: PayloadAction<A_Workspace | undefined>) => {
-        if (action.payload) {
-          state.workspace = action.payload;
-        }
+        state.workspace = action.payload;
       },
     );
   },
 });
 
+export const { resetWorkspace } = workspaceSlice.actions;
 export default workspaceSlice.reducer;
