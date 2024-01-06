@@ -1,3 +1,5 @@
+import { GreyColors } from "./colors";
+
 export const treeStyles = {
   ".MuiCollapse-root": {
     marginLeft: "0px",
@@ -15,7 +17,8 @@ export const treeStyles = {
         background: "#F5F5F5",
       },
       ".MuiTreeItem-label": {
-        fontSize: "14px",
+        fontSize: "13px",
+        color: GreyColors.FormValue,
       },
     },
   },

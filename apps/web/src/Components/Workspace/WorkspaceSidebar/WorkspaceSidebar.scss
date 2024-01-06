@@ -8,11 +8,12 @@
     border-right: 1px solid map-get($grey-colors, "light-grey");
     overflow-y: auto;
     .workspace-menu {
-      margin-top: 25px;
       .contracts-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        color: map-get($base-colors, "black");
+        font-size: 16px;
       }
     }
   }

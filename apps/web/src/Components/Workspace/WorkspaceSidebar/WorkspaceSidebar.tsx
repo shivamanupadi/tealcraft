@@ -13,7 +13,7 @@ import { RootState, useAppDispatch } from "../../../Redux/store";
 import { loadContracts } from "../../../Redux/portal/workspaceReducer";
 import { A_Contract, CoreContract, CoreWorkspace } from "@repo/tealcraft-sdk";
 import { useNavigate, useParams } from "react-router-dom";
-import { treeStyles } from "@repo/theme";
+import { GreyColors, treeStyles } from "@repo/theme";
 import { Tooltip } from "@mui/material";
 
 function getContractNodeId(contractId: string | undefined): string {
@@ -73,7 +73,12 @@ function WorkspaceSidebar(): ReactElement {
                 }
                 return (
                   <TreeItem
-                    icon={<TextSnippet></TextSnippet>}
+                    icon={
+                      <TextSnippet
+                        fontSize={"small"}
+                        sx={{ color: GreyColors.FormValue }}
+                      ></TextSnippet>
+                    }
                     className="indent"
                     key={getContractNodeId(contractInstance.getId())}
                     nodeId={getContractNodeId(contractInstance.getId())}
