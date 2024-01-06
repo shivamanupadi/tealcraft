@@ -44,8 +44,7 @@ export const updateContractSource: AsyncThunk<
   ): Promise<void> => {
     const { dispatch } = thunkAPI;
     await new ContractClient().updateSource(contractId, source);
-    const contract = await new ContractClient().get(contractId);
-    dispatch(setContractSource(contract?.source || ""));
+    dispatch(setContractSource(source));
   },
 );
 
