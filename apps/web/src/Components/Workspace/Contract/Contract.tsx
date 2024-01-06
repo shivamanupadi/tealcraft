@@ -22,13 +22,10 @@ function Contract(): ReactElement {
     <div className="contract-wrapper">
       <div className="contract-container">
         <Grid container spacing={0}>
-          <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
             <div className="contract-editor">
               <ContractEditor></ContractEditor>
             </div>
-          </Grid>
-          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-            <div className="contract-actions"></div>
           </Grid>
         </Grid>
       </div>

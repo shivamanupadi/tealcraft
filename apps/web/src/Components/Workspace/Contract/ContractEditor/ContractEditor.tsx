@@ -4,10 +4,11 @@ import { RootState, useAppDispatch } from "../../../../Redux/store";
 import { useSelector } from "react-redux";
 import { Editor, Monaco } from "@monaco-editor/react";
 import { monacoLightTheme } from "./themes/light";
-// @ts-ignore
+//@ts-ignore
 import customTypings from "!!raw-loader!@algorandfoundation/tealscript/types/global.d.ts";
 import { updateContractSource } from "../../../../Redux/portal/contractReducer";
-import { debounce } from "@mui/material";
+import { debounce, Grid } from "@mui/material";
+import ContractActions from "../ContractActions/ContractActions";
 
 function ContractEditor(): ReactElement {
   const dispatch = useAppDispatch();
@@ -46,7 +47,6 @@ function ContractEditor(): ReactElement {
 
   const handleEditorChange = debounce((value: any) => {
     if (contract) {
-      console.log(value);
       dispatch(
         updateContractSource({ contractId: contract.id, source: value }),
       );
@@ -58,28 +58,37 @@ function ContractEditor(): ReactElement {
   return (
     <div className="contract-editor-wrapper">
       <div className="contract-editor-container">
-        <div className="custom-monaco-editor">
-          <Editor
-            width={"100%"}
-            height={"100%"}
-            language="typescript"
-            theme="classic-theme"
-            defaultValue={source}
-            options={{
-              fontSize: 13,
-              minimap: {
-                enabled: false,
-              },
-              detectIndentation: false,
-              formatOnPaste: true,
-              formatOnType: true,
-              lineHeight: 1.2,
-              automaticLayout: true,
-            }}
-            onMount={editorMounted}
-            onChange={handleEditorChange}
-          ></Editor>
-        </div>
+        <Grid container spacing={0}>
+          <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
+            <div>
+              <div className="contract-editor-header">
+                <ContractActions></ContractActions>
+              </div>
+              <div className="custom-monaco-editor">
+                <Editor
+                  width={"100%"}
+                  height={"100%"}
+                  language="typescript"
+                  theme="classic-theme"
+                  defaultValue={source}
+                  options={{
+                    fontSize: 13,
+                    minimap: {
+                      enabled: false,
+                    },
+                    detectIndentation: false,
+                    formatOnPaste: true,
+                    formatOnType: true,
+                    lineHeight: 1.2,
+                    automaticLayout: true,
+                  }}
+                  onMount={editorMounted}
+                  onChange={handleEditorChange}
+                ></Editor>
+              </div>
+            </div>
+          </Grid>
+        </Grid>
       </div>
     </div>
   );

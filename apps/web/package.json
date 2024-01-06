@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@algorandfoundation/tealscript": "^0.67.3",
+    "@algorandfoundation/tealscript": "^0.68.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@monaco-editor/react": "^4.6.0",
@@ -31,9 +31,11 @@
     "raw-loader": "^4.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-json-view": "^1.21.3",
     "react-redux": "^9.0.4",
     "react-router-dom": "^6.21.1",
     "stream": "^0.0.2",
+    "ts-morph": "^20.0.0",
     "typescript": "^5.2.2",
     "web-vitals": "^2.1.4"
   },
@@ -62,6 +64,8 @@
   "devDependencies": {
     "@craco/craco": "^7.1.0",
     "craco-babel-loader": "^1.0.4",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
     "react-scripts": "^5.0.1",
     "sass": "^1.69.6",
     "webpack": "^5.89.0"

@@ -1,0 +1,19 @@
+@import "@repo/styles";
+@import "../../../../scss/constants";
+
+.contract-actions-wrapper {
+  .contract-actions-container {
+    padding: 5px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 15px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid map-get($grey-colors, "light-grey");
+    .contract-name {
+      margin-left: 10px;
+      color: map-get($grey-colors, "form-label");
+      font-size: 14px;
+    }
+  }
+}

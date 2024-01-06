@@ -43,7 +43,13 @@ export default {
           ...webpackConfig.resolve.fallback,
           stream: require.resolve("stream"),
           buffer: require.resolve("buffer"),
+          path: require.resolve("path-browserify"),
+          process: require.resolve("process/browser"),
         },
+      };
+      webpackConfig.module = {
+        ...webpackConfig.module,
+        noParse: [require.resolve("@ts-morph/common/dist/typescript.js")],
       };
       paths.appBuild = webpackConfig.output.path = path.resolve("dist");
       return webpackConfig;
