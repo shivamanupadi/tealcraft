@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../Redux/store";
 import { Project } from "ts-morph";
 import { CoreContract } from "@repo/tealcraft-sdk";
+import axios from "axios";
 
 function ContractActions(): ReactElement {
   const { contract } = useSelector((state: RootState) => state.contract);
@@ -49,10 +50,9 @@ function ContractActions(): ReactElement {
                   lsigPath,
                   compilerPath,
                 ].map(async (p) => {
-                  const response = await fetch(
-                    `https://raw.githubusercontent.com/algorandfoundation/TEALScript/${TEALSCRIPT_REF}/${p}`,
-                  );
-                  const text = await response.text();
+                  const url = `https://raw.githubusercontent.com/algorandfoundation/TEALScript/${TEALSCRIPT_REF}/${p}`;
+                  const response = await axios.get(url);
+                  const text = response.data;
                   project.createSourceFile(p, text);
                 });
 
