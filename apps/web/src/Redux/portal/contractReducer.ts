@@ -8,15 +8,21 @@ import { A_Contract, ContractClient } from "@repo/tealcraft-sdk";
 
 export type ContractState = {
   contract?: A_Contract;
+  source: string;
 };
 
-const initialState: ContractState = {};
+const initialState: ContractState = {
+  source: "",
+};
 
 export const loadContract: AsyncThunk<A_Contract | undefined, string, {}> =
   createAsyncThunk(
     "contract/loadContract",
-    async (contractId: string): Promise<A_Contract | undefined> => {
-      return await new ContractClient().get(contractId);
+    async (contractId: string, thunkAPI): Promise<A_Contract | undefined> => {
+      const { dispatch } = thunkAPI;
+      const contract = await new ContractClient().get(contractId);
+      dispatch(setContractSource(contract?.source || ""));
+      return contract;
     },
   );
 
@@ -26,14 +32,20 @@ export const updateContractSource: AsyncThunk<
   {}
 > = createAsyncThunk(
   "contract/updateContractSource",
-  async ({
-    contractId,
-    source,
-  }: {
-    contractId: string;
-    source: string;
-  }): Promise<void> => {
+  async (
+    {
+      contractId,
+      source,
+    }: {
+      contractId: string;
+      source: string;
+    },
+    thunkAPI,
+  ): Promise<void> => {
+    const { dispatch } = thunkAPI;
     await new ContractClient().updateSource(contractId, source);
+    const contract = await new ContractClient().get(contractId);
+    dispatch(setContractSource(contract?.source || ""));
   },
 );
 
@@ -42,7 +54,11 @@ export const contractSlice = createSlice({
   initialState: {
     ...initialState,
   },
-  reducers: {},
+  reducers: {
+    setContractSource: (state, action: PayloadAction<string>) => {
+      state.source = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       loadContract.fulfilled,
@@ -55,4 +71,5 @@ export const contractSlice = createSlice({
   },
 });
 
+export const { setContractSource } = contractSlice.actions;
 export default contractSlice.reducer;

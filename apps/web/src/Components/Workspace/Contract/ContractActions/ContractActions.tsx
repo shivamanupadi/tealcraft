@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import "./ContractActions.scss";
 import { Button } from "@mui/material";
 import { PlayArrow } from "@mui/icons-material";
@@ -11,8 +11,10 @@ import { CoreContract } from "@repo/tealcraft-sdk";
 import axios from "axios";
 
 function ContractActions(): ReactElement {
-  const { contract } = useSelector((state: RootState) => state.contract);
-  const [appSpec, setAppspec] = useState(null);
+  const { contract, source } = useSelector(
+    (state: RootState) => state.contract,
+  );
+
   return (
     <div className="contract-actions-wrapper">
       <div className="contract-actions-container">
@@ -42,7 +44,7 @@ function ContractActions(): ReactElement {
                 const lsigPath = `${libDir}/lsig.ts`;
                 const typesPath = "types/global.d.ts";
 
-                const TEALSCRIPT_REF = VERSION;
+                const tealScriptVersion: string = VERSION;
                 const promises = [
                   indexPath,
                   typesPath,
@@ -50,7 +52,7 @@ function ContractActions(): ReactElement {
                   lsigPath,
                   compilerPath,
                 ].map(async (p) => {
-                  const url = `https://raw.githubusercontent.com/algorandfoundation/TEALScript/${TEALSCRIPT_REF}/${p}`;
+                  const url = `https://raw.githubusercontent.com/algorandfoundation/TEALScript/${tealScriptVersion}/${p}`;
                   const response = await axios.get(url);
                   const text = response.data;
                   project.createSourceFile(p, text);
@@ -59,7 +61,7 @@ function ContractActions(): ReactElement {
                 await Promise.all(promises);
 
                 const srcPath = `examples/calc/${contract.name}.ts`;
-                project.createSourceFile(srcPath, contract.source);
+                project.createSourceFile(srcPath, source);
 
                 const compiler = new Compiler({
                   srcPath,
@@ -69,9 +71,7 @@ function ContractActions(): ReactElement {
                 });
 
                 await compiler.compile();
-                console.log(project);
                 console.log(compiler.appSpec());
-                setAppspec(compiler.appSpec());
               }
             }}
           >
