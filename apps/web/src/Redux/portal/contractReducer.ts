@@ -77,6 +77,7 @@ export const updateContractSource: AsyncThunk<
     const { dispatch } = thunkAPI;
     await new ContractClient().updateSource(contractId, source);
     dispatch(setContractSource(source));
+    dispatch(resetCompile());
   },
 );
 
@@ -87,6 +88,9 @@ export const contractSlice = createSlice({
   },
   reducers: {
     resetContract: () => initialState,
+    resetCompile: (state, action: PayloadAction<void>) => {
+      state.compile = { ...initialState.compile };
+    },
     setContractSource: (state, action: PayloadAction<string>) => {
       state.source = action.payload;
     },
@@ -134,5 +138,6 @@ export const {
   successCompile,
   failureCompile,
   startCompile,
+  resetCompile,
 } = contractSlice.actions;
 export default contractSlice.reducer;
