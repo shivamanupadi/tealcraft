@@ -8,7 +8,7 @@ import { monacoLightTheme } from "./themes/light";
 import customTypings from "!!raw-loader!@algorandfoundation/tealscript/types/global.d.ts";
 import { updateContractSource } from "../../../../Redux/portal/contractReducer";
 import { debounce, Grid } from "@mui/material";
-import ContractActions from "../ContractActions/ContractActions";
+import ContractHeader from "../ContractHeader/ContractHeader";
 
 function ContractEditor(): ReactElement {
   const dispatch = useAppDispatch();
@@ -65,7 +65,7 @@ function ContractEditor(): ReactElement {
           <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
             <div>
               <div className="contract-editor-header">
-                <ContractActions></ContractActions>
+                <ContractHeader></ContractHeader>
               </div>
               <div className="custom-monaco-editor">
                 <Editor

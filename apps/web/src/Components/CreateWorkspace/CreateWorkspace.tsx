@@ -119,7 +119,7 @@ function CreateWorkspace({
 
                             if (exists) {
                               showSnack(
-                                "WorkspaceSidebar with this name exists already",
+                                "Workspace with this name exists already",
                                 "error",
                               );
                               return;
@@ -136,7 +136,7 @@ function CreateWorkspace({
                             }
 
                             showSnack(
-                              "WorkspaceSidebar created successfully",
+                              "Workspace created successfully",
                               "success",
                             );
                           } catch (e) {

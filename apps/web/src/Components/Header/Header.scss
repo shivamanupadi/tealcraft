@@ -17,8 +17,14 @@
       }
       .logo {
         color: map-get($base-colors, "black");
-        font-size: 18px;
-        font-weight: bold;
+        font-size: 16px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        column-gap: 5px;
+        img {
+          width: 20px;
+        }
       }
     }
   }

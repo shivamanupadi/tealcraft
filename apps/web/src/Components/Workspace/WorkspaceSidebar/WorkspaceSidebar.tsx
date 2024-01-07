@@ -5,7 +5,7 @@ import {
   AddCircleOutline,
   ChevronRight,
   ExpandMore,
-  TextSnippet,
+  TextSnippetOutlined,
 } from "@mui/icons-material";
 import CreateContract from "../../CreateContract/CreateContract";
 import { useSelector } from "react-redux";
@@ -74,10 +74,10 @@ function WorkspaceSidebar(): ReactElement {
                 return (
                   <TreeItem
                     icon={
-                      <TextSnippet
+                      <TextSnippetOutlined
                         fontSize={"small"}
                         sx={{ color: GreyColors.FormValue }}
-                      ></TextSnippet>
+                      ></TextSnippetOutlined>
                     }
                     className="indent"
                     key={getContractNodeId(contractInstance.getId())}

@@ -134,7 +134,7 @@ function WorkspacePicker(): ReactElement {
                           showLoader("Deleting workspace...");
                           await new WorkspaceClient().delete(workspace.id);
                           hideLoader();
-                          showSnack("WorkspaceSidebar deleted", "success");
+                          showSnack("Workspace deleted", "success");
                           dispatch(loadWorkspaces());
                           if (workspace.id === currentWorkspace?.id) {
                             setCurrentWorkspace(null);
