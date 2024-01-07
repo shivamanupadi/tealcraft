@@ -3,11 +3,18 @@ import "./ContractHeader.scss";
 import { Button } from "@mui/material";
 import { PlayArrow } from "@mui/icons-material";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../Redux/store";
+import { RootState, useAppDispatch } from "../../../../Redux/store";
 import { CoreContract, TealCraftCompiler } from "@repo/tealcraft-sdk";
 import { useLoader } from "@repo/ui";
+import {
+  failureCompile,
+  startCompile,
+  successCompile,
+} from "../../../../Redux/portal/contractReducer";
+import { getExceptionMsg } from "@repo/utils";
 
 function ContractHeader(): ReactElement {
+  const dispatch = useAppDispatch();
   const { showLoader, hideLoader } = useLoader();
   const { contract, source } = useSelector(
     (state: RootState) => state.contract,
@@ -34,14 +41,23 @@ function ContractHeader(): ReactElement {
                 if (contract) {
                   try {
                     showLoader("Compiling contract ...");
+                    dispatch(startCompile());
                     const compiler = await new TealCraftCompiler().compile({
                       ...contract,
                       source,
                     });
-                    console.log(compiler.appSpec());
+                    const appSpec = compiler.appSpec();
+                    console.log(appSpec);
                     hideLoader();
-                  } catch (e) {
+                    dispatch(successCompile(appSpec));
+                  } catch (e: any) {
                     hideLoader();
+                    dispatch(
+                      failureCompile({
+                        msg: getExceptionMsg(e),
+                        stack: e.stack,
+                      }),
+                    );
                   }
                 }
               }}

@@ -6,13 +6,35 @@ import {
 } from "@reduxjs/toolkit";
 import { A_Contract, ContractClient } from "@repo/tealcraft-sdk";
 
+export type ContractCompileErrorPayload = {
+  msg: string;
+  stack: string;
+};
+
 export type ContractState = {
   contract?: A_Contract;
   source: string;
+  compile: {
+    success: boolean;
+    inProgress: boolean;
+    completed: boolean;
+    result: any;
+    error: ContractCompileErrorPayload;
+  };
 };
 
 const initialState: ContractState = {
   source: "",
+  compile: {
+    success: false,
+    inProgress: false,
+    result: null,
+    completed: false,
+    error: {
+      msg: "",
+      stack: "",
+    },
+  },
 };
 
 export const loadContract: AsyncThunk<
@@ -68,6 +90,33 @@ export const contractSlice = createSlice({
     setContractSource: (state, action: PayloadAction<string>) => {
       state.source = action.payload;
     },
+    startCompile: (state) => {
+      state.compile = {
+        ...initialState.compile,
+        inProgress: true,
+      };
+    },
+    successCompile: (state, action: PayloadAction<any>) => {
+      state.compile = {
+        ...state.compile,
+        inProgress: false,
+        success: true,
+        completed: true,
+        result: action.payload,
+      };
+    },
+    failureCompile: (
+      state,
+      action: PayloadAction<ContractCompileErrorPayload>,
+    ) => {
+      state.compile = {
+        ...state.compile,
+        inProgress: false,
+        success: false,
+        completed: true,
+        error: action.payload,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -79,5 +128,11 @@ export const contractSlice = createSlice({
   },
 });
 
-export const { setContractSource, resetContract } = contractSlice.actions;
+export const {
+  setContractSource,
+  resetContract,
+  successCompile,
+  failureCompile,
+  startCompile,
+} = contractSlice.actions;
 export default contractSlice.reducer;
