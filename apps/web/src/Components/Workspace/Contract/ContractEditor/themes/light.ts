@@ -335,7 +335,7 @@ export const monacoLightTheme = {
   ],
   colors: {
     "editor.foreground": "#24292e",
-    "editor.background": "#ffffff",
+    "editor.background": "#fbfcfd",
     "editor.selectionBackground": "#c8c8fa",
     "editor.inactiveSelectionBackground": "#fafbfc",
     "editor.lineHighlightBackground": "#fafbfc",

@@ -12,6 +12,7 @@ import {
   successCompile,
 } from "../../../../Redux/portal/contractReducer";
 import { getExceptionMsg } from "@repo/utils";
+import { theme } from "@repo/theme";
 
 function ContractHeader(): ReactElement {
   const dispatch = useAppDispatch();
@@ -37,6 +38,7 @@ function ContractHeader(): ReactElement {
               color={"secondary"}
               size={"small"}
               className="small-button"
+              sx={{ background: theme.palette.common.white }}
               onClick={async () => {
                 if (contract) {
                   try {
