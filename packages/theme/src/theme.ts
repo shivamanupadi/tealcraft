@@ -47,6 +47,12 @@ export const theme = createTheme({
           ":hover": {
             boxShadow: "none",
           },
+          "&.small-button": {
+            padding: "0px 5px",
+            ".MuiButton-startIcon": {
+              margin: "0px",
+            },
+          },
         },
         contained: {
           "&.primary-light-button": {

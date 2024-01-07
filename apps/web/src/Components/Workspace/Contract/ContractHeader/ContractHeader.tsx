@@ -5,8 +5,10 @@ import { PlayArrow } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../Redux/store";
 import { CoreContract, TealCraftCompiler } from "@repo/tealcraft-sdk";
+import { useLoader } from "@repo/ui";
 
 function ContractHeader(): ReactElement {
+  const { showLoader, hideLoader } = useLoader();
   const { contract, source } = useSelector(
     (state: RootState) => state.contract,
   );
@@ -23,21 +25,28 @@ function ContractHeader(): ReactElement {
           </div>
           <div>
             <Button
-              startIcon={<PlayArrow></PlayArrow>}
+              startIcon={<PlayArrow fontSize={"small"}></PlayArrow>}
               variant={"outlined"}
               color={"secondary"}
               size={"small"}
+              className="small-button"
               onClick={async () => {
                 if (contract) {
-                  const compiler = await new TealCraftCompiler().compile({
-                    ...contract,
-                    source,
-                  });
-                  console.log(compiler.appSpec());
+                  try {
+                    showLoader("Compiling contract ...");
+                    const compiler = await new TealCraftCompiler().compile({
+                      ...contract,
+                      source,
+                    });
+                    console.log(compiler.appSpec());
+                    hideLoader();
+                  } catch (e) {
+                    hideLoader();
+                  }
                 }
               }}
             >
-              Run
+              Compile
             </Button>
           </div>
         </div>
