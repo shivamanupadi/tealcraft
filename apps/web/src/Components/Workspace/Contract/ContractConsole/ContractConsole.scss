@@ -3,8 +3,6 @@
 
 .contract-console-wrapper {
   .contract-console-container {
-    height: calc(100vh - $header-height);
-    overflow-y: auto;
     border-left: 1px solid map-get($grey-colors, "light-grey");
     .contract-console-header {
       border-bottom: 1px solid map-get($grey-colors, "light-grey");
@@ -13,10 +11,18 @@
       padding: 5px 25px;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
     }
     .contract-console-body {
       padding: 20px;
+      height: calc(100vh - $header-height - $contract-header-height - 50px);
+      overflow-y: auto;
+      .compile-result {
+        .app-spec {
+          font-size: 13px;
+          word-break: break-all;
+        }
+      }
       .compile-error {
         .error {
           margin: 10px 0;

@@ -18,7 +18,9 @@ export type ContractState = {
     success: boolean;
     inProgress: boolean;
     completed: boolean;
-    result: any;
+    result: {
+      appSpec: any;
+    };
     error: ContractCompileErrorPayload;
   };
 };
@@ -28,7 +30,9 @@ const initialState: ContractState = {
   compile: {
     success: false,
     inProgress: false,
-    result: null,
+    result: {
+      appSpec: null,
+    },
     completed: false,
     error: {
       msg: "",
@@ -106,7 +110,9 @@ export const contractSlice = createSlice({
         inProgress: false,
         success: true,
         completed: true,
-        result: action.payload,
+        result: {
+          appSpec: action.payload,
+        },
       };
     },
     failureCompile: (
