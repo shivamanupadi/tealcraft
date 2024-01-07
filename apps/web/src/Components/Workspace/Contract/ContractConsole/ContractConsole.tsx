@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../Redux/store";
 import { theme } from "@repo/theme";
 import { LoadingTile } from "@repo/ui";
+import { Alert } from "@mui/material";
 
 function ContractConsole(): ReactElement {
   const { compile } = useSelector((state: RootState) => state.contract);
@@ -18,15 +19,43 @@ function ContractConsole(): ReactElement {
           <div>
             {completed ? (
               <div>
+                <div className="compile-status">
+                  {success ? (
+                    <Alert
+                      className="mini-alert secondary-light-alert"
+                      color="success"
+                      icon={false}
+                    >
+                      Compiled successfully
+                    </Alert>
+                  ) : (
+                    <Alert className="mini-alert" color="error" icon={false}>
+                      Compilation failed
+                    </Alert>
+                  )}
+                </div>
                 {success ? (
                   ""
                 ) : (
-                  <div
-                    className="compile-error"
-                    style={{ color: theme.palette.warning.dark }}
-                  >
-                    <div>{compile.error.msg}</div>
-                    <div>{compile.error.stack}</div>
+                  <div className="compile-error">
+                    <div className="error">
+                      <div
+                        className="title"
+                        style={{ color: theme.palette.warning.dark }}
+                      >
+                        Message
+                      </div>
+                      <div className="content">{compile.error.msg}</div>
+                    </div>
+                    <div className="error">
+                      <div
+                        className="title"
+                        style={{ color: theme.palette.warning.dark }}
+                      >
+                        Call stack
+                      </div>
+                      <div className="content">{compile.error.stack}</div>
+                    </div>
                   </div>
                 )}
               </div>
