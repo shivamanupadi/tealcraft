@@ -3,12 +3,12 @@
 
 .contract-editor-wrapper {
   .contract-editor-container {
-    height: calc(100vh - $header-height);
-    overflow-y: auto;
     .custom-monaco-editor {
-      height: calc(100vh - $header-height);
+      height: calc(100vh - $header-height - $contract-header-height - 40px);
+      background: map-get($grey-colors, "very-light-grey");
       * {
         font-family: JetBrainsMono, sans-serif !important;
+        background: map-get($grey-colors, "very-light-grey");
       }
     }
   }

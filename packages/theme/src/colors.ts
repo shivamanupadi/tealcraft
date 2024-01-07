@@ -4,6 +4,7 @@ export enum BaseColors {
 }
 
 export enum GreyColors {
+  VeryLightGrey = "#FBFCFD",
   LightGrey = "#f2f2f2",
   DarkGrey = "#666666",
   FormLabel = "#808285",

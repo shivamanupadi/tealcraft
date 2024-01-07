@@ -20,9 +20,9 @@
     buffer "^6.0.3"
 
 "@algorandfoundation/tealscript@^0.68.0":
-  version "0.68.0"
-  resolved "https://registry.yarnpkg.com/@algorandfoundation/tealscript/-/tealscript-0.68.0.tgz#f6169d90261920f26c9b2274792d9d36db7d215d"
-  integrity sha512-iY5nZURJ/VUEiKtphSg5Wpm7FqijokBUb/XVfH/qRZrYyc6d61L7brue0Igg9bAp0YGXlB+pHIrItyoVj75lcQ==
+  version "0.68.2"
+  resolved "https://registry.yarnpkg.com/@algorandfoundation/tealscript/-/tealscript-0.68.2.tgz#3334d3126cff61f1c182cbb7e9d03d038e9f92f1"
+  integrity sha512-0+0aHPx4j1RyIW1Uhjve6zS/+keMcz4hYzFb+nNhvZrL6rZJSlKvV9Q0uDaZUI+rhqnTzNEsLmVpnQW3t6H3Uw==
   dependencies:
     "@algorandfoundation/algokit-utils" "5.0.1"
     "@microsoft/tsdoc" "^0.14.2"

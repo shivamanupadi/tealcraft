@@ -9,6 +9,7 @@ import customTypings from "!!raw-loader!@algorandfoundation/tealscript/types/glo
 import { updateContractSource } from "../../../../Redux/portal/contractReducer";
 import { debounce, Grid } from "@mui/material";
 import ContractHeader from "../ContractHeader/ContractHeader";
+import ContractConsole from "../ContractConsole/ContractConsole";
 
 function ContractEditor(): ReactElement {
   const dispatch = useAppDispatch();
@@ -90,6 +91,9 @@ function ContractEditor(): ReactElement {
                 ></Editor>
               </div>
             </div>
+          </Grid>
+          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+            <ContractConsole></ContractConsole>
           </Grid>
         </Grid>
       </div>

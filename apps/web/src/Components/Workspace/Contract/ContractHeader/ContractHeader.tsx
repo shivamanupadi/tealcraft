@@ -21,7 +21,7 @@ function ContractHeader(): ReactElement {
         </div>
         <div className="contract-actions">
           <div className="compiler">
-            Compiler version : {new TealCraftCompiler().getTealScriptVersion()}
+            compiler : v{new TealCraftCompiler().getTealScriptVersion()}
           </div>
           <div>
             <Button
