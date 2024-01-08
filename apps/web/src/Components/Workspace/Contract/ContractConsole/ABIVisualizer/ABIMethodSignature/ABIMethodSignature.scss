@@ -1,0 +1,32 @@
+@import "@repo/styles";
+
+.abi-method-signature-wrapper {
+  .abi-method-signature-container {
+    .method-signature {
+      .method-sig-section {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        &:last-child {
+          border-bottom: none;
+          padding-bottom: 0;
+        }
+        .method-sig-section-key {
+          font-size: 14px;
+          color: map-get($grey-colors, "form-value");
+          margin-bottom: 5px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          column-gap: 10px;
+        }
+        .method-sig-section-value {
+          font-size: 14px;
+          color: map-get($grey-colors, "form-label");
+          &.break {
+            word-break: break-word;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+@import "@repo/styles";
+
+.abi-method-wrapper {
+  .abi-method-container {
+    .abi-method {
+      margin-top: 10px;
+      border: 1px solid map-get($grey-colors, "light-grey");
+      border-radius: 5px;
+      .accordion {
+        box-shadow: none;
+      }
+      .method-header {
+        .method-name {
+          font-size: 14px;
+        }
+      }
+      .method-body {
+        .method-title {
+          font-weight: bold;
+          margin: 15px 0;
+        }
+        .method-tabs {
+          border-bottom: 1px solid map-get($grey-colors, "light-grey");
+          margin-bottom: 20px;
+        }
+
+        .method-arguments {
+          .arguments-title {
+            font-size: 14px;
+            margin-top: 20px;
+            color: map-get($grey-colors, "form-value");
+          }
+          .arguments-value {
+            margin-top: 10px;
+            .empty {
+              font-size: 13px;
+              color: map-get($grey-colors, "form-label");
+            }
+          }
+        }
+      }
+    }
+  }
+}

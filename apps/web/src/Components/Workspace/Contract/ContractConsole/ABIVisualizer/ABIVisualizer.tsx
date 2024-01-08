@@ -1,14 +1,15 @@
-import "./AbiVisualizer.scss";
+import "./ABIVisualizer.scss";
 import { ReactElement } from "react";
 import { ABIContract, ABIContractParams } from "algosdk";
 import { downloadJson } from "@repo/utils";
 import { Button } from "@mui/material";
+import ABIMethod from "./ABIMethod/ABIMethod";
 
 type AbiVisualizerProps = {
   abi: ABIContractParams;
 };
 
-function AbiVisualizer({
+function ABIVisualizer({
   abi = { methods: [], name: "" },
 }: AbiVisualizerProps): ReactElement {
   const abiInstance = new ABIContract(abi);
@@ -48,7 +49,11 @@ function AbiVisualizer({
                 </div>
                 <div className="abi-methods-body">
                   {abiInstance.methods.map((method, index) => {
-                    return <div key={"abi-method-" + index}>{method.name}</div>;
+                    return (
+                      <div key={"abi-method-" + index}>
+                        <ABIMethod method={method.toJSON()}></ABIMethod>
+                      </div>
+                    );
                   })}
                 </div>
               </div>
@@ -60,4 +65,4 @@ function AbiVisualizer({
   );
 }
 
-export default AbiVisualizer;
+export default ABIVisualizer;
