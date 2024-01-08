@@ -15,16 +15,25 @@ import {
 import { ExpandMore } from "@mui/icons-material";
 import { ABIMethodParams, ABIMethod as ABIMethodSDK } from "algosdk";
 import ABIMethodSignature from "../ABIMethodSignature/ABIMethodSignature";
+import { GreyColors, theme } from "@repo/theme";
 
 export const tableStyles = {
   width: "100%",
   borderRadius: "5px",
   boxShadow: "none !important",
+  border: `1px solid ${theme.palette.grey[100]}`,
   th: {
-    fontSize: "16px",
+    fontSize: "14px",
+    background: theme.palette.grey[100],
+    color: GreyColors.FormValue,
+  },
+  td: {
+    color: GreyColors.FormLabel,
   },
   "th, td": {
-    borderColor: "#E6E7E8",
+    fontSize: "14px",
+    padding: "5px 10px",
+    borderColor: theme.palette.grey[100],
   },
 };
 
