@@ -1,0 +1,14 @@
+@import "@repo/styles";
+@import "../../../../../scss/constants";
+
+.contract-app-spec-wrapper {
+  .contract-app-spec-container {
+    .app-spec {
+      font-size: 13px;
+      word-break: break-all;
+      background: map-get($grey-colors, "very-light-grey");
+      padding: 20px;
+      border-radius: 5px;
+    }
+  }
+}

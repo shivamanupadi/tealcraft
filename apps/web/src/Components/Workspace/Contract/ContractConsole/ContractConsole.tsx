@@ -1,15 +1,17 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import "./ContractConsole.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../Redux/store";
 import { theme } from "@repo/theme";
 import { LoadingTile } from "@repo/ui";
-import { Alert } from "@mui/material";
-import ReactJson from "react-json-view";
+import { Alert, Tab, Tabs } from "@mui/material";
+import ContractAppSpec from "./ContractAppSpec/ContractAppSpec";
 
 function ContractConsole(): ReactElement {
   const { compile } = useSelector((state: RootState) => state.contract);
   const { success, completed, inProgress, result } = compile;
+
+  const [tab, setTab] = useState<string>("abi");
 
   return (
     <div className="contract-console-wrapper">
@@ -45,20 +47,51 @@ function ContractConsole(): ReactElement {
               <div>
                 {success ? (
                   <div className="compile-result">
-                    {result.appSpec ? (
-                      <div className="app-spec">
-                        <ReactJson
-                          src={result.appSpec}
-                          name={false}
-                          displayObjectSize={false}
-                          displayDataTypes={false}
-                          enableClipboard={false}
-                          iconStyle={"square"}
-                        />
-                      </div>
-                    ) : (
-                      ""
-                    )}
+                    <Tabs
+                      value={tab}
+                      className="console-tabs"
+                      orientation="horizontal"
+                      variant={"standard"}
+                    >
+                      <Tab
+                        label="ABI"
+                        value="abi"
+                        onClick={() => {
+                          setTab("abi");
+                        }}
+                      />
+                      <Tab
+                        label="App spec"
+                        value="app-spec"
+                        onClick={() => {
+                          setTab("app-spec");
+                        }}
+                      />
+                      <Tab
+                        label="TEAL"
+                        value="teal"
+                        onClick={() => {
+                          setTab("teal");
+                        }}
+                      />
+                      <Tab
+                        label="State schema"
+                        value="state-schema"
+                        onClick={() => {
+                          setTab("state-schema");
+                        }}
+                      />
+                    </Tabs>
+
+                    <div className="tab-content">
+                      {tab === "app-spec" ? (
+                        <ContractAppSpec
+                          appSpec={result.appSpec}
+                        ></ContractAppSpec>
+                      ) : (
+                        ""
+                      )}
+                    </div>
                   </div>
                 ) : (
                   <div className="compile-error">

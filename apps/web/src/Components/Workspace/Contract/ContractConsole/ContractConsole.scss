@@ -14,16 +14,19 @@
       justify-content: space-between;
     }
     .contract-console-body {
-      padding: 20px;
       height: calc(100vh - $header-height - $contract-header-height - 50px);
       overflow-y: auto;
       .compile-result {
-        .app-spec {
-          font-size: 13px;
-          word-break: break-all;
+        .console-tabs {
+          margin-bottom: 20px;
+          border-bottom: 1px solid map-get($grey-colors, "light-grey");
+        }
+        .tab-content {
+          margin: 20px;
         }
       }
       .compile-error {
+        padding: 20px;
         .error {
           margin: 10px 0;
           font-size: 14px;
