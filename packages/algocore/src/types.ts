@@ -1,4 +1,4 @@
-import { BoxReference } from "algosdk";
+import { ABIContractParams, BoxReference } from "algosdk";
 
 export type A_AccountInformation = {
   address: string;
@@ -283,15 +283,76 @@ export type A_SigProofs = {
 };
 
 export type A_SearchTransaction_State_Proof_Payload = {
-  message: Message;
+  message: A_Message;
   "state-proof": A_StateProof;
   "state-proof-type": number;
 };
 
-export type Message = {
+export type A_Message = {
   "block-headers-commitment": string;
   "first-attested-round": number;
   "latest-attested-round": number;
   "ln-proven-weight": number;
   "voters-commitment": string;
+};
+
+export interface A_ApplicationSpecParams {
+  source: {
+    approval: string;
+    clear: string;
+  };
+  contract: ABIContractParams;
+  state: A_ApplicationSpecState;
+  schema: A_ApplicationSpecSchema;
+  hints: A_ApplicationSpecHints;
+}
+
+export type A_ApplicationSpecState = {
+  local: A_ApplicationSpecStateStorage;
+  global: A_ApplicationSpecStateStorage;
+};
+
+export type A_ApplicationSpecStateStorage = {
+  num_byte_slices: number;
+  num_uints: number;
+};
+
+export type A_ApplicationSpecSchema = {
+  local: A_ApplicationSpecSchemaValue;
+  global: A_ApplicationSpecSchemaValue;
+};
+
+export type A_ApplicationSpecSchemaValue = {
+  declared: Record<string, A_ApplicationSpecSchemaDetails>;
+  reserved: Record<string, A_ApplicationSpecSchemaDetails>;
+};
+
+export type A_ApplicationSpecSchemaDetails = {
+  type: string;
+  key: string;
+  descr: string;
+};
+
+export type A_ApplicationSpecHints = Record<string, A_ApplicationSpecHint>;
+
+export type A_ApplicationSpecHint = {
+  default_arguments: A_ApplicationSpecHintDefaultArguments;
+  call_config: {
+    no_op: string;
+  };
+};
+
+export type A_ApplicationSpecHintDefaultArguments = Record<
+  string,
+  A_ApplicationSpecHintDefaultArgument
+>;
+
+export type A_ApplicationSpecHintDefaultArgument = {
+  source: string;
+  data: string;
+};
+
+export type A_ApplicationSpecHintDefaultArgumentValue = {
+  name: string;
+  value: string;
 };

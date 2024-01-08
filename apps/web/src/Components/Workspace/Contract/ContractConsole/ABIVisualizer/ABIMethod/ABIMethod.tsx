@@ -17,7 +17,7 @@ import { ABIMethodParams, ABIMethod as ABIMethodSDK } from "algosdk";
 import ABIMethodSignature from "../ABIMethodSignature/ABIMethodSignature";
 import { GreyColors, theme } from "@repo/theme";
 
-export const tableStyles = {
+const tableStyles = {
   width: "100%",
   borderRadius: "5px",
   boxShadow: "none !important",

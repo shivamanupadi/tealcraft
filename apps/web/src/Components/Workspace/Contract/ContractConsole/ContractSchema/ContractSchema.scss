@@ -1,0 +1,20 @@
+@import "@repo/styles";
+
+.contract-schema-wrapper {
+  .contract-schema-container {
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid map-get($grey-colors, "light-grey");
+    .contract-schema-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      column-gap: 15px;
+      margin-bottom: 10px;
+      .title {
+        font-size: 14px;
+        color: map-get($grey-colors, "form-value");
+      }
+    }
+  }
+}

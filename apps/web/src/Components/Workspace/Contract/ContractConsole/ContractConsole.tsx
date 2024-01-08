@@ -8,6 +8,7 @@ import { Tab, Tabs } from "@mui/material";
 import ContractAppSpec from "./ContractAppSpec/ContractAppSpec";
 import { CheckCircle, Error } from "@mui/icons-material";
 import ABIVisualizer from "./ABIVisualizer/ABIVisualizer";
+import ContractSchema from "./ContractSchema/ContractSchema";
 
 function ContractConsole(): ReactElement {
   const { compile } = useSelector((state: RootState) => state.contract);
@@ -69,10 +70,10 @@ function ContractConsole(): ReactElement {
                         }}
                       />
                       <Tab
-                        label="State schema"
-                        value="state-schema"
+                        label="Schema"
+                        value="schema"
                         onClick={() => {
-                          setTab("state-schema");
+                          setTab("schema");
                         }}
                       />
                     </Tabs>
@@ -86,10 +87,31 @@ function ContractConsole(): ReactElement {
                         ""
                       )}
 
-                      {tab === "abi" ? (
+                      {tab === "abi" && result.appSpec ? (
                         <ABIVisualizer
-                          abi={result.appSpec.contract}
+                          abi={result.appSpec?.contract}
                         ></ABIVisualizer>
+                      ) : (
+                        ""
+                      )}
+
+                      {tab === "schema" && result.appSpec ? (
+                        <div>
+                          <div>
+                            <ContractSchema
+                              title="Global state"
+                              schema={result.appSpec.schema.global}
+                              storage={result.appSpec.state.global}
+                            ></ContractSchema>
+                          </div>
+                          <div style={{ marginTop: "20px" }}>
+                            <ContractSchema
+                              title="Local state"
+                              schema={result.appSpec.schema.local}
+                              storage={result.appSpec.state.local}
+                            ></ContractSchema>
+                          </div>
+                        </div>
                       ) : (
                         ""
                       )}
