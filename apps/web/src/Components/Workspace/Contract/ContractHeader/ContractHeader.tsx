@@ -11,8 +11,10 @@ import {
   startCompile,
   successCompile,
 } from "../../../../Redux/portal/contractReducer";
-import { getExceptionMsg } from "@repo/utils";
+import { downloadFile, getExceptionMsg } from "@repo/utils";
 import { theme } from "@repo/theme";
+
+const ActionButtonSx = { background: theme.palette.common.white };
 
 function ContractHeader(): ReactElement {
   const dispatch = useAppDispatch();
@@ -33,12 +35,31 @@ function ContractHeader(): ReactElement {
           </div>
           <div>
             <Button
+              variant={"outlined"}
+              color={"primary"}
+              size={"small"}
+              className="small-button"
+              sx={ActionButtonSx}
+              onClick={async () => {
+                if (contract) {
+                  downloadFile(
+                    source,
+                    new CoreContract(contract).getNameWithExtension(),
+                  );
+                }
+              }}
+            >
+              Download
+            </Button>
+          </div>
+          <div>
+            <Button
               startIcon={<PlayArrow fontSize={"small"}></PlayArrow>}
               variant={"outlined"}
               color={"secondary"}
               size={"small"}
               className="small-button"
-              sx={{ background: theme.palette.common.white }}
+              sx={ActionButtonSx}
               onClick={async () => {
                 if (contract) {
                   try {

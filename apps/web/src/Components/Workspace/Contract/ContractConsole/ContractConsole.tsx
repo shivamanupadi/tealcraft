@@ -4,8 +4,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../Redux/store";
 import { theme } from "@repo/theme";
 import { LoadingTile } from "@repo/ui";
-import { Alert, Tab, Tabs } from "@mui/material";
+import { Tab, Tabs } from "@mui/material";
 import ContractAppSpec from "./ContractAppSpec/ContractAppSpec";
+import { CheckCircle, Error } from "@mui/icons-material";
 
 function ContractConsole(): ReactElement {
   const { compile } = useSelector((state: RootState) => state.contract);
@@ -22,17 +23,9 @@ function ContractConsole(): ReactElement {
             {completed ? (
               <div className="compile-status">
                 {success ? (
-                  <Alert
-                    className="mini-alert secondary-light-alert"
-                    color="success"
-                    icon={false}
-                  >
-                    success
-                  </Alert>
+                  <CheckCircle color={"secondary"}></CheckCircle>
                 ) : (
-                  <Alert className="mini-alert" color="error" icon={false}>
-                    failed
-                  </Alert>
+                  <Error color={"error"}></Error>
                 )}
               </div>
             ) : (
