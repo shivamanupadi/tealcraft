@@ -3,6 +3,12 @@
 
 .contract-app-spec-wrapper {
   .contract-app-spec-container {
+    .spec-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      column-gap: 15px;
+    }
     .app-spec {
       font-size: 13px;
       word-break: break-all;
