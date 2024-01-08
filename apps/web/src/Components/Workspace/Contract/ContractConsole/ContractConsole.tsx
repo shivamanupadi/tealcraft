@@ -7,6 +7,7 @@ import { LoadingTile } from "@repo/ui";
 import { Tab, Tabs } from "@mui/material";
 import ContractAppSpec from "./ContractAppSpec/ContractAppSpec";
 import { CheckCircle, Error } from "@mui/icons-material";
+import AbiVisualizer from "./AbiVisualizer/AbiVisualizer";
 
 function ContractConsole(): ReactElement {
   const { compile } = useSelector((state: RootState) => state.contract);
@@ -81,6 +82,14 @@ function ContractConsole(): ReactElement {
                         <ContractAppSpec
                           appSpec={result.appSpec}
                         ></ContractAppSpec>
+                      ) : (
+                        ""
+                      )}
+
+                      {tab === "abi" ? (
+                        <AbiVisualizer
+                          abi={result.appSpec.contract}
+                        ></AbiVisualizer>
                       ) : (
                         ""
                       )}

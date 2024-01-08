@@ -1,0 +1,36 @@
+@import "@repo/styles";
+
+.abi-visualizer-wrapper {
+  .abi-visualizer-container {
+    .abi-visualizer-body {
+      .abi {
+        .abi-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          column-gap: 15px;
+          padding-bottom: 10px;
+          margin-bottom: 10px;
+          border-bottom: 1px solid map-get($grey-colors, "light-grey");
+          .abi-name {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: map-get($grey-colors, "form-value");
+          }
+          .abi-desc {
+            font-size: 13px;
+            color: map-get($grey-colors, "form-label");
+          }
+        }
+        .abi-body {
+          .abi-methods-container {
+            .abi-methods-header {
+              font-size: 14px;
+              color: map-get($grey-colors, "form-value");
+            }
+          }
+        }
+      }
+    }
+  }
+}

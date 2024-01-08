@@ -92,7 +92,7 @@ export const contractSlice = createSlice({
   },
   reducers: {
     resetContract: () => initialState,
-    resetCompile: (state, action: PayloadAction<void>) => {
+    resetCompile: (state) => {
       state.compile = { ...initialState.compile };
     },
     setContractSource: (state, action: PayloadAction<string>) => {
