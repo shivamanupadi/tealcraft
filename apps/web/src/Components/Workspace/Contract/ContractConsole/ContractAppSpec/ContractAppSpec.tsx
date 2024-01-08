@@ -12,20 +12,23 @@ function ContractAppSpec({ appSpec }: ContractAppSpecProps): ReactElement {
   return (
     <div className="contract-app-spec-wrapper">
       <div className="contract-app-spec-container">
-        <div className="spec-actions">
-          <Button
-            color={"primary"}
-            onClick={() => {
-              downloadJson(appSpec, "application.json");
-            }}
-            variant={"contained"}
-            className="small-button"
-            size={"small"}
-          >
-            Download
-          </Button>
+        <div className="app-spec-header">
+          <div className="name">Application.json</div>
+          <div>
+            <Button
+              color={"primary"}
+              onClick={() => {
+                downloadJson(appSpec, "application.json");
+              }}
+              variant={"outlined"}
+              className="small-button"
+              size={"small"}
+            >
+              Download
+            </Button>
+          </div>
         </div>
-        <div className="app-spec">
+        <div className="app-spec-body">
           <ReactJson
             src={appSpec}
             name={false}

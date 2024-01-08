@@ -4,7 +4,7 @@ export function getExceptionMsg(e: any): string {
   return e?.response?.data?.message || e?.message;
 }
 
-export function downloadJson(data: JSON, fileName: string) {
+export function downloadJson(data: any, fileName: string) {
   const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
     JSON.stringify(data),
   )}`;

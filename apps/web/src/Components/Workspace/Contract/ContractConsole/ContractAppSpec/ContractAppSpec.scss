@@ -3,19 +3,23 @@
 
 .contract-app-spec-wrapper {
   .contract-app-spec-container {
-    .spec-actions {
+    .app-spec-header {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: center;
       column-gap: 15px;
+      padding-bottom: 10px;
       margin-bottom: 10px;
+      border-bottom: 1px solid map-get($grey-colors, "light-grey");
+      .name {
+        font-size: 14px;
+        color: map-get($grey-colors, "form-value");
+      }
     }
-    .app-spec {
+    .app-spec-body {
       font-size: 13px;
       word-break: break-all;
-      background: map-get($grey-colors, "very-light-grey");
-      padding: 20px;
-      border-radius: 5px;
+      margin-top: 20px;
     }
   }
 }

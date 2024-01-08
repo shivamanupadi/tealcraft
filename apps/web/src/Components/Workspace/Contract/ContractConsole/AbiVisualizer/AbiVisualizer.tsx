@@ -1,6 +1,8 @@
 import "./AbiVisualizer.scss";
 import { ReactElement } from "react";
 import { ABIContract, ABIContractParams } from "algosdk";
+import { downloadJson } from "@repo/utils";
+import { Button } from "@mui/material";
 
 type AbiVisualizerProps = {
   abi: ABIContractParams;
@@ -17,13 +19,26 @@ function AbiVisualizer({
           <div className="abi">
             <div className="abi-header">
               <div>
-                <div className="abi-name">{abiInstance.name}</div>
+                <div className="abi-name">Name: {abiInstance.name}</div>
                 <div className="abi-desc">
                   Description:{" "}
                   {abiInstance.description
                     ? abiInstance.description
                     : "--Empty--"}
                 </div>
+              </div>
+              <div>
+                <Button
+                  color={"primary"}
+                  onClick={() => {
+                    downloadJson(abiInstance.toJSON(), "abi.json");
+                  }}
+                  variant={"outlined"}
+                  className="small-button"
+                  size={"small"}
+                >
+                  Download
+                </Button>
               </div>
             </div>
             <div className="abi-body">
