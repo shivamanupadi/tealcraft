@@ -45,6 +45,7 @@ export default {
           buffer: require.resolve("buffer"),
           path: require.resolve("path-browserify"),
           process: require.resolve("process/browser"),
+          perf_hooks: false,
         },
       };
       webpackConfig.module = {
