@@ -1,4 +1,5 @@
 import { saveAs } from "file-saver";
+import copy from "copy-to-clipboard";
 
 export function getExceptionMsg(e: any): string {
   return e?.response?.data?.message || e?.message;
@@ -17,4 +18,12 @@ export function downloadJson(data: any, fileName: string) {
 export function downloadFile(content: string, filename: string) {
   const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
   saveAs(blob, filename);
+}
+
+export function copyContent(ev: any, content: string) {
+  copy(content, {
+    message: "Press #{key} to copy",
+  });
+  ev.preventDefault();
+  ev.stopPropagation();
 }

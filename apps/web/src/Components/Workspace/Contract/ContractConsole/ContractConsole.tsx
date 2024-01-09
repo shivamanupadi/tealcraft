@@ -9,6 +9,7 @@ import ContractAppSpec from "./ContractAppSpec/ContractAppSpec";
 import { CheckCircle, Error } from "@mui/icons-material";
 import ABIVisualizer from "./ABIVisualizer/ABIVisualizer";
 import ContractSchema from "./ContractSchema/ContractSchema";
+import ContractPrograms from "./ContractPrograms/ContractPrograms";
 
 function ContractConsole(): ReactElement {
   const { compile } = useSelector((state: RootState) => state.contract);
@@ -79,7 +80,7 @@ function ContractConsole(): ReactElement {
                     </Tabs>
 
                     <div className="tab-content">
-                      {tab === "app-spec" ? (
+                      {tab === "app-spec" && result.appSpec ? (
                         <ContractAppSpec
                           appSpec={result.appSpec}
                         ></ContractAppSpec>
@@ -91,6 +92,16 @@ function ContractConsole(): ReactElement {
                         <ABIVisualizer
                           abi={result.appSpec?.contract}
                         ></ABIVisualizer>
+                      ) : (
+                        ""
+                      )}
+
+                      {tab === "teal" && result.appSpec ? (
+                        <div>
+                          <ContractPrograms
+                            appSpec={result.appSpec}
+                          ></ContractPrograms>
+                        </div>
                       ) : (
                         ""
                       )}

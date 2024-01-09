@@ -5,3 +5,9 @@ export enum TEXT_ENCODING {
   HEX = "hex",
   JSON = "json",
 }
+
+export enum PROGRAM_ENCODING {
+  BASE64 = "base64",
+  TEAL = "teal",
+  TEXT = "text",
+}

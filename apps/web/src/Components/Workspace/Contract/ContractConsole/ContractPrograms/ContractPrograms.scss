@@ -1,0 +1,11 @@
+@import "@repo/styles";
+
+.contract-programs-wrapper {
+  .contract-programs-container {
+    .programs-tabs {
+      margin-bottom: 20px;
+      margin-top: -20px;
+      border-bottom: 1px solid map-get($grey-colors, "light-grey");
+    }
+  }
+}

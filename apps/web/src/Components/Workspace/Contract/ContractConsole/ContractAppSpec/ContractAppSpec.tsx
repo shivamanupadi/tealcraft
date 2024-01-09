@@ -3,9 +3,10 @@ import "./ContractAppSpec.scss";
 import ReactJson from "react-json-view";
 import { Button } from "@mui/material";
 import { downloadJson } from "@repo/utils";
+import { A_ApplicationSpecParams } from "@repo/algocore";
 
 export type ContractAppSpecProps = {
-  appSpec: any;
+  appSpec: A_ApplicationSpecParams;
 };
 
 function ContractAppSpec({ appSpec }: ContractAppSpecProps): ReactElement {
