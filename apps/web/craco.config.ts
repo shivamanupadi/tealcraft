@@ -1,6 +1,7 @@
 import webpack from "webpack";
 import path from "path";
 import { realpathSync } from "node:fs";
+import ESLintWebpackPlugin from "eslint-webpack-plugin";
 
 const appDirectory = realpathSync(process.cwd());
 const resolveApp = (relativePath: string) =>
@@ -28,6 +29,13 @@ export default {
     configure: (webpackConfig: any, { env, paths }: any) => {
       webpackConfig.plugins = [
         ...webpackConfig.plugins,
+        new ESLintWebpackPlugin({
+          extensions: ["ts", "tsx", "js", "jsx"],
+          exclude: ["node_modules"],
+          eslintPath: require.resolve("eslint"),
+          context: ".",
+          cache: true,
+        }),
         new webpack.ProvidePlugin({
           Buffer: ["buffer", "Buffer"],
         }),
