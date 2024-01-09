@@ -15,6 +15,9 @@
     "rimraf": "^5.0.5",
     "turbo": "latest"
   },
+  "resolutions": {
+    "strip-ansi": "6.0.0"
+  },
   "engines": {
     "node": ">=18"
   },
