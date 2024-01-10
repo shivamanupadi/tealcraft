@@ -70,6 +70,9 @@ function ContractHeader(): ReactElement {
                       source,
                     });
                     const appSpec = compiler.appSpec();
+                    console.log(compiler.programVersion);
+                    console.log(compiler.srcPath);
+                    console.log(compiler);
                     hideLoader();
                     dispatch(successCompile(appSpec));
                   } catch (e: any) {

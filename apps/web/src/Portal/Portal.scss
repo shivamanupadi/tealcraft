@@ -2,5 +2,17 @@
 
 .portal-wrapper {
   .portal-container {
+    .no-workspaces {
+      text-align: center;
+      img {
+        margin-top: 100px;
+        width: 200px;
+      }
+      .info {
+        margin-bottom: 20px;
+        color: map-get($grey-colors, "form-label");
+        line-height: 1.3;
+      }
+    }
   }
 }

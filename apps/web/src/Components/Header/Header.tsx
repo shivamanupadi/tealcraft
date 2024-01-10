@@ -3,8 +3,11 @@ import "./Header.scss";
 import logo from "../../assets/images/logo.png";
 
 import WorkspacePicker from "../WorkspacePicker/WorkspacePicker";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Redux/store";
 
 function Header(): ReactElement {
+  const { workspaces } = useSelector((state: RootState) => state.portal);
   return (
     <div className="header-wrapper">
       <div className="header-container">
@@ -18,9 +21,13 @@ function Header(): ReactElement {
           </div>
           <div className="greyed">/</div>
           <div className="greyed">Workspaces</div>
-          <div>
-            <WorkspacePicker></WorkspacePicker>
-          </div>
+          {workspaces.length > 0 ? (
+            <div>
+              <WorkspacePicker></WorkspacePicker>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>
