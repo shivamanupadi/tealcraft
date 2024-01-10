@@ -52,7 +52,12 @@ export class TealCraftCompiler {
   async compile(contract: A_Contract): Promise<Compiler> {
     const project = await this.getProject();
 
-    const { name, source } = contract;
+    let { name, source } = contract;
+
+    source = `import {Contract } from '../../src/lib/index';
+    ${source}
+    `;
+
     const srcPath = `contracts/${name}/${name}.ts`;
     project.createSourceFile(srcPath, source);
 
