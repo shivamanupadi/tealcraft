@@ -71,6 +71,8 @@ function WorkspaceSidebar(): ReactElement {
                   <div>
                     <Tooltip title="Create contract">
                       <AddCircleOutline
+                        sx={{ marginTop: "5px" }}
+                        color={"secondary"}
                         onClick={(e) => {
                           setContractCreationVisibility(true);
                           e.stopPropagation();
@@ -82,6 +84,17 @@ function WorkspaceSidebar(): ReactElement {
                 </div>
               }
             >
+              {contracts.length === 0 ? (
+                <div className="no-contracts">
+                  <div>
+                    There are no contracts in this workspace. Create your first
+                    contract.
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+
               {contracts.map((contract) => {
                 const contractInstance = new CoreContract(contract);
                 let workspaceInstance: CoreWorkspace;
