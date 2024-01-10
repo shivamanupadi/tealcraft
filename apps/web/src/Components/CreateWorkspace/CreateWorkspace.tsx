@@ -134,11 +134,6 @@ function CreateWorkspace({
                             if (workspace) {
                               onSuccess(workspace);
                             }
-
-                            showSnack(
-                              "Workspace created successfully",
-                              "success",
-                            );
                           } catch (e) {
                             hideLoader();
                             showException(e);
