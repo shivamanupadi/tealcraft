@@ -27,3 +27,8 @@ export function copyContent(ev: any, content: string) {
   ev.preventDefault();
   ev.stopPropagation();
 }
+
+export function isValidClassName(className: string): boolean {
+  const regex = /^[a-zA-Z_]\w*$/;
+  return regex.test(className);
+}

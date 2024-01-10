@@ -6,6 +6,7 @@ export class ContractClient {
   async save(
     workspaceId: string,
     name: string,
+    source: string = "",
   ): Promise<A_Contract | undefined> {
     const id = v4();
     await dataStore.contracts.add({
@@ -13,7 +14,7 @@ export class ContractClient {
       timestamp: Date.now(),
       workspaceId: workspaceId,
       name: name,
-      source: "",
+      source,
     });
 
     return this.get(id);

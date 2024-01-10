@@ -12,6 +12,7 @@ import { Close } from "@mui/icons-material";
 import { ModalGrowTransition, ShadedInput } from "@repo/theme";
 import { A_Contract, A_Workspace, ContractClient } from "@repo/tealcraft-sdk";
 import { useLoader, useSnackbar } from "@repo/ui";
+import { isValidClassName } from "@repo/utils";
 
 interface CreateContractProps {
   show: boolean;
@@ -110,6 +111,14 @@ function CreateContract({
                             );
                             return;
                           }
+
+                          if (!isValidClassName(name)) {
+                            showSnack(
+                              `Contract name should be a valid typescript class name`,
+                              "error",
+                            );
+                            return;
+                          }
                           try {
                             showLoader(
                               "Checking if workspace already exists...",
@@ -131,9 +140,21 @@ function CreateContract({
                             }
 
                             showLoader("Creating contract ...");
+                            const defaultSource = `export class ${name} extends Contract {
+  /** Target AVM 10 */
+  programVersion = 10;
+  
+  /**
+  * createApplication
+  */
+  createApplication(): boolean {
+    return true
+  }
+}`;
                             const contract = await new ContractClient().save(
                               workspace.id,
                               name,
+                              defaultSource,
                             );
                             hideLoader();
                             handleClose();
