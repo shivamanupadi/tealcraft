@@ -15,6 +15,29 @@
         color: map-get($base-colors, "black");
         font-size: 16px;
       }
+      .MuiTreeItem-root {
+        &:hover {
+          > .MuiTreeItem-content {
+            .contract-icons {
+              .delete {
+                visibility: visible !important;
+              }
+            }
+          }
+        }
+        .contract-icons {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-right: 15px;
+          .contract-icon {
+            color: map-get($grey-colors, "form-value");
+          }
+          .delete {
+            visibility: hidden;
+          }
+        }
+      }
     }
   }
 }

@@ -4,6 +4,7 @@ import { TreeItem, TreeView } from "@mui/x-tree-view";
 import {
   AddCircleOutline,
   ChevronRight,
+  DeleteOutlined,
   ExpandMore,
   TextSnippetOutlined,
 } from "@mui/icons-material";
@@ -11,10 +12,18 @@ import CreateContract from "../../CreateContract/CreateContract";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../Redux/store";
 import { loadContracts } from "../../../Redux/portal/workspaceReducer";
-import { A_Contract, CoreContract, CoreWorkspace } from "@repo/tealcraft-sdk";
+import {
+  A_Contract,
+  ContractClient,
+  CoreContract,
+  CoreWorkspace,
+} from "@repo/tealcraft-sdk";
 import { useNavigate, useParams } from "react-router-dom";
-import { GreyColors, treeStyles } from "@repo/theme";
+import { confirmationProps, treeStyles } from "@repo/theme";
 import { Tooltip } from "@mui/material";
+import { useConfirm } from "material-ui-confirm";
+import { useLoader, useSnackbar } from "@repo/ui";
+import { resetContract } from "../../../Redux/portal/contractReducer";
 
 function getContractNodeId(contractId: string | undefined): string {
   return `contract-${contractId}`;
@@ -23,9 +32,17 @@ function getContractNodeId(contractId: string | undefined): string {
 function WorkspaceSidebar(): ReactElement {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const confirmation = useConfirm();
+
+  const { showLoader, hideLoader } = useLoader();
+  const { showSnack, showException } = useSnackbar();
 
   const { workspace, contracts } = useSelector(
     (state: RootState) => state.workspace,
+  );
+
+  const { contract: currentContract } = useSelector(
+    (state: RootState) => state.contract,
   );
 
   const params = useParams();
@@ -74,10 +91,51 @@ function WorkspaceSidebar(): ReactElement {
                 return (
                   <TreeItem
                     icon={
-                      <TextSnippetOutlined
-                        fontSize={"small"}
-                        sx={{ color: GreyColors.FormValue }}
-                      ></TextSnippetOutlined>
+                      <div className="contract-icons">
+                        <DeleteOutlined
+                          className="contract-icon delete"
+                          fontSize={"small"}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+
+                            confirmation({
+                              ...confirmationProps,
+                              description: `You are trying to delete the contract - ${contract.name}.`,
+                            })
+                              .then(async () => {
+                                try {
+                                  showLoader("Deleting contract...");
+                                  await new ContractClient().delete(
+                                    contract.id,
+                                  );
+                                  hideLoader();
+                                  showSnack("Contract deleted", "success");
+                                  if (workspace) {
+                                    dispatch(loadContracts(workspace));
+                                  }
+
+                                  if (currentContract) {
+                                    if (contract.id === currentContract.id) {
+                                      dispatch(resetContract());
+                                      navigate(
+                                        `/portal/workspace/${workspace?.id}`,
+                                      );
+                                    }
+                                  }
+                                } catch (e) {
+                                  hideLoader();
+                                  showException(e);
+                                }
+                              })
+                              .catch(() => {});
+                          }}
+                        ></DeleteOutlined>
+                        <TextSnippetOutlined
+                          fontSize={"small"}
+                          className="contract-icon"
+                        ></TextSnippetOutlined>
+                      </div>
                     }
                     className="indent"
                     key={getContractNodeId(contractInstance.getId())}
