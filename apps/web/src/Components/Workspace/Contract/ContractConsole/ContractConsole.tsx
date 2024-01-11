@@ -3,19 +3,26 @@ import "./ContractConsole.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../Redux/store";
 import { theme } from "@repo/theme";
-import { LoadingTile } from "@repo/ui";
-import { Tab, Tabs } from "@mui/material";
+import { LoadingTile, useLoader, useSnackbar } from "@repo/ui";
+import { Menu, MenuItem, Tab, Tabs } from "@mui/material";
 import ContractAppSpec from "./ContractAppSpec/ContractAppSpec";
-import { CheckCircle, Error } from "@mui/icons-material";
+import { CheckCircle, Error, MoreVert } from "@mui/icons-material";
 import ABIVisualizer from "./ABIVisualizer/ABIVisualizer";
 import ContractSchema from "./ContractSchema/ContractSchema";
 import ContractPrograms from "./ContractPrograms/ContractPrograms";
+import { downloadFile } from "@repo/utils";
 
+const menuItemsSx = { fontSize: "13px" };
 function ContractConsole(): ReactElement {
   const { compile } = useSelector((state: RootState) => state.contract);
   const { success, completed, inProgress, result } = compile;
 
   const [tab, setTab] = useState<string>("abi");
+  const [consoleMenuAnchorEl, setConsoleMenuAnchorEl] =
+    useState<null | HTMLElement>(null);
+
+  const { showLoader, hideLoader } = useLoader();
+  const { showSnack, showException } = useSnackbar();
 
   return (
     <div className="contract-console-wrapper">
@@ -28,11 +35,56 @@ function ContractConsole(): ReactElement {
               <div className="compile-status">
                 {success ? (
                   <div className="avm-details">
-                    <div className="version">
-                      Target AVM: {result.AVMVersion}
-                    </div>
                     <div>
                       <CheckCircle color={"secondary"}></CheckCircle>
+                    </div>
+                    <div className="version">
+                      Target AVM : {result.AVMVersion}
+                    </div>
+                    <div>
+                      <MoreVert
+                        className="more-options"
+                        onClick={(ev: any) => {
+                          setConsoleMenuAnchorEl(ev.currentTarget);
+                        }}
+                      ></MoreVert>
+                      <Menu
+                        anchorEl={consoleMenuAnchorEl}
+                        open={Boolean(consoleMenuAnchorEl)}
+                        disableAutoFocusItem={true}
+                        onClose={() => {
+                          setConsoleMenuAnchorEl(null);
+                        }}
+                      >
+                        <MenuItem
+                          sx={menuItemsSx}
+                          selected={false}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setConsoleMenuAnchorEl(null);
+
+                            if (!result.srcMap) {
+                              showSnack("Source map not available", "warning");
+                              return;
+                            }
+
+                            try {
+                              showLoader("Downloading source map ...");
+                              downloadFile(
+                                JSON.stringify(result.srcMap),
+                                "srcMap.map",
+                              );
+                              hideLoader();
+                            } catch (e) {
+                              hideLoader();
+                              showException(e);
+                            }
+                          }}
+                        >
+                          Download source map
+                        </MenuItem>
+                      </Menu>
                     </div>
                   </div>
                 ) : (

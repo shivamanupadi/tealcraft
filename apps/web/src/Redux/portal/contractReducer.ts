@@ -23,6 +23,7 @@ export type ContractState = {
     result: {
       appSpec: A_ApplicationSpecParams | null;
       AVMVersion: number;
+      srcMap: any;
     };
     error: ContractCompileErrorPayload;
   };
@@ -36,6 +37,7 @@ const initialState: ContractState = {
     result: {
       appSpec: null,
       AVMVersion: 0,
+      srcMap: null,
     },
     completed: false,
     error: {
@@ -118,6 +120,7 @@ export const contractSlice = createSlice({
         result: {
           appSpec: compiler.appSpec(),
           AVMVersion: compiler.programVersion,
+          srcMap: compiler.srcMap,
         },
       };
     },
