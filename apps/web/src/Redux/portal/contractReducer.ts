@@ -6,6 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import { A_Contract, ContractClient } from "@repo/tealcraft-sdk";
 import { A_ApplicationSpecParams } from "@repo/algocore";
+import { Compiler } from "@algorandfoundation/tealscript";
 
 export type ContractCompileErrorPayload = {
   msg: string;
@@ -21,6 +22,7 @@ export type ContractState = {
     completed: boolean;
     result: {
       appSpec: A_ApplicationSpecParams | null;
+      AVMVersion: number;
     };
     error: ContractCompileErrorPayload;
   };
@@ -33,6 +35,7 @@ const initialState: ContractState = {
     inProgress: false,
     result: {
       appSpec: null,
+      AVMVersion: 0,
     },
     completed: false,
     error: {
@@ -105,14 +108,16 @@ export const contractSlice = createSlice({
         inProgress: true,
       };
     },
-    successCompile: (state, action: PayloadAction<any>) => {
+    successCompile: (state, action: PayloadAction<Compiler>) => {
+      const compiler = action.payload;
       state.compile = {
         ...state.compile,
         inProgress: false,
         success: true,
         completed: true,
         result: {
-          appSpec: action.payload,
+          appSpec: compiler.appSpec(),
+          AVMVersion: compiler.programVersion,
         },
       };
     },

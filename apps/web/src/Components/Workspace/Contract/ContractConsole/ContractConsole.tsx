@@ -22,11 +22,19 @@ function ContractConsole(): ReactElement {
       <div className="contract-console-container">
         <div className="contract-console-header">
           <div>Console</div>
+
           <div>
             {completed ? (
               <div className="compile-status">
                 {success ? (
-                  <CheckCircle color={"secondary"}></CheckCircle>
+                  <div className="avm-details">
+                    <div className="version">
+                      Target AVM: {result.AVMVersion}
+                    </div>
+                    <div>
+                      <CheckCircle color={"secondary"}></CheckCircle>
+                    </div>
+                  </div>
                 ) : (
                   <Error color={"error"}></Error>
                 )}
