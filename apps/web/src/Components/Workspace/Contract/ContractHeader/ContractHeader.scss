@@ -11,10 +11,22 @@
     border-bottom: 1px solid map-get($grey-colors, "light-grey");
     height: $contract-header-height;
     background: map-get($grey-colors, "very-light-grey");
-    .contract-name {
-      margin-left: 10px;
-      color: map-get($grey-colors, "form-label");
-      font-size: 14px;
+    .contract-name-container {
+      .contract-name {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        column-gap: 10px;
+        margin-left: 10px;
+        color: map-get($grey-colors, "form-label");
+        font-size: 14px;
+        .edit-name {
+          font-size: 14px;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
     }
     .contract-actions {
       display: flex;

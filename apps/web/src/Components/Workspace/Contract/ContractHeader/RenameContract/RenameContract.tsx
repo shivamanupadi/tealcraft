@@ -1,5 +1,5 @@
-import { ReactElement, useState } from "react";
-import "./CreateContract.scss";
+import { ReactElement, useEffect, useState } from "react";
+import "./RenameContract.scss";
 import {
   Button,
   Dialog,
@@ -14,27 +14,34 @@ import { A_Contract, A_Workspace, ContractClient } from "@repo/tealcraft-sdk";
 import { useLoader, useSnackbar } from "@repo/ui";
 import { isValidClassName } from "@repo/utils";
 
-interface CreateContractProps {
+interface RenameContractProps {
   show: boolean;
   onClose: () => void;
-  onSuccess: (contract: A_Contract) => void;
+  onSuccess: () => void;
   workspace: A_Workspace;
+  contract: A_Contract;
 }
 
-function CreateContract({
+function RenameContract({
   show,
   onClose,
   onSuccess,
   workspace,
-}: CreateContractProps): ReactElement {
+  contract,
+}: RenameContractProps): ReactElement {
   const { showLoader, hideLoader } = useLoader();
   const { showSnack, showException } = useSnackbar();
-  const [name, setName] = useState<string>("");
+  const [name, setName] = useState<string>(contract.name);
 
   const clearState = () => {
     setName("");
   };
 
+  useEffect(() => {
+    if (show) {
+      setName(contract.name);
+    }
+  }, [show]);
   function handleClose() {
     clearState();
     onClose();
@@ -52,14 +59,14 @@ function CreateContract({
           className="classic-modal"
         >
           <DialogTitle>
-            <div>Create contract</div>
+            <div>Rename contract</div>
             <div>
               <Close onClick={handleClose} className="close-modal" />
             </div>
           </DialogTitle>
           <DialogContent>
-            <div className="create-contract-wrapper">
-              <div className="create-contract-container">
+            <div className="rename-contract-wrapper">
+              <div className="rename-contract-container">
                 <form
                   onSubmit={async (event) => {
                     event.preventDefault();
@@ -74,7 +81,6 @@ function CreateContract({
                       <ShadedInput
                         autoFocus
                         value={name}
-                        placeholder="My contract"
                         onChange={(ev: any) => {
                           setName(ev.target.value);
                         }}
@@ -119,6 +125,12 @@ function CreateContract({
                             );
                             return;
                           }
+
+                          if (name === contract.name) {
+                            handleClose();
+                            return;
+                          }
+
                           try {
                             showLoader(
                               "Checking if contract already exists...",
@@ -139,27 +151,16 @@ function CreateContract({
                               return;
                             }
 
-                            showLoader("Creating contract ...");
-                            const defaultSource = `export class ${name} extends Contract {
-  /** Target AVM 10 */
-  programVersion = 10;
-  
-  /**
-  * createApplication
-  */
-  createApplication(): boolean {
-    return true
-  }
-}`;
-                            const contract = await new ContractClient().save(
-                              workspace.id,
+                            showLoader("Renaming contract ...");
+
+                            await new ContractClient().rename(
+                              contract.id,
                               name,
-                              defaultSource,
                             );
                             hideLoader();
                             handleClose();
                             if (contract) {
-                              onSuccess(contract);
+                              onSuccess();
                             }
                           } catch (e) {
                             hideLoader();
@@ -183,4 +184,4 @@ function CreateContract({
   );
 }
 
-export default CreateContract;
+export default RenameContract;

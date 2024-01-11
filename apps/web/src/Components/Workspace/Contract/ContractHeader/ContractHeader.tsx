@@ -1,18 +1,21 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import "./ContractHeader.scss";
 import { Button } from "@mui/material";
-import { PlayArrow } from "@mui/icons-material";
+import { Edit, PlayArrow } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../../Redux/store";
 import { CoreContract, TealCraftCompiler } from "@repo/tealcraft-sdk";
 import { useLoader } from "@repo/ui";
 import {
   failureCompile,
+  loadContract,
   startCompile,
   successCompile,
 } from "../../../../Redux/portal/contractReducer";
 import { downloadFile, getExceptionMsg } from "@repo/utils";
 import { theme } from "@repo/theme";
+import { loadContracts } from "../../../../Redux/portal/workspaceReducer";
+import RenameContract from "./RenameContract/RenameContract";
 
 const ActionButtonSx = { background: theme.palette.common.white };
 
@@ -23,11 +26,53 @@ function ContractHeader(): ReactElement {
     (state: RootState) => state.contract,
   );
 
+  const { workspace } = useSelector((state: RootState) => state.workspace);
+
+  const [isContractRenameVisible, setContractRenameVisibility] =
+    useState<boolean>(false);
+
   return (
     <div className="contract-header-wrapper">
       <div className="contract-header-container">
-        <div className="contract-name">
-          {contract ? new CoreContract(contract).getNameWithExtension() : ""}
+        <div className="contract-name-container">
+          {contract ? (
+            <div className="contract-name">
+              <div>{new CoreContract(contract).getNameWithExtension()}</div>
+              <div>
+                <Edit
+                  className="edit-name"
+                  onClick={() => {
+                    setContractRenameVisibility(true);
+                  }}
+                ></Edit>
+
+                {workspace ? (
+                  <RenameContract
+                    show={isContractRenameVisible}
+                    onClose={() => {
+                      setContractRenameVisibility(false);
+                    }}
+                    onSuccess={() => {
+                      setContractRenameVisibility(false);
+                      dispatch(loadContracts(workspace));
+                      dispatch(
+                        loadContract({
+                          workspaceId: workspace.id,
+                          contractId: contract.id,
+                        }),
+                      );
+                    }}
+                    workspace={workspace}
+                    contract={contract}
+                  ></RenameContract>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
         <div className="contract-actions">
           <div className="compiler">
