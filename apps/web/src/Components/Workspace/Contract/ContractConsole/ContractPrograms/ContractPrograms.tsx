@@ -43,7 +43,8 @@ function ContractPrograms({ appSpec }: ContractProgramsProps): ReactElement {
           {tab === "approval" ? (
             <ContractProgram
               program={appSpec.source.approval}
-              name="Approval program"
+              type="approval"
+              contract={appSpec.contract}
             ></ContractProgram>
           ) : (
             ""
@@ -52,7 +53,8 @@ function ContractPrograms({ appSpec }: ContractProgramsProps): ReactElement {
           {tab === "clear" ? (
             <ContractProgram
               program={appSpec.source.clear}
-              name="Clear program"
+              type="clear"
+              contract={appSpec.contract}
             ></ContractProgram>
           ) : (
             ""

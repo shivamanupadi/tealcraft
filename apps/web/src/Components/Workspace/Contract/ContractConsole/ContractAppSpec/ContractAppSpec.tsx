@@ -19,7 +19,10 @@ function ContractAppSpec({ appSpec }: ContractAppSpecProps): ReactElement {
             <Button
               color={"primary"}
               onClick={() => {
-                downloadJson(appSpec, "application.json");
+                downloadJson(
+                  appSpec,
+                  `${appSpec.contract.name}.application.json`,
+                );
               }}
               variant={"outlined"}
               className="small-button"

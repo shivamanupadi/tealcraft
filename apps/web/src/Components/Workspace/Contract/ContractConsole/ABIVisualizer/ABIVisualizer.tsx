@@ -32,7 +32,10 @@ function ABIVisualizer({
                 <Button
                   color={"primary"}
                   onClick={() => {
-                    downloadJson(abiInstance.toJSON(), "abi.json");
+                    downloadJson(
+                      abiInstance.toJSON(),
+                      `${abiInstance.name}.abi.json`,
+                    );
                   }}
                   variant={"outlined"}
                   className="small-button"

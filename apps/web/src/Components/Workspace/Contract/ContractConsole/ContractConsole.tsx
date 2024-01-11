@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../Redux/store";
 import { theme } from "@repo/theme";
 import { LoadingTile, useLoader, useSnackbar } from "@repo/ui";
-import { Menu, MenuItem, Tab, Tabs } from "@mui/material";
+import { Menu, MenuItem, Tab, Tabs, Tooltip } from "@mui/material";
 import ContractAppSpec from "./ContractAppSpec/ContractAppSpec";
 import { CheckCircle, Error, MoreVert } from "@mui/icons-material";
 import ABIVisualizer from "./ABIVisualizer/ABIVisualizer";
@@ -14,7 +14,9 @@ import { downloadFile } from "@repo/utils";
 
 const menuItemsSx = { fontSize: "13px" };
 function ContractConsole(): ReactElement {
-  const { compile } = useSelector((state: RootState) => state.contract);
+  const { compile, contract } = useSelector(
+    (state: RootState) => state.contract,
+  );
   const { success, completed, inProgress, result } = compile;
 
   const [tab, setTab] = useState<string>("abi");
@@ -42,12 +44,15 @@ function ContractConsole(): ReactElement {
                       Target AVM : {result.AVMVersion}
                     </div>
                     <div>
-                      <MoreVert
-                        className="more-options"
-                        onClick={(ev: any) => {
-                          setConsoleMenuAnchorEl(ev.currentTarget);
-                        }}
-                      ></MoreVert>
+                      <Tooltip title="More options">
+                        <MoreVert
+                          className="more-options"
+                          onClick={(ev: any) => {
+                            setConsoleMenuAnchorEl(ev.currentTarget);
+                          }}
+                        ></MoreVert>
+                      </Tooltip>
+
                       <Menu
                         anchorEl={consoleMenuAnchorEl}
                         open={Boolean(consoleMenuAnchorEl)}
@@ -73,7 +78,7 @@ function ContractConsole(): ReactElement {
                               showLoader("Downloading source map ...");
                               downloadFile(
                                 JSON.stringify(result.srcMap),
-                                "srcMap.map",
+                                `${contract?.name}.srcMap.map`,
                               );
                               hideLoader();
                             } catch (e) {

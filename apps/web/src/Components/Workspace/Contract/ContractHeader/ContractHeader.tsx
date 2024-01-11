@@ -1,6 +1,6 @@
 import { ReactElement, useState } from "react";
 import "./ContractHeader.scss";
-import { Button } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 import { Edit, PlayArrow } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../../Redux/store";
@@ -39,12 +39,14 @@ function ContractHeader(): ReactElement {
             <div className="contract-name">
               <div>{new CoreContract(contract).getNameWithExtension()}</div>
               <div>
-                <Edit
-                  className="edit-name"
-                  onClick={() => {
-                    setContractRenameVisibility(true);
-                  }}
-                ></Edit>
+                <Tooltip title="Rename contract">
+                  <Edit
+                    className="edit-name"
+                    onClick={() => {
+                      setContractRenameVisibility(true);
+                    }}
+                  ></Edit>
+                </Tooltip>
 
                 {workspace ? (
                   <RenameContract

@@ -4,15 +4,18 @@ import { Button, ButtonGroup } from "@mui/material";
 import { PROGRAM_ENCODING } from "@repo/algocore";
 import { CodeBlock, github } from "react-code-blocks";
 import { copyContent, downloadFile } from "@repo/utils";
+import { ABIContractParams } from "algosdk";
 
 export interface ContractProgramProps {
-  name: string;
+  type: string;
   program: string;
+  contract: ABIContractParams;
 }
 
 function ContractProgram({
-  name,
+  type,
   program,
+  contract,
 }: ContractProgramProps): ReactElement {
   const [encoding, setEncoding] = useState<string>(PROGRAM_ENCODING.TEAL);
   const [prg, setPrg] = useState<string>("");
@@ -30,7 +33,10 @@ function ContractProgram({
       <div className={"contract-program-container"}>
         <div className="contract-program-header">
           <div className="title">
-            <div className="name">{name}</div>
+            <div className="name">
+              {type === "approval" ? "Approval program" : ""}
+              {type === "clear" ? "Clear program" : ""}
+            </div>
             <div>
               <ButtonGroup variant="outlined">
                 <Button
@@ -84,7 +90,7 @@ function ContractProgram({
                 size={"small"}
                 className="small-button"
                 onClick={() => {
-                  downloadFile(prg, "approval.teal");
+                  downloadFile(prg, `${contract.name}.${type}.teal`);
                 }}
                 variant={"outlined"}
               >
