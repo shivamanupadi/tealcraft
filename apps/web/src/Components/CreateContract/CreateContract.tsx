@@ -141,8 +141,8 @@ function CreateContract({
 
                             showLoader("Creating contract ...");
                             const defaultSource = `export class ${name} extends Contract {
-  /** Target AVM 10 */
-  programVersion = 10;
+  /** Target AVM 9 */
+  programVersion = 9;
   
   /**
   * createApplication
