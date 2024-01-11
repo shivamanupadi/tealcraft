@@ -38,7 +38,10 @@ function ContractConsole(): ReactElement {
                 {success ? (
                   <div className="avm-details">
                     <div>
-                      <CheckCircle color={"secondary"}></CheckCircle>
+                      <CheckCircle
+                        color={"secondary"}
+                        fontSize={"small"}
+                      ></CheckCircle>
                     </div>
                     <div className="version">
                       Target AVM : {result.AVMVersion}
@@ -93,7 +96,10 @@ function ContractConsole(): ReactElement {
                     </div>
                   </div>
                 ) : (
-                  <Error color={"error"}></Error>
+                  <div className="error-status">
+                    <div>Failed</div>
+                    <Error color={"error"} fontSize={"small"}></Error>
+                  </div>
                 )}
               </div>
             ) : (

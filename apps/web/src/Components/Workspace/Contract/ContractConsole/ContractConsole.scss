@@ -13,6 +13,13 @@
       align-items: center;
       justify-content: space-between;
       .compile-status {
+        .error-status {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          column-gap: 5px;
+          font-size: 14px;
+        }
         .avm-details {
           display: flex;
           align-items: center;
