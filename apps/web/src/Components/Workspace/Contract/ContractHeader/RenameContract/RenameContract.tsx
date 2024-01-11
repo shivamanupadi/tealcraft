@@ -10,9 +10,13 @@ import {
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { ModalGrowTransition, ShadedInput } from "@repo/theme";
-import { A_Contract, A_Workspace, ContractClient } from "@repo/tealcraft-sdk";
+import {
+  A_Contract,
+  A_Workspace,
+  ContractClient,
+  TealCraft,
+} from "@repo/tealcraft-sdk";
 import { useLoader, useSnackbar } from "@repo/ui";
-import { isValidClassName } from "@repo/utils";
 
 interface RenameContractProps {
   show: boolean;
@@ -95,34 +99,10 @@ function RenameContract({
                         variant={"contained"}
                         sx={{ marginTop: "20px" }}
                         onClick={async () => {
-                          const minLength = 5;
-                          const maxLength = 30;
-                          if (!name) {
-                            showSnack("Invalid contract name", "error");
-                            return;
-                          }
-
-                          if (name.length < minLength) {
-                            showSnack(
-                              `Contract name should be at least ${minLength} chars`,
-                              "error",
-                            );
-                            return;
-                          }
-
-                          if (name.length > maxLength) {
-                            showSnack(
-                              `Contract name cannot be more than ${maxLength} chars`,
-                              "error",
-                            );
-                            return;
-                          }
-
-                          if (!isValidClassName(name)) {
-                            showSnack(
-                              `Contract name should be a valid typescript class name`,
-                              "error",
-                            );
+                          try {
+                            new TealCraft().isValidContractName(name);
+                          } catch (e) {
+                            showException(e);
                             return;
                           }
 
