@@ -1,7 +1,9 @@
-import { isValidClassName } from "@repo/utils";
+import { downloadJson, isValidClassName } from "@repo/utils";
 import { loadDemoData } from "./demoData";
 import { LOCAL_STORAGE } from "./constants";
 import { WorkspaceClient } from "./clients/WorkspaceClient";
+import { exportDB, importDB, ImportOptions } from "dexie-export-import";
+import { dataStore } from "./database/datastore";
 
 export class TealCraft {
   saveWorkspaceId(id: string) {
@@ -57,5 +59,23 @@ export class TealCraft {
     Object.values(LOCAL_STORAGE).forEach((item) => {
       localStorage.removeItem(item);
     });
+  }
+
+  async exportData() {
+    const blob = await exportDB(dataStore);
+    const jsonData = JSON.parse(await blob.text());
+    downloadJson(jsonData, "tealcraft.data.json");
+  }
+
+  async importData(data: any) {
+    const blob = new Blob([data], {
+      type: "application/json",
+    });
+
+    const options: ImportOptions = {
+      overwriteValues: true,
+    };
+
+    await importDB(blob, options);
   }
 }

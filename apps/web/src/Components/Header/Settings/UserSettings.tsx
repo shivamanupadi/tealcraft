@@ -15,6 +15,10 @@ interface UserSettingsProps {
   onClose: () => void;
 }
 
+const buttonSx = {
+  width: "80px",
+};
+
 function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
   const confirmation = useConfirm();
   const { showLoader, hideLoader } = useLoader();
@@ -35,7 +39,6 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
               width: "30%",
             },
           }}
-          transitionDuration={200}
           anchor={"right"}
           open={show}
           onClose={handleClose}
@@ -58,6 +61,7 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
                     <Button
                       color={"primary"}
                       variant={"contained"}
+                      sx={buttonSx}
                       size={"small"}
                       onClick={async () => {
                         confirmation({
@@ -93,12 +97,91 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
 
                 <div className="section">
                   <div className="section-title">
-                    Reset your TealCraft data ?
+                    Export your TealCraft data ?
                   </div>
                   <div className="section-body">
                     <Button
                       color={"primary"}
                       variant={"contained"}
+                      sx={buttonSx}
+                      size={"small"}
+                      onClick={async () => {
+                        try {
+                          showLoader("Exporting your data...");
+                          await new TealCraft().exportData();
+                          hideLoader();
+                        } catch (e) {
+                          hideLoader();
+                          showException(e);
+                        }
+                      }}
+                    >
+                      Export
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="section">
+                  <div className="section-title">
+                    Import your TealCraft data
+                  </div>
+                  <div className="section-body">
+                    <Button
+                      color={"primary"}
+                      variant={"contained"}
+                      sx={buttonSx}
+                      size={"small"}
+                    >
+                      Import
+                      <input
+                        type="file"
+                        accept=".json"
+                        multiple={false}
+                        onChange={async (ev) => {
+                          // @ts-ignore
+                          const file = ev.target.files[0];
+
+                          const reader = new FileReader();
+                          reader.addEventListener(
+                            "load",
+                            async function () {
+                              try {
+                                showLoader("Importing data ...");
+                                const data = reader.result?.toString();
+                                await new TealCraft().importData(data);
+
+                                showSnack(
+                                  "Data imported successfully",
+                                  "success",
+                                );
+                                dispatch(loadWorkspaces());
+                                hideLoader();
+                              } catch (e: any) {
+                                hideLoader();
+                                showException(e);
+                              }
+                            },
+                            false,
+                          );
+
+                          if (file) {
+                            reader.readAsText(file);
+                          }
+                        }}
+                      />
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="section">
+                  <div className="section-title">
+                    Factory reset your TealCraft data ?
+                  </div>
+                  <div className="section-body">
+                    <Button
+                      color={"primary"}
+                      variant={"contained"}
+                      sx={buttonSx}
                       size={"small"}
                       onClick={async () => {
                         confirmation({
@@ -123,7 +206,7 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
                           .catch(() => {});
                       }}
                     >
-                      Factory reset
+                      Reset
                     </Button>
                   </div>
                 </div>
