@@ -54,8 +54,7 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
               <div className="user-settings-body">
                 <div className="section">
                   <div className="section-title">
-                    Do you want a demo workspace with preloaded example
-                    contracts ?
+                    Demo workspace with preloaded example contracts
                   </div>
                   <div className="section-body">
                     <Button
@@ -97,7 +96,7 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
 
                 <div className="section">
                   <div className="section-title">
-                    Export your TealCraft data ?
+                    Export your TealCraft data
                   </div>
                   <div className="section-body">
                     <Button
@@ -131,11 +130,13 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
                       variant={"contained"}
                       sx={buttonSx}
                       size={"small"}
+                      component="label"
                     >
                       Import
                       <input
                         type="file"
                         accept=".json"
+                        hidden
                         multiple={false}
                         onChange={async (ev) => {
                           // @ts-ignore
@@ -156,6 +157,7 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
                                 );
                                 dispatch(loadWorkspaces());
                                 hideLoader();
+                                handleClose();
                               } catch (e: any) {
                                 hideLoader();
                                 showException(e);
@@ -175,7 +177,7 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
 
                 <div className="section">
                   <div className="section-title">
-                    Factory reset your TealCraft data ?
+                    Factory reset your TealCraft data
                   </div>
                   <div className="section-body">
                     <Button
