@@ -6,7 +6,8 @@ import UserSettings from "./Settings/UserSettings";
 import WorkspacePicker from "../WorkspacePicker/WorkspacePicker";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/store";
-import { Settings } from "@mui/icons-material";
+import { Button } from "@mui/material";
+import { SettingsOutlined } from "@mui/icons-material";
 
 function Header(): ReactElement {
   const { workspaces } = useSelector((state: RootState) => state.portal);
@@ -35,12 +36,19 @@ function Header(): ReactElement {
         <div className="right-section">
           <div className="actions">
             <div>
-              <Settings
-                className="hover"
+              <Button
+                startIcon={<SettingsOutlined></SettingsOutlined>}
+                size={"small"}
                 onClick={() => {
                   setSettingsVisibility(true);
                 }}
-              ></Settings>
+                variant="contained"
+                color={"primary"}
+                className="grey-button"
+              >
+                Settings
+              </Button>
+
               {isSettingsVisible ? (
                 <UserSettings
                   show={isSettingsVisible}
