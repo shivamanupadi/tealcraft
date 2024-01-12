@@ -10,11 +10,13 @@
       justify-content: space-between;
       align-items: center;
       column-gap: 15px;
-      margin-bottom: 10px;
       .title {
         font-size: 14px;
         color: map-get($grey-colors, "form-value");
       }
+    }
+    .contract-schema-body {
+      margin-top: 10px;
     }
   }
 }

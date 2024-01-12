@@ -55,7 +55,7 @@ function ContractSchema({
   return (
     <div className={"contract-schema-wrapper"}>
       <div className={"contract-schema-container"}>
-        <div className={"contract-schema-header"}>
+        <div className="contract-schema-header">
           <div className="title">{title}</div>
           <div>
             <Alert
@@ -76,8 +76,8 @@ function ContractSchema({
             </Alert>
           </div>
         </div>
-        <div>
-          {items.length > 0 ? (
+        {items.length > 0 ? (
+          <div className="contract-schema-body">
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                 <div className="arguments">
@@ -140,10 +140,10 @@ function ContractSchema({
                 </div>
               </Grid>
             </Grid>
-          ) : (
-            ""
-          )}
-        </div>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

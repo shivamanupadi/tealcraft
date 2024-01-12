@@ -43,9 +43,7 @@ function ContractConsole(): ReactElement {
                         fontSize={"small"}
                       ></CheckCircle>
                     </div>
-                    <div className="version">
-                      Target AVM : {result.AVMVersion}
-                    </div>
+                    <div className="version">AVM : {result.AVMVersion}</div>
                     <div>
                       <Tooltip title="More options">
                         <MoreVert
