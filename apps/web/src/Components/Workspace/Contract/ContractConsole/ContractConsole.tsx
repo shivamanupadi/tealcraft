@@ -47,7 +47,7 @@ function ContractConsole(): ReactElement {
                     <div>
                       <Tooltip title="More options">
                         <MoreVert
-                          className="more-options"
+                          className="more-options hover"
                           onClick={(ev: any) => {
                             setConsoleMenuAnchorEl(ev.currentTarget);
                           }}

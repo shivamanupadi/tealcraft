@@ -5,8 +5,12 @@
   .header-container {
     border-bottom: 1px solid map-get($grey-colors, "light-grey");
     height: $header-height;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 15px;
+    padding: 0 30px;
     .left-section {
-      padding: 20px 30px;
       display: flex;
       justify-content: flex-start;
       align-items: center;
@@ -24,6 +28,13 @@
         column-gap: 5px;
         img {
           width: 20px;
+        }
+      }
+    }
+    .right-section {
+      .actions {
+        svg {
+          color: map-get($grey-colors, "form-label");
         }
       }
     }

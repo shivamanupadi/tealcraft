@@ -41,7 +41,7 @@ function ContractHeader(): ReactElement {
               <div>
                 <Tooltip title="Rename contract">
                   <Edit
-                    className="edit-name"
+                    className="edit-name hover"
                     onClick={() => {
                       setContractRenameVisibility(true);
                     }}

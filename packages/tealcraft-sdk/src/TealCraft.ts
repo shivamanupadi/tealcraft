@@ -1,15 +1,21 @@
 import { isValidClassName } from "@repo/utils";
+import { loadDemoData } from "./demoData";
+import { LOCAL_STORAGE } from "./constants";
+import { WorkspaceClient } from "./clients/WorkspaceClient";
 
 export class TealCraft {
   saveWorkspaceId(id: string) {
-    localStorage.setItem("workspaceId", id);
+    localStorage.setItem(LOCAL_STORAGE.workspaceId, id);
   }
+
   getWorkspaceId(): string | null {
-    return localStorage.getItem("workspaceId");
+    return localStorage.getItem(LOCAL_STORAGE.workspaceId);
   }
+
   removeWorkspaceId() {
-    localStorage.removeItem("workspaceId");
+    localStorage.removeItem(LOCAL_STORAGE.workspaceId);
   }
+
   isValidContractName(name: string): boolean {
     const minLength = 5;
     const maxLength = 30;
@@ -30,5 +36,26 @@ export class TealCraft {
     }
 
     return true;
+  }
+
+  async loadDemoData(): Promise<string> {
+    return await loadDemoData();
+  }
+
+  async factoryReset(): Promise<void> {
+    const workspaceClient = new WorkspaceClient();
+    const workspaces = await workspaceClient.findAll();
+
+    const promises: any = [];
+
+    workspaces.forEach((workspace) => {
+      promises.push(workspaceClient.delete(workspace.id));
+    });
+
+    await Promise.all(promises);
+
+    Object.values(LOCAL_STORAGE).forEach((item) => {
+      localStorage.removeItem(item);
+    });
   }
 }

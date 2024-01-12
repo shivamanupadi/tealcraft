@@ -1,0 +1,41 @@
+@import "@repo/styles";
+@import "../../../scss/constants";
+
+.user-settings-wrapper {
+  .user-settings-container {
+    .user-settings-header {
+      padding: 20px;
+      border-bottom: 1px solid map-get($grey-colors, "light-grey");
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      column-gap: 15px;
+      .title {
+        font-size: 16px;
+        font-weight: bold;
+        color: map-get($grey-colors, "form-label");
+      }
+      .actions {
+        color: map-get($grey-colors, "form-label");
+      }
+    }
+    .user-settings-body {
+      padding: 0 20px;
+      .section {
+        margin-top: 20px;
+        background: map-get($grey-colors, "very-light-grey");
+        border: 1px solid map-get($grey-colors, "light-grey");
+        padding: 20px;
+        border-radius: 5px;
+        .section-title {
+          font-size: 14px;
+          color: map-get($grey-colors, "form-label");
+          line-height: 1.3;
+        }
+        .section-body {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}

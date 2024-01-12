@@ -4,7 +4,7 @@
 .workspace-sidebar-wrapper {
   .workspace-sidebar-container {
     width: 240px;
-    height: calc(100vh - $header-height);
+    height: calc(100vh - $header-height - 10px);
     border-right: 1px solid map-get($grey-colors, "light-grey");
     overflow-y: auto;
     .workspace-menu {
