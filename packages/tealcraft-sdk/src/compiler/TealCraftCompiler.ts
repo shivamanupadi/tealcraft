@@ -54,7 +54,7 @@ export class TealCraftCompiler {
 
     let { name, source } = contract;
 
-    source = `import {Contract } from '../../src/lib/index';
+    source = `import { Contract, LogicSig } from '../../src/lib/index';
     ${source}
     `;
 
