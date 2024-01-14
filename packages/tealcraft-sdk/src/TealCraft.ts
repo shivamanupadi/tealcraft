@@ -1,9 +1,9 @@
 import { downloadJson, isValidClassName } from "@repo/utils";
 import { loadDemoData } from "./demoData";
 import { LOCAL_STORAGE } from "./constants";
-import { WorkspaceClient } from "./clients/WorkspaceClient";
 import { exportDB, importDB, ImportOptions } from "dexie-export-import";
 import { dataStore } from "./database/datastore";
+import { Table } from "dexie";
 
 export class TealCraft {
   saveWorkspaceId(id: string) {
@@ -45,13 +45,11 @@ export class TealCraft {
   }
 
   async factoryReset(): Promise<void> {
-    const workspaceClient = new WorkspaceClient();
-    const workspaces = await workspaceClient.findAll();
-
+    const tableNames: Table[] = dataStore.tables;
     const promises: any = [];
 
-    workspaces.forEach((workspace) => {
-      promises.push(workspaceClient.delete(workspace.id));
+    tableNames.forEach((tableName) => {
+      promises.push(tableName.clear());
     });
 
     await Promise.all(promises);
