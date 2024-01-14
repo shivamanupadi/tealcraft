@@ -1,14 +1,14 @@
 import { ReactElement, useEffect, useRef } from "react";
 import "./ContractEditor.scss";
-import { RootState, useAppDispatch } from "../../../../Redux/store";
 import { useSelector } from "react-redux";
 import { Editor, Monaco } from "@monaco-editor/react";
 import { monacoLightTheme } from "./themes/light";
-import { updateContractSource } from "../../../../Redux/portal/contractReducer";
 import { debounce, Grid } from "@mui/material";
 import ContractHeader from "../ContractHeader/ContractHeader";
 import ContractConsole from "../ContractConsole/ContractConsole";
 import { CustomTypings } from "./intellisense";
+import { RootState, useAppDispatch } from "../../../Redux/store";
+import { updateContractSource } from "../../../Redux/portal/contractReducer";
 
 function ContractEditor(): ReactElement {
   const dispatch = useAppDispatch();

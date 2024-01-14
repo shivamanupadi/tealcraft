@@ -1,7 +1,6 @@
 import { ReactElement, useState } from "react";
 import "./ContractConsole.scss";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../Redux/store";
 import { theme } from "@repo/theme";
 import { LoadingTile, useLoader, useSnackbar } from "@repo/ui";
 import { Menu, MenuItem, Tab, Tabs, Tooltip } from "@mui/material";
@@ -11,6 +10,7 @@ import ABIVisualizer from "./ABIVisualizer/ABIVisualizer";
 import ContractSchema from "./ContractSchema/ContractSchema";
 import ContractPrograms from "./ContractPrograms/ContractPrograms";
 import { downloadFile } from "@repo/utils";
+import { RootState } from "../../../Redux/store";
 
 const menuItemsSx = { fontSize: "13px" };
 function ContractConsole(): ReactElement {

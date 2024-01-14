@@ -1,10 +1,10 @@
 import { ReactElement, useEffect } from "react";
 import "./Contract.scss";
 import { useParams } from "react-router-dom";
-import { useAppDispatch } from "../../../Redux/store";
-import { loadContract } from "../../../Redux/portal/contractReducer";
 import ContractEditor from "./ContractEditor/ContractEditor";
 import { Grid } from "@mui/material";
+import { useAppDispatch } from "../../Redux/store";
+import { loadContract } from "../../Redux/portal/contractReducer";
 
 function Contract(): ReactElement {
   const dispatch = useAppDispatch();

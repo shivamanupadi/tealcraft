@@ -1,9 +1,8 @@
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ReactElement } from "react";
-import Portal from "../../Portal/Portal";
-import Workspace from "../../Components/Workspace/Workspace";
-import Contract from "../../Components/Workspace/Contract/Contract";
-
+import Portal from "../../Pages/Portal/Portal";
+import Workspace from "../../Pages/Workspace/Workspace";
+import Contract from "../../Pages/Contract/Contract";
 function AppRouter(): ReactElement {
   return (
     <HashRouter>

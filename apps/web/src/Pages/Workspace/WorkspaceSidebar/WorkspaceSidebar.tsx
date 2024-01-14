@@ -8,7 +8,6 @@ import {
   ExpandMore,
   TextSnippetOutlined,
 } from "@mui/icons-material";
-import CreateContract from "../../CreateContract/CreateContract";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../Redux/store";
 import { loadContracts } from "../../../Redux/portal/workspaceReducer";
@@ -24,6 +23,7 @@ import { Tooltip } from "@mui/material";
 import { useConfirm } from "material-ui-confirm";
 import { useLoader, useSnackbar } from "@repo/ui";
 import { resetContract } from "../../../Redux/portal/contractReducer";
+import CreateContract from "../../../Components/CreateContract/CreateContract";
 
 function getContractNodeId(contractId: string | undefined): string {
   return `contract-${contractId}`;

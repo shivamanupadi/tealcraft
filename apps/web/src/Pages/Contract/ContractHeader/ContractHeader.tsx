@@ -3,19 +3,19 @@ import "./ContractHeader.scss";
 import { Button, Tooltip } from "@mui/material";
 import { Edit, PlayArrow } from "@mui/icons-material";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../../../../Redux/store";
 import { CoreContract, TealCraftCompiler } from "@repo/tealcraft-sdk";
 import { useLoader } from "@repo/ui";
+import { downloadFile, getExceptionMsg } from "@repo/utils";
+import { theme } from "@repo/theme";
+import RenameContract from "./RenameContract/RenameContract";
+import { RootState, useAppDispatch } from "../../../Redux/store";
+import { loadContracts } from "../../../Redux/portal/workspaceReducer";
 import {
   failureCompile,
   loadContract,
   startCompile,
   successCompile,
-} from "../../../../Redux/portal/contractReducer";
-import { downloadFile, getExceptionMsg } from "@repo/utils";
-import { theme } from "@repo/theme";
-import { loadContracts } from "../../../../Redux/portal/workspaceReducer";
-import RenameContract from "./RenameContract/RenameContract";
+} from "../../../Redux/portal/contractReducer";
 
 const ActionButtonSx = { background: theme.palette.common.white };
 

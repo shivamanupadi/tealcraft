@@ -1,8 +1,8 @@
 import { ReactElement, useEffect } from "react";
 import "./Portal.scss";
-import Header from "../Components/Header/Header";
-import { useAppDispatch } from "../Redux/store";
-import { initPortal } from "../Redux/portal/portalReducer";
+import Header from "../../Components/Header/Header";
+import { useAppDispatch } from "../../Redux/store";
+import { initPortal } from "../../Redux/portal/portalReducer";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { TealCraft } from "@repo/tealcraft-sdk";
 import NoWorkspaces from "./NoWorkspaces/NoWorkspaces";

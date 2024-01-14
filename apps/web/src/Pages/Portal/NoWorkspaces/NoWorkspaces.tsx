@@ -1,13 +1,13 @@
 import { ReactElement, useState } from "react";
 import "./NoWorkspaces.scss";
-import { RootState, useAppDispatch } from "../../Redux/store";
-import { loadWorkspaces } from "../../Redux/portal/portalReducer";
+import { RootState, useAppDispatch } from "../../../Redux/store";
+import { loadWorkspaces } from "../../../Redux/portal/portalReducer";
 import { useNavigate } from "react-router-dom";
 import { A_Workspace, TealCraft } from "@repo/tealcraft-sdk";
 import { useSelector } from "react-redux";
 import { Button } from "@mui/material";
-import CreateWorkspace from "../../Components/CreateWorkspace/CreateWorkspace";
-import noWorkspacesImg from "../../assets/images/no-workspaces.png";
+import CreateWorkspace from "../../../Components/CreateWorkspace/CreateWorkspace";
+import noWorkspacesImg from "../../../assets/images/no-workspaces.png";
 
 function NoWorkspaces(): ReactElement {
   const dispatch = useAppDispatch();
