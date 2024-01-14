@@ -32,16 +32,16 @@ const tableStyles = {
   },
 };
 
-import {
-  A_ApplicationSpecSchemaValue,
-  A_ApplicationSpecStateStorage,
-} from "@repo/algocore";
 import { GreyColors, theme } from "@repo/theme";
+import {
+  Schema,
+  StateSchema,
+} from "@algorandfoundation/algokit-utils/types/app-spec";
 
 export interface ContractSchemaProps {
   title: string;
-  storage: A_ApplicationSpecStateStorage;
-  schema: A_ApplicationSpecSchemaValue;
+  storage: StateSchema;
+  schema: Schema;
 }
 
 function ContractSchema({
@@ -125,7 +125,7 @@ function ContractSchema({
                                 },
                               }}
                             >
-                              <TableCell>{row?.key}</TableCell>
+                              <TableCell></TableCell>
                               <TableCell>{row?.type}</TableCell>
                               <TableCell>{row?.descr}</TableCell>
                               <TableCell>

@@ -5,8 +5,8 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { A_Contract, ContractClient } from "@repo/tealcraft-sdk";
-import { A_ApplicationSpecParams } from "@repo/algocore";
 import { Compiler } from "@algorandfoundation/tealscript";
+import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
 
 export type ContractCompileErrorPayload = {
   msg: string;
@@ -21,7 +21,7 @@ export type ContractState = {
     inProgress: boolean;
     completed: boolean;
     result: {
-      appSpec: A_ApplicationSpecParams | null;
+      appSpec: AppSpec | null;
       AVMVersion: number;
       srcMap: any;
     };

@@ -1,11 +1,11 @@
 import "./ContractPrograms.scss";
 import { ReactElement, useState } from "react";
-import { A_ApplicationSpecParams } from "@repo/algocore";
 import ContractProgram from "../ContractProgram/ContractProgram";
 import { Tab, Tabs } from "@mui/material";
+import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
 
 export interface ContractProgramsProps {
-  appSpec: A_ApplicationSpecParams;
+  appSpec: AppSpec;
 }
 
 function ContractPrograms({ appSpec }: ContractProgramsProps): ReactElement {
