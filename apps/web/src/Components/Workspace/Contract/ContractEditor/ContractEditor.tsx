@@ -4,12 +4,11 @@ import { RootState, useAppDispatch } from "../../../../Redux/store";
 import { useSelector } from "react-redux";
 import { Editor, Monaco } from "@monaco-editor/react";
 import { monacoLightTheme } from "./themes/light";
-//@ts-ignore
-import customTypings from "!!raw-loader!@algorandfoundation/tealscript/types/global.d.ts";
 import { updateContractSource } from "../../../../Redux/portal/contractReducer";
 import { debounce, Grid } from "@mui/material";
 import ContractHeader from "../ContractHeader/ContractHeader";
 import ContractConsole from "../ContractConsole/ContractConsole";
+import { CustomTypings } from "./intellisense";
 
 function ContractEditor(): ReactElement {
   const dispatch = useAppDispatch();
@@ -43,9 +42,10 @@ function ContractEditor(): ReactElement {
       noSyntaxValidation: true,
     });
 
+    console.log(CustomTypings);
     monaco.languages.typescript.typescriptDefaults.addExtraLib(
-      customTypings,
-      "file:///node_modules/@algorandfoundation/tealscript/types/global.d.ts",
+      CustomTypings,
+      "file:///node_modules/@algorandfoundation/tealscript/index.d.ts",
     );
   }
 
