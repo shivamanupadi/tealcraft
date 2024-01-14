@@ -1,9 +1,9 @@
-import { A_AccountInformation } from "../types";
+import { AccountResult } from "@algorandfoundation/algokit-utils/types/indexer";
 
 export class CoreAccount {
-  private account: A_AccountInformation;
+  private account: AccountResult;
 
-  constructor(account: A_AccountInformation) {
+  constructor(account: AccountResult) {
     this.account = account;
   }
 
