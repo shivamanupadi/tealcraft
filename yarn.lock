@@ -1521,9 +1521,9 @@
     "@floating-ui/utils" "^0.2.0"
 
 "@floating-ui/react-dom@^2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@floating-ui/react-dom/-/react-dom-2.0.5.tgz#851522899c34e3e2be1e29f3294f150834936e28"
-  integrity sha512-UsBK30Bg+s6+nsgblXtZmwHhgS2vmbuQK22qgt2pTQM6M3X6H1+cQcLXqgRY3ihVLcZJE6IvqDQozhsnIVqK/Q==
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@floating-ui/react-dom/-/react-dom-2.0.6.tgz#5ffcf40b6550817a973b54cdd443374f51ca7a5c"
+  integrity sha512-IB8aCRFxr8nFkdYZgH+Otd9EVQPJoynxeFRGTB8voPoZMRWo8XjYuCRgpI1btvuKY69XMiLnW+ym7zoBHM90Rw==
   dependencies:
     "@floating-ui/dom" "^1.5.4"
 
@@ -2896,9 +2896,9 @@
     "@types/node" "*"
 
 "@types/node@*", "@types/node@^20.5.0":
-  version "20.11.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.3.tgz#ac29fba7aeadc74046b02e50758156f4850f1296"
-  integrity sha512-nrlmbvGPNGaj84IJZXMPhQuCMEVTT/hXZMJJG/aIqVL9fKxqk814sGGtJA4GI6hpJSLQjpi6cn0Qx9eOf9SDVg==
+  version "20.11.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.4.tgz#c724a5d6723182af758b91b994209336f4439cb7"
+  integrity sha512-6I0fMH8Aoy2lOejL3s4LhyIYX34DPwY8bl5xlNjBvUEk8OHrcuzsFt+Ied4LvJihbtXPM+8zUqdydfIti86v9g==
   dependencies:
     undici-types "~5.26.4"
 
