@@ -3,6 +3,8 @@ import { ReactElement } from "react";
 import Portal from "../../Pages/Portal/Portal";
 import Workspace from "../../Pages/Workspace/Workspace";
 import Contract from "../../Pages/Contract/Contract";
+import Share from "../../Pages/Share/Share";
+import ShareContract from "../../Components/ShareContract/ShareContract";
 function AppRouter(): ReactElement {
   return (
     <HashRouter>
@@ -20,6 +22,12 @@ function AppRouter(): ReactElement {
           <Route path="" element={<Navigate to="/portal" replace />} />
         </Route>
 
+        <Route path="/share" element={<Share></Share>}>
+          <Route
+            path="contract/:fiddleId"
+            element={<ShareContract></ShareContract>}
+          ></Route>
+        </Route>
         <Route path="*" element={<Navigate to="/portal" replace />} />
       </Routes>
     </HashRouter>

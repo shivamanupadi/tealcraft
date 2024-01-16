@@ -1,0 +1,35 @@
+@import "@repo/styles";
+@import "../../scss/constants";
+
+$top-margin: 100px;
+
+.share-wrapper {
+  background: map-get($theme-colors, "primary-light");
+  height: calc(100vh - $top-margin);
+  padding-top: $top-margin;
+  .share-container {
+    width: 300px;
+    margin: 0 auto;
+    border-radius: 5px;
+    border: 1px solid map-get($grey-colors, "light-grey");
+    background: map-get($base-colors, "white");
+    .share-header {
+      padding: 20px;
+      border-bottom: 1px solid map-get($grey-colors, "light-grey");
+      .logo {
+        color: map-get($base-colors, "black");
+        font-size: 16px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        column-gap: 5px;
+        img {
+          width: 20px;
+        }
+      }
+    }
+    .share-body {
+      padding: 20px;
+    }
+  }
+}

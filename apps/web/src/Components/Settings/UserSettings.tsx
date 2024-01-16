@@ -3,10 +3,10 @@ import "./UserSettings.scss";
 import { Button, Drawer } from "@mui/material";
 import { TealCraft } from "@repo/tealcraft-sdk";
 import { confirmationProps } from "@repo/theme";
-import { loadWorkspaces } from "../../../Redux/portal/portalReducer";
+import { loadWorkspaces } from "../../Redux/portal/portalReducer";
 import { useConfirm } from "material-ui-confirm";
 import { useLoader, useSnackbar } from "@repo/ui";
-import { useAppDispatch } from "../../../Redux/store";
+import { useAppDispatch } from "../../Redux/store";
 import { useNavigate } from "react-router-dom";
 import { Close } from "@mui/icons-material";
 

@@ -18,4 +18,10 @@ export class ContractFiddleClient {
       return response.data;
     }
   }
+
+  async getFiddle(id: number): Promise<ContractFiddleParams> {
+    const url = `${this.apiUrl}/contracts/${id}`;
+    const response = await axios.get(url);
+    return response.data;
+  }
 }

@@ -1,4 +1,12 @@
-import { Body, Controller, Post, SetMetadata } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  SetMetadata,
+} from "@nestjs/common";
 import { ContractService } from "../../database/services/contract.service";
 import { CreateContractFiddleParams } from "@repo/types";
 import { ContractEntity } from "../../database/Entities/contract.entity";
@@ -11,10 +19,18 @@ export class ContractController {
 
   @Post("")
   @Scopes("api")
-  async createContractFiddle(
+  async createFiddle(
     @Body() payload: CreateContractFiddleParams,
   ): Promise<ContractEntity> {
     const { name, source } = payload;
     return await this.contractService.save(name, source);
+  }
+
+  @Get("/:id")
+  @Scopes("api")
+  async getFiddle(
+    @Param("id", new ParseIntPipe()) id,
+  ): Promise<ContractEntity> {
+    return await this.contractService.find(id);
   }
 }

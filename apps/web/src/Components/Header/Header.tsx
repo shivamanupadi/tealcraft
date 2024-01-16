@@ -1,7 +1,7 @@
 import { ReactElement, useState } from "react";
 import "./Header.scss";
 import logo from "../../assets/images/logo.png";
-import UserSettings from "./Settings/UserSettings";
+import UserSettings from "../Settings/UserSettings";
 
 import WorkspacePicker from "../WorkspacePicker/WorkspacePicker";
 import { useSelector } from "react-redux";
