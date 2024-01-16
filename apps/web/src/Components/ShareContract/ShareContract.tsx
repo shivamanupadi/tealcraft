@@ -74,8 +74,10 @@ function ShareContract(): ReactElement {
                   </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                  <FormLabel className="classic-label">Workspace</FormLabel>
-                  <div>
+                  <FormLabel className="classic-label">
+                    Select workspace to import
+                  </FormLabel>
+                  <div style={{ marginTop: "5px" }}>
                     <WorkspaceSelector></WorkspaceSelector>
                   </div>
                 </Grid>

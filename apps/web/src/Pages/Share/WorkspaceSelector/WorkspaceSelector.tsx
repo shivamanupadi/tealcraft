@@ -33,7 +33,7 @@ function WorkspaceSelector(): ReactElement {
             setWorkspaceAnchorEl(ev.currentTarget);
           }}
         >
-          {workspace ? workspace.name : "Select workspace"}
+          {workspace ? workspace.name : "--None--"}
         </Button>
         <Menu
           anchorEl={workspaceAnchorEl}

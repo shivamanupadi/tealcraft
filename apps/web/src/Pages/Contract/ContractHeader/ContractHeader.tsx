@@ -21,11 +21,12 @@ import {
   successCompile,
 } from "../../../Redux/portal/contractReducer";
 import { REACT_APP_API_URL } from "../../../env";
+import FiddleUrl from "../../../Components/FiddleUrl/FiddleUrl";
 
 function ContractHeader(): ReactElement {
   const dispatch = useAppDispatch();
   const { showLoader, hideLoader } = useLoader();
-  const { showSnack, showException } = useSnackbar();
+  const { showException } = useSnackbar();
   const { contract, source } = useSelector(
     (state: RootState) => state.contract,
   );
@@ -34,6 +35,8 @@ function ContractHeader(): ReactElement {
 
   const [isContractRenameVisible, setContractRenameVisibility] =
     useState<boolean>(false);
+  const [isFiddleUrlVisible, setFiddleUrlVisibility] = useState<boolean>(false);
+  const [fiddleUrl, setFiddleUrl] = useState<string>("");
 
   return (
     <div className="contract-header-wrapper">
@@ -116,10 +119,10 @@ function ContractHeader(): ReactElement {
                       REACT_APP_API_URL,
                     ).createFiddle(contract.id);
                     if (fiddle) {
-                      showSnack(
+                      setFiddleUrl(
                         new CoreContractFiddle(fiddle).getFiddleUrl(),
-                        "success",
                       );
+                      setFiddleUrlVisibility(true);
                     }
                     hideLoader();
                   } catch (e) {
@@ -131,6 +134,13 @@ function ContractHeader(): ReactElement {
             >
               Share
             </Button>
+            <FiddleUrl
+              show={isFiddleUrlVisible}
+              onClose={() => {
+                setFiddleUrlVisibility(false);
+              }}
+              url={fiddleUrl}
+            ></FiddleUrl>
           </div>
           <div>
             <Button
