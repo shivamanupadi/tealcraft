@@ -3,10 +3,14 @@ import "./ContractHeader.scss";
 import { Button, Tooltip } from "@mui/material";
 import { Edit, PlayArrow } from "@mui/icons-material";
 import { useSelector } from "react-redux";
-import { CoreContract, TealCraftCompiler } from "@repo/tealcraft-sdk";
-import { useLoader } from "@repo/ui";
+import {
+  ContractFiddleClient,
+  CoreContract,
+  CoreContractFiddle,
+  TealCraftCompiler,
+} from "@repo/tealcraft-sdk";
+import { useLoader, useSnackbar } from "@repo/ui";
 import { downloadFile, getExceptionMsg } from "@repo/utils";
-import { theme } from "@repo/theme";
 import RenameContract from "./RenameContract/RenameContract";
 import { RootState, useAppDispatch } from "../../../Redux/store";
 import { loadContracts } from "../../../Redux/portal/workspaceReducer";
@@ -16,12 +20,12 @@ import {
   startCompile,
   successCompile,
 } from "../../../Redux/portal/contractReducer";
-
-const ActionButtonSx = { background: theme.palette.common.white };
+import { REACT_APP_API_URL } from "../../../env";
 
 function ContractHeader(): ReactElement {
   const dispatch = useAppDispatch();
   const { showLoader, hideLoader } = useLoader();
+  const { showSnack, showException } = useSnackbar();
   const { contract, source } = useSelector(
     (state: RootState) => state.contract,
   );
@@ -85,8 +89,7 @@ function ContractHeader(): ReactElement {
               variant={"outlined"}
               color={"primary"}
               size={"small"}
-              className="small-button"
-              sx={ActionButtonSx}
+              className="grey-button small-button"
               onClick={async () => {
                 if (contract) {
                   downloadFile(
@@ -101,12 +104,41 @@ function ContractHeader(): ReactElement {
           </div>
           <div>
             <Button
+              variant={"outlined"}
+              color={"primary"}
+              size={"small"}
+              className="small-button"
+              onClick={async () => {
+                if (contract) {
+                  try {
+                    showLoader("Creating public url ...");
+                    const fiddle = await new ContractFiddleClient(
+                      REACT_APP_API_URL,
+                    ).createFiddle(contract.id);
+                    if (fiddle) {
+                      showSnack(
+                        new CoreContractFiddle(fiddle).getFiddleUrl(),
+                        "success",
+                      );
+                    }
+                    hideLoader();
+                  } catch (e) {
+                    hideLoader();
+                    showException(e);
+                  }
+                }
+              }}
+            >
+              Share
+            </Button>
+          </div>
+          <div>
+            <Button
               startIcon={<PlayArrow fontSize={"small"}></PlayArrow>}
               variant={"outlined"}
               color={"secondary"}
               size={"small"}
               className="small-button"
-              sx={ActionButtonSx}
               onClick={async () => {
                 if (contract) {
                   try {

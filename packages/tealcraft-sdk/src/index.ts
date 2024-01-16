@@ -6,3 +6,5 @@ export * from "./clients/WorkspaceClient";
 export * from "./clients/ContractClient";
 export * from "./compiler/TealCraftCompiler";
 export * from "./constants";
+export * from "./api/fiddle/contract/ContractFiddleClient";
+export * from "./api/fiddle/contract/CoreContractFiddle";

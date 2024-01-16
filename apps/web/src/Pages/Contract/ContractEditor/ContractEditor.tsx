@@ -42,7 +42,6 @@ function ContractEditor(): ReactElement {
       noSyntaxValidation: true,
     });
 
-    console.log(CustomTypings);
     monaco.languages.typescript.typescriptDefaults.addExtraLib(
       CustomTypings,
       "file:///node_modules/@algorandfoundation/tealscript/index.d.ts",

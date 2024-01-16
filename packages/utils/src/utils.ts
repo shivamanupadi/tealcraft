@@ -32,3 +32,8 @@ export function isValidClassName(className: string): boolean {
   const regex = /^[a-zA-Z_]\w*$/;
   return regex.test(className);
 }
+
+export function getBaseUrl(): string {
+  const { protocol, host } = window.location;
+  return `${protocol}//${host}`;
+}
