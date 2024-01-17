@@ -1,10 +1,14 @@
 import { ReactElement, useEffect, useState } from "react";
 import "./ShareContract.scss";
-import { useParams } from "react-router-dom";
-import { ContractFiddleClient } from "@repo/tealcraft-sdk";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  A_Workspace,
+  ContractFiddleClient,
+  CoreContractFiddle,
+} from "@repo/tealcraft-sdk";
 import { REACT_APP_API_URL } from "../../env";
 import { ContractFiddleParams } from "@repo/types";
-import { LoadingTile } from "@repo/ui";
+import { LoadingTile, useLoader, useSnackbar } from "@repo/ui";
 import { useAppDispatch } from "../../Redux/store";
 import { loadWorkspaces } from "../../Redux/portal/portalReducer";
 import { Button, FormLabel, Grid } from "@mui/material";
@@ -12,11 +16,39 @@ import WorkspaceSelector from "../../Pages/Share/WorkspaceSelector/WorkspaceSele
 
 function ShareContract(): ReactElement {
   const dispatch = useAppDispatch();
+  const { showSnack, showException } = useSnackbar();
+  const { showLoader, hideLoader } = useLoader();
   const [fiddle, setFiddle] = useState<ContractFiddleParams | null>(null);
   const [isLoaderVisible, setLoaderVisibility] = useState<boolean>(false);
+  const [workspace, setWorkspace] = useState<null | A_Workspace>(null);
+  const navigate = useNavigate();
 
   const params = useParams();
   const { fiddleId } = params;
+
+  async function importFiddle() {
+    if (!fiddle) {
+      return;
+    }
+
+    if (!workspace) {
+      showSnack("Please select a workspace to import", "error");
+      return;
+    }
+
+    try {
+      showLoader("Importing contract ...");
+      const contract = await new CoreContractFiddle(fiddle).importToWorkspace(
+        workspace.id,
+      );
+      hideLoader();
+      showSnack("Contract imported successfully", "success");
+      navigate(`/portal/workspace/${workspace.id}/contract/${contract?.id}`);
+    } catch (e) {
+      hideLoader();
+      showException(e);
+    }
+  }
 
   async function loadFiddle(fiddleId: number) {
     try {
@@ -78,11 +110,22 @@ function ShareContract(): ReactElement {
                     Select workspace to import
                   </FormLabel>
                   <div style={{ marginTop: "5px" }}>
-                    <WorkspaceSelector></WorkspaceSelector>
+                    <WorkspaceSelector
+                      onSelect={(workspace: A_Workspace) => {
+                        setWorkspace(workspace);
+                      }}
+                    ></WorkspaceSelector>
                   </div>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                  <Button variant={"contained"} color={"primary"} fullWidth>
+                  <Button
+                    variant={"contained"}
+                    color={"primary"}
+                    fullWidth
+                    onClick={() => {
+                      importFiddle();
+                    }}
+                  >
                     Import
                   </Button>
                 </Grid>

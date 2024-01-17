@@ -8,13 +8,17 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import { Done, UnfoldMore } from "@mui/icons-material";
+import { Done, KeyboardArrowDown } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../Redux/store";
 import { A_Workspace, CoreWorkspace } from "@repo/tealcraft-sdk";
 import { theme } from "@repo/theme";
 
-function WorkspaceSelector(): ReactElement {
+type WorkspaceSelectorProps = {
+  onSelect: (workspace: A_Workspace) => void;
+};
+
+function WorkspaceSelector({ onSelect }: WorkspaceSelectorProps): ReactElement {
   const [workspaceAnchorEl, setWorkspaceAnchorEl] =
     useState<null | HTMLElement>(null);
 
@@ -28,7 +32,7 @@ function WorkspaceSelector(): ReactElement {
           color={"primary"}
           variant={"contained"}
           className="grey-button"
-          endIcon={<UnfoldMore />}
+          endIcon={<KeyboardArrowDown />}
           onClick={(ev) => {
             setWorkspaceAnchorEl(ev.currentTarget);
           }}
@@ -54,6 +58,7 @@ function WorkspaceSelector(): ReactElement {
                   e.stopPropagation();
                   setWorkspaceAnchorEl(null);
                   setWorkspace(eachWorkspace);
+                  onSelect(eachWorkspace);
                 }}
               >
                 {workspace ? (
