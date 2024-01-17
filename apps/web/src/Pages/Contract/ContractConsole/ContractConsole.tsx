@@ -11,6 +11,7 @@ import ContractSchema from "./ContractSchema/ContractSchema";
 import ContractPrograms from "./ContractPrograms/ContractPrograms";
 import { downloadFile } from "@repo/utils";
 import { RootState } from "../../../Redux/store";
+import ContractClient from "./ContractClient/ContractClient";
 
 const menuItemsSx = { fontSize: "13px" };
 function ContractConsole(): ReactElement {
@@ -146,6 +147,13 @@ function ContractConsole(): ReactElement {
                           setTab("schema");
                         }}
                       />
+                      <Tab
+                        label="Client"
+                        value="client"
+                        onClick={() => {
+                          setTab("client");
+                        }}
+                      />
                     </Tabs>
 
                     <div className="tab-content">
@@ -191,6 +199,16 @@ function ContractConsole(): ReactElement {
                               storage={result.appSpec.state.local}
                             ></ContractSchema>
                           </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+
+                      {tab === "client" && result.appSpec ? (
+                        <div>
+                          <ContractClient
+                            appSpec={result.appSpec}
+                          ></ContractClient>
                         </div>
                       ) : (
                         ""

@@ -52,8 +52,11 @@ export default {
           stream: require.resolve("stream"),
           buffer: require.resolve("buffer"),
           path: require.resolve("path-browserify"),
+          crypto: require.resolve("crypto-browserify"),
           process: require.resolve("process/browser"),
+          url: require.resolve("url"),
           perf_hooks: false,
+          fs: false,
         },
       };
       webpackConfig.module = {
