@@ -19,7 +19,9 @@
     "turbo": "latest"
   },
   "resolutions": {
-    "strip-ansi": "6.0.0"
+    "strip-ansi": "6.0.0",
+    "wrap-ansi": "7.0.0",
+    "string-width": "4.1.0"
   },
   "engines": {
     "node": ">=18"

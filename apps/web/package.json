@@ -48,7 +48,9 @@
     "build": "GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true craco build --verbose"
   },
   "resolutions": {
-    "strip-ansi": "6.0.0"
+    "strip-ansi": "6.0.0",
+    "wrap-ansi": "7.0.0",
+    "string-width": "4.1.0"
   },
   "eslintConfig": {
     "extends": [
