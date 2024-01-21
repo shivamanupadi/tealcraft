@@ -15,10 +15,15 @@ export class ContractService {
    *
    * @param {string} name - The name of the workspace.
    * @param source
+   * @param frameworkId
    * @return {Promise<ContractEntity>} - A promise that resolves to the saved workspace entity.
    */
-  async save(name: string, source: string): Promise<ContractEntity> {
-    const workspaceData = { name, source };
+  async save(
+    name: string,
+    source: string,
+    frameworkId: string,
+  ): Promise<ContractEntity> {
+    const workspaceData = { name, source, frameworkId };
     return await this.contractsRepository.save(workspaceData);
   }
 

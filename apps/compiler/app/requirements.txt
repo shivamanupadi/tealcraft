@@ -1,0 +1,2 @@
+structlog==23.2.0
+puya==0.3.0

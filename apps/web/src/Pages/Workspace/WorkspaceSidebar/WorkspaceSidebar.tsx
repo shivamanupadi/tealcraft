@@ -55,115 +55,119 @@ function WorkspaceSidebar(): ReactElement {
     <div className="workspace-sidebar-wrapper">
       <div className="workspace-sidebar-container">
         <div className="workspace-menu">
-          <TreeView
-            defaultCollapseIcon={<ExpandMore />}
-            defaultExpandIcon={<ChevronRight />}
-            defaultExpanded={["contracts"]}
-            selected={getContractNodeId(contractId)}
-            multiSelect={false}
-            sx={treeStyles}
-          >
-            <TreeItem
-              nodeId="contracts"
-              label={
-                <div className="contracts-header">
-                  <div>Contracts</div>
-                  <div>
-                    <Tooltip title="Create contract">
-                      <AddCircleOutline
-                        sx={{ marginTop: "5px" }}
-                        color={"secondary"}
-                        onClick={(e) => {
-                          setContractCreationVisibility(true);
-                          e.stopPropagation();
-                          e.preventDefault();
-                        }}
-                      ></AddCircleOutline>
-                    </Tooltip>
-                  </div>
-                </div>
-              }
+          {workspace ? (
+            <TreeView
+              defaultCollapseIcon={<ExpandMore />}
+              defaultExpandIcon={<ChevronRight />}
+              defaultExpanded={["contracts"]}
+              selected={getContractNodeId(contractId)}
+              multiSelect={false}
+              sx={treeStyles}
             >
-              {contracts.length === 0 ? (
-                <div className="no-contracts">
-                  <div>
-                    There are no contracts in this workspace. Create your first
-                    contract.
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {contracts.map((contract) => {
-                const contractInstance = new CoreContract(contract);
-                let workspaceInstance: CoreWorkspace;
-                if (workspace) {
-                  workspaceInstance = new CoreWorkspace(workspace);
-                }
-                return (
-                  <TreeItem
-                    icon={
-                      <div className="contract-icons">
-                        <DeleteOutlined
-                          className="contract-icon delete"
-                          fontSize={"small"}
+              <TreeItem
+                nodeId="contracts"
+                label={
+                  <div className="contracts-header">
+                    <div>Contracts</div>
+                    <div>
+                      <Tooltip title="Create contract">
+                        <AddCircleOutline
+                          sx={{ marginTop: "5px" }}
+                          color={"secondary"}
                           onClick={(e) => {
+                            setContractCreationVisibility(true);
                             e.stopPropagation();
                             e.preventDefault();
-
-                            confirmation({
-                              ...confirmationProps,
-                              description: `You are trying to delete the contract - ${contract.name}.`,
-                            })
-                              .then(async () => {
-                                try {
-                                  showLoader("Deleting contract...");
-                                  await new ContractClient().delete(
-                                    contract.id,
-                                  );
-                                  hideLoader();
-                                  showSnack("Contract deleted", "success");
-                                  if (workspace) {
-                                    dispatch(loadContracts(workspace));
-                                  }
-
-                                  if (currentContract) {
-                                    if (contract.id === currentContract.id) {
-                                      dispatch(resetContract());
-                                      navigate(
-                                        `/portal/workspace/${workspace?.id}`,
-                                      );
-                                    }
-                                  }
-                                } catch (e) {
-                                  hideLoader();
-                                  showException(e);
-                                }
-                              })
-                              .catch(() => {});
                           }}
-                        ></DeleteOutlined>
-                        <TextSnippetOutlined
-                          fontSize={"small"}
-                          className="contract-icon"
-                        ></TextSnippetOutlined>
-                      </div>
-                    }
-                    className="indent"
-                    key={getContractNodeId(contractInstance.getId())}
-                    nodeId={getContractNodeId(contractInstance.getId())}
-                    label={contractInstance.getNameWithExtension()}
-                    onClick={() => {
-                      navigate(
-                        `/portal/workspace/${workspaceInstance.getId()}/contract/${contractInstance.getId()}`,
-                      );
-                    }}
-                  ></TreeItem>
-                );
-              })}
-            </TreeItem>
-          </TreeView>
+                        ></AddCircleOutline>
+                      </Tooltip>
+                    </div>
+                  </div>
+                }
+              >
+                {contracts.length === 0 ? (
+                  <div className="no-contracts">
+                    <div>
+                      There are no contracts in this workspace. Create your
+                      first contract.
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+
+                {contracts.map((contract) => {
+                  const contractInstance = new CoreContract(contract);
+                  let workspaceInstance: CoreWorkspace;
+                  if (workspace) {
+                    workspaceInstance = new CoreWorkspace(workspace);
+                  }
+                  return (
+                    <TreeItem
+                      icon={
+                        <div className="contract-icons">
+                          <DeleteOutlined
+                            className="contract-icon delete"
+                            fontSize={"small"}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              e.preventDefault();
+
+                              confirmation({
+                                ...confirmationProps,
+                                description: `You are trying to delete the contract - ${contract.name}.`,
+                              })
+                                .then(async () => {
+                                  try {
+                                    showLoader("Deleting contract...");
+                                    await new ContractClient().delete(
+                                      contract.id,
+                                    );
+                                    hideLoader();
+                                    showSnack("Contract deleted", "success");
+                                    if (workspace) {
+                                      dispatch(loadContracts(workspace));
+                                    }
+
+                                    if (currentContract) {
+                                      if (contract.id === currentContract.id) {
+                                        dispatch(resetContract());
+                                        navigate(
+                                          `/portal/workspace/${workspace?.id}`,
+                                        );
+                                      }
+                                    }
+                                  } catch (e) {
+                                    hideLoader();
+                                    showException(e);
+                                  }
+                                })
+                                .catch(() => {});
+                            }}
+                          ></DeleteOutlined>
+                          <TextSnippetOutlined
+                            fontSize={"small"}
+                            className="contract-icon"
+                          ></TextSnippetOutlined>
+                        </div>
+                      }
+                      className="indent"
+                      key={getContractNodeId(contractInstance.getId())}
+                      nodeId={getContractNodeId(contractInstance.getId())}
+                      label={contractInstance.getNameWithExtension()}
+                      onClick={() => {
+                        navigate(
+                          `/portal/workspace/${workspaceInstance.getId()}/contract/${contractInstance.getId()}`,
+                        );
+                      }}
+                    ></TreeItem>
+                  );
+                })}
+              </TreeItem>
+            </TreeView>
+          ) : (
+            ""
+          )}
         </div>
 
         {workspace ? (

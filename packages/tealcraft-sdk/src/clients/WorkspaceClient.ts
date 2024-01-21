@@ -4,12 +4,16 @@ import { v4 } from "uuid";
 import { ContractClient } from "./ContractClient";
 
 export class WorkspaceClient {
-  async save(name: string): Promise<A_Workspace | undefined> {
+  async save(
+    name: string,
+    frameworkId: string = "tealscript",
+  ): Promise<A_Workspace | undefined> {
     const id = v4();
     await dataStore.workspaces.add({
       id,
       timestamp: Date.now(),
       name: name,
+      frameworkId: frameworkId,
     });
 
     return this.get(id);

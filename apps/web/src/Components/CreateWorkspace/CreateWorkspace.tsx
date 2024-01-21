@@ -10,8 +10,15 @@ import {
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { ModalGrowTransition, ShadedInput } from "@repo/theme";
-import { A_Workspace, WorkspaceClient } from "@repo/tealcraft-sdk";
+import {
+  A_Framework,
+  A_Workspace,
+  getFrameworks,
+  WorkspaceClient,
+} from "@repo/tealcraft-sdk";
 import { useLoader, useSnackbar } from "@repo/ui";
+import typescriptLogo from "../../assets/images/typescript.png";
+import pythonLogo from "../../assets/images/python.png";
 
 interface CreateWorkspaceProps {
   show: boolean;
@@ -28,8 +35,14 @@ function CreateWorkspace({
   const { showSnack, showException } = useSnackbar();
   const [name, setName] = useState<string>("");
 
+  const frameworks = getFrameworks();
+  const [selectedFramework, selectFramework] = useState<A_Framework | null>(
+    null,
+  );
+
   const clearState = () => {
     setName("");
+    selectFramework(null);
   };
 
   function handleClose() {
@@ -79,6 +92,33 @@ function CreateWorkspace({
                       />
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                      <FormLabel className="classic-label">
+                        Select framework
+                      </FormLabel>
+                      <div className="frameworks">
+                        {frameworks.map((framework) => {
+                          let logo = typescriptLogo;
+                          if (framework.id === "puya") {
+                            logo = pythonLogo;
+                          }
+                          return (
+                            <div
+                              className={`framework hover ${selectedFramework && selectedFramework.id === framework.id ? "selected" : ""}`}
+                              key={framework.id}
+                              onClick={() => {
+                                selectFramework(framework);
+                              }}
+                            >
+                              <div className="name">{framework.label}</div>
+                              <div className="logo">
+                                <img src={logo} alt="framework-logo" />
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                       <Button
                         color={"primary"}
                         fullWidth
@@ -108,6 +148,11 @@ function CreateWorkspace({
                             );
                             return;
                           }
+                          if (!selectedFramework) {
+                            showSnack(`Please select a framework`, "error");
+                            return;
+                          }
+
                           try {
                             showLoader(
                               "Checking if workspace already exists...",
@@ -128,6 +173,7 @@ function CreateWorkspace({
                             showLoader("Creating workspace...");
                             const workspace = await new WorkspaceClient().save(
                               name,
+                              selectedFramework.id,
                             );
                             hideLoader();
                             handleClose();

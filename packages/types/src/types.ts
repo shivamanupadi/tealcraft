@@ -2,6 +2,7 @@ export type ContractFiddleParams = {
   id: number;
   name: string;
   source: string;
+  frameworkId: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -9,4 +10,5 @@ export type ContractFiddleParams = {
 export type CreateContractFiddleParams = {
   name: string;
   source: string;
+  frameworkId: string;
 };

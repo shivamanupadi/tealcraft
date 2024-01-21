@@ -22,8 +22,8 @@ export class ContractController {
   async createFiddle(
     @Body() payload: CreateContractFiddleParams,
   ): Promise<ContractEntity> {
-    const { name, source } = payload;
-    return await this.contractService.save(name, source);
+    const { name, source, frameworkId } = payload;
+    return await this.contractService.save(name, source, frameworkId);
   }
 
   @Get("/:id")

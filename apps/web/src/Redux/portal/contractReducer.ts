@@ -4,8 +4,11 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import { A_Contract, ContractClient } from "@repo/tealcraft-sdk";
-import { Compiler } from "@algorandfoundation/tealscript";
+import {
+  A_CompileResult,
+  A_Contract,
+  ContractClient,
+} from "@repo/tealcraft-sdk";
 import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
 
 export type ContractCompileErrorPayload = {
@@ -110,17 +113,17 @@ export const contractSlice = createSlice({
         inProgress: true,
       };
     },
-    successCompile: (state, action: PayloadAction<Compiler>) => {
-      const compiler = action.payload;
+    successCompile: (state, action: PayloadAction<A_CompileResult>) => {
+      const compilerResult = action.payload;
       state.compile = {
         ...state.compile,
         inProgress: false,
         success: true,
         completed: true,
         result: {
-          appSpec: compiler.appSpec(),
-          AVMVersion: compiler.programVersion,
-          srcMap: compiler.srcMap,
+          appSpec: compilerResult.appSpec,
+          AVMVersion: compilerResult.AVMVersion,
+          srcMap: compilerResult.srcMap,
         },
       };
     },

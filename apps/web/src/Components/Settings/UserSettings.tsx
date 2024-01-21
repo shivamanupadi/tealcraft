@@ -54,18 +54,18 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
               <div className="user-settings-body">
                 <div className="section">
                   <div className="section-title">
-                    Demo workspace with preloaded example contracts
+                    One TealScript and one Puya workspace with preloaded example
+                    contracts.
                   </div>
                   <div className="section-body">
                     <Button
                       color={"primary"}
                       variant={"contained"}
                       sx={buttonSx}
-                      size={"small"}
                       onClick={async () => {
                         confirmation({
                           ...confirmationProps,
-                          description: `New workspace will be created with some preloaded contracts.`,
+                          description: `One TealScript and one Puya workspace with preloaded contracts will be created.`,
                         })
                           .then(async () => {
                             try {
@@ -103,7 +103,6 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
                       color={"primary"}
                       variant={"contained"}
                       sx={buttonSx}
-                      size={"small"}
                       onClick={async () => {
                         try {
                           showLoader("Exporting your data...");
@@ -129,7 +128,6 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
                       color={"primary"}
                       variant={"contained"}
                       sx={buttonSx}
-                      size={"small"}
                       component="label"
                     >
                       Import
@@ -184,7 +182,6 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
                       color={"primary"}
                       variant={"contained"}
                       sx={buttonSx}
-                      size={"small"}
                       onClick={async () => {
                         confirmation({
                           ...confirmationProps,

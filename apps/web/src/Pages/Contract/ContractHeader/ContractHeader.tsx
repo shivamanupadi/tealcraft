@@ -32,6 +32,7 @@ function ContractHeader(): ReactElement {
   );
 
   const { workspace } = useSelector((state: RootState) => state.workspace);
+  const { version } = useSelector((state: RootState) => state.compiler);
 
   const [isContractRenameVisible, setContractRenameVisibility] =
     useState<boolean>(false);
@@ -85,7 +86,7 @@ function ContractHeader(): ReactElement {
         </div>
         <div className="contract-actions">
           <div className="compiler">
-            compiler : v{new TealCraftCompiler().getTealScriptVersion()}
+            <span>compiler : v{version}</span>
           </div>
           <div>
             <Button
@@ -154,12 +155,22 @@ function ContractHeader(): ReactElement {
                   try {
                     showLoader("Compiling contract ...");
                     dispatch(startCompile());
-                    const compiler = await new TealCraftCompiler().compile({
-                      ...contract,
-                      source,
-                    });
-                    dispatch(successCompile(compiler));
+                    const compilerResult =
+                      await new TealCraftCompiler().compile({
+                        ...contract,
+                        source,
+                      });
                     hideLoader();
+                    if (compilerResult) {
+                      dispatch(successCompile(compilerResult));
+                    } else {
+                      dispatch(
+                        failureCompile({
+                          msg: "Something went wrong",
+                          stack: "",
+                        }),
+                      );
+                    }
                   } catch (e: any) {
                     hideLoader();
                     dispatch(

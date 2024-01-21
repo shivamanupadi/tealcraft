@@ -1,4 +1,6 @@
 import { A_Contract } from "../types";
+import { CoreFramework } from "../compiler/frameworks/CoreFramework";
+import { getFramework } from "../compiler/frameworks/frameworkUtils";
 
 export class CoreContract {
   private contract: A_Contract;
@@ -15,7 +17,17 @@ export class CoreContract {
     return this.contract.id;
   }
 
+  getFrameworkId(): string {
+    return this.contract.frameworkId;
+  }
+
   getNameWithExtension(): string {
-    return `${this.getName()}.ts`;
+    const framework = getFramework(this.getFrameworkId());
+    if (framework) {
+      const extension = new CoreFramework(framework).getExtension();
+      return `${this.getName()}.${extension}`;
+    }
+
+    return this.getName();
   }
 }

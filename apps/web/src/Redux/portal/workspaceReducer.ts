@@ -10,6 +10,7 @@ import {
   ContractClient,
   WorkspaceClient,
 } from "@repo/tealcraft-sdk";
+import { loadVersion } from "./compilerReducer";
 
 export type WorkspaceState = {
   workspace?: A_Workspace;
@@ -37,6 +38,7 @@ export const loadWorkspace: AsyncThunk<A_Workspace | undefined, string, {}> =
       const workspace = await new WorkspaceClient().get(workspaceId);
       if (workspace) {
         dispatch(loadContracts(workspace));
+        dispatch(loadVersion(workspace));
       }
       return workspace;
     },

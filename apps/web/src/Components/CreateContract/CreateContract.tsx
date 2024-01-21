@@ -15,6 +15,7 @@ import {
   A_Workspace,
   ContractClient,
   TealCraft,
+  TealCraftCompiler,
 } from "@repo/tealcraft-sdk";
 import { useLoader, useSnackbar } from "@repo/ui";
 
@@ -121,19 +122,15 @@ function CreateContract({
                             }
 
                             showLoader("Creating contract ...");
-                            const defaultSource = `export class ${name} extends Contract {
-  /** Target AVM 9 */
-  programVersion = 9;
-  
-  /**
-  * createApplication
-  */
-  createApplication(): boolean {
-    return true
-  }
-}`;
+
+                            const defaultSource =
+                              new TealCraftCompiler().getDefaultTemplate(
+                                workspace,
+                                name,
+                              );
+
                             const contract = await new ContractClient().save(
-                              workspace.id,
+                              workspace,
                               name,
                               defaultSource,
                             );

@@ -7,9 +7,9 @@ export class TealCraftDatabase extends Dexie {
 
   constructor() {
     super("tealcraft");
-    this.version(2).stores({
-      workspaces: "id, timestamp, name",
-      contracts: "id, timestamp, workspaceId, name, source",
+    this.version(3).stores({
+      workspaces: "id, timestamp, name, framework",
+      contracts: "id, timestamp, workspaceId, name, source, extension",
     });
   }
 }

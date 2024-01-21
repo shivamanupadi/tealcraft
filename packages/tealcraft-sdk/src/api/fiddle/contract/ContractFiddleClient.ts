@@ -12,9 +12,9 @@ export class ContractFiddleClient {
   async createFiddle(id: string): Promise<ContractFiddleParams | undefined> {
     const contract = await new ContractClient().get(id);
     if (contract) {
-      const { name, source } = contract;
+      const { name, source, frameworkId } = contract;
       const url = `${this.apiUrl}/contracts`;
-      const response = await axios.post(url, { name, source });
+      const response = await axios.post(url, { name, source, frameworkId });
       return response.data;
     }
   }

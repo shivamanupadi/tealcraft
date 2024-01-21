@@ -1,20 +1,23 @@
 import { dataStore } from "../database/datastore";
-import { A_Contract } from "../types";
+import { A_Contract, A_Workspace } from "../types";
 import { v4 } from "uuid";
+import { CoreWorkspace } from "../core/CoreWorkspace";
 
 export class ContractClient {
   async save(
-    workspaceId: string,
+    workspace: A_Workspace,
     name: string,
     source: string = "",
   ): Promise<A_Contract | undefined> {
     const id = v4();
+    const coreWorkspace = new CoreWorkspace(workspace);
     await dataStore.contracts.add({
       id,
       timestamp: Date.now(),
-      workspaceId: workspaceId,
+      workspaceId: coreWorkspace.getId(),
       name: name,
       source,
+      frameworkId: coreWorkspace.getFrameworkId(),
     });
 
     return this.get(id);

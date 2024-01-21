@@ -23,6 +23,9 @@ export class ContractEntity {
   @Column({ name: "source" })
   source: string;
 
+  @Column({ name: "framework_id" })
+  frameworkId: string;
+
   @CreateDateColumn({
     name: "created_at",
     type: "timestamp",

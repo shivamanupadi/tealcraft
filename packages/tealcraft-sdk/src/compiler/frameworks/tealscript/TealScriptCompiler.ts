@@ -1,11 +1,11 @@
 import { Project } from "ts-morph";
 import { VERSION } from "@algorandfoundation/tealscript/dist/version";
 import axios from "axios";
-import { A_Contract } from "../types";
+import { A_CompileResult, A_Contract } from "../../../types";
 import { Compiler } from "@algorandfoundation/tealscript";
 
-export class TealCraftCompiler {
-  getTealScriptVersion(): string {
+export class TealScriptCompiler {
+  async getCompilerVersion(): Promise<string> {
     return VERSION;
   }
 
@@ -30,7 +30,7 @@ export class TealCraftCompiler {
 
     const typesPath = "types/global.d.ts";
 
-    const tealScriptVersion: string = this.getTealScriptVersion();
+    const tealScriptVersion: string = await this.getCompilerVersion();
     const promises = [
       indexPath,
       typesPath,
@@ -49,7 +49,7 @@ export class TealCraftCompiler {
     return project;
   }
 
-  async compile(contract: A_Contract): Promise<Compiler> {
+  async compile(contract: A_Contract): Promise<A_CompileResult> {
     const project = await this.getProject();
 
     let { name, source } = contract;
@@ -70,6 +70,24 @@ export class TealCraftCompiler {
 
     await compiler.compile();
 
-    return compiler;
+    return {
+      appSpec: compiler.appSpec(),
+      AVMVersion: compiler.programVersion,
+      srcMap: compiler.srcMap,
+    };
+  }
+
+  getDefaultTemplate(name: string): string {
+    return `export class ${name} extends Contract {
+  /** Target AVM 9 */
+  programVersion = 9;
+  
+  /**
+  * createApplication
+  */
+  createApplication(): boolean {
+    return true
+  }
+}`;
   }
 }

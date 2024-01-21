@@ -5,6 +5,7 @@ import {
   A_Workspace,
   ContractFiddleClient,
   CoreContractFiddle,
+  CoreWorkspace,
 } from "@repo/tealcraft-sdk";
 import { REACT_APP_API_URL } from "../../env";
 import { ContractFiddleParams } from "@repo/types";
@@ -36,10 +37,18 @@ function ShareContract(): ReactElement {
       return;
     }
 
+    if (!new CoreContractFiddle(fiddle).canImportToWorkspace(workspace)) {
+      const fiddleFramework = new CoreContractFiddle(fiddle).getFramework();
+      const workspaceFramework = new CoreWorkspace(workspace).getFramework();
+      const msg = `You are trying to import ${fiddleFramework?.label} contract into ${workspaceFramework?.label} workspace`;
+      showSnack(msg, "error");
+      return;
+    }
+
     try {
       showLoader("Importing contract ...");
       const contract = await new CoreContractFiddle(fiddle).importToWorkspace(
-        workspace.id,
+        workspace,
       );
       hideLoader();
       showSnack("Contract imported successfully", "success");
@@ -93,7 +102,19 @@ function ShareContract(): ReactElement {
                   <FormLabel className="classic-label">Contract</FormLabel>
                   <div>
                     <FormLabel className="classic-value">
-                      {fiddle?.name}
+                      {fiddle
+                        ? new CoreContractFiddle(fiddle).getNameWithExtension()
+                        : ""}
+                    </FormLabel>
+                  </div>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                  <FormLabel className="classic-label">Framework</FormLabel>
+                  <div>
+                    <FormLabel className="classic-value">
+                      {fiddle
+                        ? new CoreContractFiddle(fiddle).getFramework()?.label
+                        : ""}
                     </FormLabel>
                   </div>
                 </Grid>
