@@ -34,7 +34,7 @@ export class TealCraft {
     }
 
     if (!isValidClassName(name)) {
-      throw new Error("Contract name should be a valid typescript class name");
+      throw new Error("Contract name should be a valid class name");
     }
 
     return true;

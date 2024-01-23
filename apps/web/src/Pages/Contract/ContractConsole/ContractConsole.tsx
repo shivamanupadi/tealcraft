@@ -44,16 +44,25 @@ function ContractConsole(): ReactElement {
                         fontSize={"small"}
                       ></CheckCircle>
                     </div>
-                    <div className="version">AVM : {result.AVMVersion}</div>
+                    {result.AVMVersion ? (
+                      <div className="version">AVM : {result.AVMVersion}</div>
+                    ) : (
+                      ""
+                    )}
+
                     <div>
-                      <Tooltip title="More options">
-                        <MoreVert
-                          className="more-options hover"
-                          onClick={(ev: any) => {
-                            setConsoleMenuAnchorEl(ev.currentTarget);
-                          }}
-                        ></MoreVert>
-                      </Tooltip>
+                      {result.srcMap ? (
+                        <Tooltip title="More options">
+                          <MoreVert
+                            className="more-options hover"
+                            onClick={(ev: any) => {
+                              setConsoleMenuAnchorEl(ev.currentTarget);
+                            }}
+                          ></MoreVert>
+                        </Tooltip>
+                      ) : (
+                        ""
+                      )}
 
                       <Menu
                         anchorEl={consoleMenuAnchorEl}

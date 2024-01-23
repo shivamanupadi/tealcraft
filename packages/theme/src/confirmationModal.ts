@@ -6,9 +6,8 @@ export const confirmationProps: ConfirmOptions = {
   description: "",
   confirmationText: "Confirm",
   confirmationButtonProps: {
-    color: "primary",
+    color: "secondary",
     variant: "contained",
-    className: "black-button",
   },
   cancellationButtonProps: {
     color: "inherit",

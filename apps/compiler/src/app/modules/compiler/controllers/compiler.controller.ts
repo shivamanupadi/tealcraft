@@ -14,10 +14,11 @@ import { rimraf } from "rimraf";
 import { promisify } from "util";
 
 const rimrafAsync = promisify(rimraf);
+const CONTRACTS_PATH = "./app/contracts/";
 
 @Controller("api/compiler")
 export class CompilerController {
-  containerName = "puya-compiler";
+  private containerName = "puya-compiler";
 
   @Get("version")
   async version(): Promise<string> {
@@ -34,26 +35,24 @@ export class CompilerController {
     try {
       const { source, name } = body;
       const folderName = uuidv4();
-
-      const folderPath = path.resolve(`./app/contracts/${folderName}`);
-      const filePath = path.resolve(`${folderPath}/${name}.py`);
-
-      await fs.mkdir(folderPath, { recursive: true });
-
-      await fs.writeFile(filePath, source);
-
+      const { folderPath } = await this.setupCompilation(
+        folderName,
+        name,
+        source,
+      );
       const dockerFilePath = `contracts/${folderName}`;
       const dockerCommand = `docker exec ${this.containerName} puyapy --no-output-teal ${dockerFilePath}`;
 
       try {
         await this.execCommand(dockerCommand);
         const appSpecPath = path.resolve(
-          `./app/contracts/${folderName}/application.json`,
+          `${CONTRACTS_PATH}${folderName}/application.json`,
         );
         const appSpec = await fs.readFile(appSpecPath, "utf-8");
         rimrafAsync(folderPath, {});
         return appSpec;
       } catch (e) {
+        rimrafAsync(folderPath, {});
         throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
       }
     } catch (error) {
@@ -61,15 +60,25 @@ export class CompilerController {
     }
   }
 
+  private async setupCompilation(
+    folderName: string,
+    name: string,
+    source: string,
+  ): Promise<{ folderPath: string }> {
+    const folderPath = path.resolve(`${CONTRACTS_PATH}${folderName}`);
+    const filePath = path.resolve(`${folderPath}/${name}.py`);
+    await fs.mkdir(folderPath, { recursive: true });
+    await fs.writeFile(filePath, source);
+    return { folderPath };
+  }
+
   async execCommand(command: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-      childProcess.exec(command, (error, stdout) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(stdout);
-        }
-      });
-    });
+    const execFunction = promisify(childProcess.exec);
+    try {
+      const { stdout } = await execFunction(command);
+      return stdout;
+    } catch (error) {
+      throw error;
+    }
   }
 }

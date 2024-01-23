@@ -4,13 +4,12 @@ import { useSelector } from "react-redux";
 import { Grid } from "@mui/material";
 import ContractHeader from "../ContractHeader/ContractHeader";
 import ContractConsole from "../ContractConsole/ContractConsole";
-import { RootState, useAppDispatch } from "../../../Redux/store";
+import { RootState } from "../../../Redux/store";
 import TealScriptEditor from "./TealScriptEditor/TealScriptEditor";
 import { CoreContract } from "@repo/tealcraft-sdk";
 import PuyaEditor from "./PuyaEditor/PuyaEditor";
 
 function ContractEditor(): ReactElement {
-  const dispatch = useAppDispatch();
   const { contract } = useSelector((state: RootState) => state.contract);
 
   return (
