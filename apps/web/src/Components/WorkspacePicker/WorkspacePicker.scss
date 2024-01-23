@@ -1,7 +1,32 @@
 @import "@repo/styles";
 @import "../../scss/constants";
 
+.workspaces-list {
+  .workspace-picker-name {
+    display: flex;
+    justify-content: flex-start;
+    column-gap: 10px;
+    align-items: center;
+    img {
+      width: 15px;
+      vertical-align: middle;
+      border-radius: 2px;
+    }
+  }
+}
+
 .workspace-picker-wrapper {
   .workspace-picker-container {
+    .current-workspace {
+      display: flex;
+      justify-content: flex-start;
+      column-gap: 10px;
+      align-items: center;
+      img {
+        width: 20px;
+        vertical-align: middle;
+        border-radius: 2px;
+      }
+    }
   }
 }

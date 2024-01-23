@@ -37,7 +37,19 @@ function WorkspaceSelector({ onSelect }: WorkspaceSelectorProps): ReactElement {
             setWorkspaceAnchorEl(ev.currentTarget);
           }}
         >
-          {workspace ? workspace.name : "--None--"}
+          {workspace ? (
+            <div className="selected-workspace">
+              <div>
+                <img
+                  src={new CoreWorkspace(workspace).getLogo()}
+                  alt="workspace-logo"
+                />
+              </div>
+              <div>{workspace.name}</div>
+            </div>
+          ) : (
+            "--None--"
+          )}
         </Button>
         <Menu
           anchorEl={workspaceAnchorEl}
@@ -77,7 +89,15 @@ function WorkspaceSelector({ onSelect }: WorkspaceSelectorProps): ReactElement {
                 )}
                 <ListItemText>
                   <Typography color="text.primary">
-                    {workspaceInstance.getName()}
+                    <div className="workspace-selector-name">
+                      <div>
+                        <img
+                          src={workspaceInstance.getLogo()}
+                          alt="workspace-logo"
+                        />
+                      </div>
+                      <div>{workspaceInstance.getName()}</div>
+                    </div>
                   </Typography>
                 </ListItemText>
               </MenuItem>

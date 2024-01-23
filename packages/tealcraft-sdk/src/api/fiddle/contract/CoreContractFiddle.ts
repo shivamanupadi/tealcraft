@@ -51,4 +51,9 @@ export class CoreContractFiddle {
     const frameworkId = new CoreWorkspace(workspace).getFrameworkId();
     return this.fiddle.frameworkId === frameworkId;
   }
+
+  getLogo(): string {
+    const framework = this.getFramework();
+    return framework ? new CoreFramework(framework).getLogo() : "";
+  }
 }

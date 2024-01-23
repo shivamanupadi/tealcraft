@@ -1,5 +1,6 @@
 import { A_Framework, A_Workspace } from "../types";
 import { getFramework } from "../compiler/frameworks/frameworkUtils";
+import { CoreFramework } from "../compiler/frameworks/CoreFramework";
 
 export class CoreWorkspace {
   private readonly workspace: A_Workspace;
@@ -27,5 +28,10 @@ export class CoreWorkspace {
   getFramework(): A_Framework | undefined {
     const id = this.getFrameworkId();
     return getFramework(id);
+  }
+
+  getLogo(): string {
+    const framework = this.getFramework();
+    return framework ? new CoreFramework(framework).getLogo() : "";
   }
 }

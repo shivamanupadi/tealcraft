@@ -13,12 +13,11 @@ import { ModalGrowTransition, ShadedInput } from "@repo/theme";
 import {
   A_Framework,
   A_Workspace,
+  CoreFramework,
   getFrameworks,
   WorkspaceClient,
 } from "@repo/tealcraft-sdk";
 import { useLoader, useSnackbar } from "@repo/ui";
-import typescriptLogo from "../../assets/images/typescript.png";
-import pythonLogo from "../../assets/images/python.png";
 
 interface CreateWorkspaceProps {
   show: boolean;
@@ -97,10 +96,8 @@ function CreateWorkspace({
                       </FormLabel>
                       <div className="frameworks">
                         {frameworks.map((framework) => {
-                          let logo = typescriptLogo;
-                          if (framework.id === "puya") {
-                            logo = pythonLogo;
-                          }
+                          const logo = new CoreFramework(framework).getLogo();
+
                           return (
                             <div
                               className={`framework hover ${selectedFramework && selectedFramework.id === framework.id ? "selected" : ""}`}

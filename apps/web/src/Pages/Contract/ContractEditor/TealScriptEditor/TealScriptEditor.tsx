@@ -26,6 +26,7 @@ function TealScriptEditor(): ReactElement {
   function editorMounted(editor: any, monaco: Monaco) {
     editorRef.current = editor;
 
+    // @ts-ignore
     monaco.editor.defineTheme("classic-theme", monacoLightTheme);
     monaco.editor.setTheme("classic-theme");
 

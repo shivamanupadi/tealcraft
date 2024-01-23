@@ -72,7 +72,19 @@ function WorkspacePicker(): ReactElement {
             setWorkspaceAnchorEl(ev.currentTarget);
           }}
         >
-          {currentWorkspace ? currentWorkspace.name : "Select workspace"}
+          {currentWorkspace ? (
+            <div className="current-workspace">
+              <div>
+                <img
+                  src={new CoreWorkspace(currentWorkspace).getLogo()}
+                  alt="workspace-logo"
+                />
+              </div>
+              <div>{currentWorkspace.name}</div>
+            </div>
+          ) : (
+            "Select workspace"
+          )}
         </Button>
         <Menu
           anchorEl={workspaceAnchorEl}
@@ -81,6 +93,7 @@ function WorkspacePicker(): ReactElement {
           onClose={() => {
             setWorkspaceAnchorEl(null);
           }}
+          className="workspaces-list"
         >
           {workspaces.map((workspace, index) => {
             const workspaceInstance = new CoreWorkspace(workspace);
@@ -112,7 +125,15 @@ function WorkspacePicker(): ReactElement {
                 )}
                 <ListItemText>
                   <Typography color="text.primary">
-                    {workspaceInstance.getName()}
+                    <div className="workspace-picker-name">
+                      <div>
+                        <img
+                          src={new CoreWorkspace(workspace).getLogo()}
+                          alt="workspace-logo"
+                        />
+                      </div>
+                      <div>{workspaceInstance.getName()}</div>
+                    </div>
                   </Typography>
                 </ListItemText>
 

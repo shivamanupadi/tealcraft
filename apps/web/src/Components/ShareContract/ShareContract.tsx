@@ -112,9 +112,24 @@ function ShareContract(): ReactElement {
                   <FormLabel className="classic-label">Framework</FormLabel>
                   <div>
                     <FormLabel className="classic-value">
-                      {fiddle
-                        ? new CoreContractFiddle(fiddle).getFramework()?.label
-                        : ""}
+                      {fiddle ? (
+                        <div className="framework">
+                          <div>
+                            <img
+                              src={new CoreContractFiddle(fiddle).getLogo()}
+                              alt="framework-logo"
+                            />
+                          </div>
+                          <div>
+                            {
+                              new CoreContractFiddle(fiddle).getFramework()
+                                ?.label
+                            }
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </FormLabel>
                   </div>
                 </Grid>
