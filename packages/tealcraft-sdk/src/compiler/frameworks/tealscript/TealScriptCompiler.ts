@@ -78,16 +78,18 @@ export class TealScriptCompiler {
   }
 
   getDefaultTemplate(name: string): string {
-    return `export class ${name} extends Contract {
-  /** Target AVM 9 */
-  programVersion = 9;
-  
-  /**
-  * createApplication
-  */
-  createApplication(): boolean {
-    return true
-  }
+    return `//No imports needed: Contract, LogicSig and all TealScript types are globally available
+    
+export class ${name} extends Contract {
+    /** Target AVM 9 */
+    programVersion = 9;
+
+    /**
+     * createApplication
+    */
+    createApplication(): boolean {
+        return true;
+    }
 }`;
   }
 }
