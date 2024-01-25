@@ -1,7 +1,7 @@
 import { Project } from "ts-morph";
 import { VERSION } from "@algorandfoundation/tealscript/dist/version";
 import axios from "axios";
-import { A_CompileResult, A_Contract } from "../../../types";
+import { A_CompileResult, A_Contract } from "../../../../types";
 import { Compiler } from "@algorandfoundation/tealscript";
 
 export class TealScriptCompiler {

@@ -3,24 +3,24 @@ import { ContractFiddleParams } from "@repo/types";
 import { ContractClient } from "../../../clients/ContractClient";
 
 export class ContractFiddleClient {
-  private readonly apiUrl: string;
+  private readonly fiddlesApiUrl: string;
 
-  constructor(baseUrl: string) {
-    this.apiUrl = `${baseUrl}/api`;
+  constructor(fiddlesBaseUrl: string) {
+    this.fiddlesApiUrl = fiddlesBaseUrl;
   }
 
   async createFiddle(id: string): Promise<ContractFiddleParams | undefined> {
     const contract = await new ContractClient().get(id);
     if (contract) {
       const { name, source, frameworkId } = contract;
-      const url = `${this.apiUrl}/contracts`;
+      const url = `${this.fiddlesApiUrl}/contracts`;
       const response = await axios.post(url, { name, source, frameworkId });
       return response.data;
     }
   }
 
   async getFiddle(id: number): Promise<ContractFiddleParams> {
-    const url = `${this.apiUrl}/contracts/${id}`;
+    const url = `${this.fiddlesApiUrl}/contracts/${id}`;
     const response = await axios.get(url);
     return response.data;
   }

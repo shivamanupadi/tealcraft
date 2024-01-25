@@ -16,7 +16,7 @@ import { promisify } from "util";
 const rimrafAsync = promisify(rimraf);
 const CONTRACTS_PATH = "./app/contracts/";
 
-@Controller("api/compiler")
+@Controller("compiler")
 export class CompilerController {
   private containerName = "puya-compiler";
 

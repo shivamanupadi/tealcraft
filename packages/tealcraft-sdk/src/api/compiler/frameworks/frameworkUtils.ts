@@ -1,4 +1,4 @@
-import { A_Framework } from "../../types";
+import { A_Framework } from "../../../types";
 
 export function getFrameworks(): A_Framework[] {
   return [

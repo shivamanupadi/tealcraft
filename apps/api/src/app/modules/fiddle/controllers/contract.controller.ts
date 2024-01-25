@@ -13,12 +13,12 @@ import { ContractEntity } from "../../database/Entities/contract.entity";
 
 export const Scopes = (...scopes: string[]) => SetMetadata("scopes", scopes);
 
-@Controller("api/contracts")
+@Controller("fiddles")
 export class ContractController {
   constructor(private contractService: ContractService) {}
 
-  @Post("")
-  @Scopes("api")
+  @Post("contracts")
+  @Scopes("fiddles")
   async createFiddle(
     @Body() payload: CreateContractFiddleParams,
   ): Promise<ContractEntity> {
@@ -26,8 +26,8 @@ export class ContractController {
     return await this.contractService.save(name, source, frameworkId);
   }
 
-  @Get("/:id")
-  @Scopes("api")
+  @Get("contracts/:id")
+  @Scopes("fiddles")
   async getFiddle(
     @Param("id", new ParseIntPipe()) id,
   ): Promise<ContractEntity> {

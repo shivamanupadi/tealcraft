@@ -7,4 +7,4 @@ import { DatabaseModule } from "../database/database.module";
   controllers: [ContractController],
   providers: [],
 })
-export class ContractModule {}
+export class FiddleModule {}

@@ -20,8 +20,8 @@ import {
   startCompile,
   successCompile,
 } from "../../../Redux/portal/contractReducer";
-import { REACT_APP_API_URL } from "../../../env";
 import FiddleUrl from "../../../Components/FiddleUrl/FiddleUrl";
+import { API_COMPILER_URL, API_FIDDLES_URL } from "../../../constants";
 
 function ContractHeader(): ReactElement {
   const dispatch = useAppDispatch();
@@ -117,7 +117,7 @@ function ContractHeader(): ReactElement {
                   try {
                     showLoader("Creating public url ...");
                     const fiddle = await new ContractFiddleClient(
-                      REACT_APP_API_URL,
+                      API_FIDDLES_URL,
                     ).createFiddle(contract.id);
                     if (fiddle) {
                       setFiddleUrl(
@@ -156,10 +156,15 @@ function ContractHeader(): ReactElement {
                     showLoader("Compiling contract ...");
                     dispatch(startCompile());
                     const compilerResult =
-                      await new TealCraftCompiler().compile({
-                        ...contract,
-                        source,
-                      });
+                      await new TealCraftCompiler().compile(
+                        {
+                          ...contract,
+                          source,
+                        },
+                        {
+                          compilerUrl: API_COMPILER_URL,
+                        },
+                      );
                     hideLoader();
                     if (compilerResult) {
                       dispatch(successCompile(compilerResult));

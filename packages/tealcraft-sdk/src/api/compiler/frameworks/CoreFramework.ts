@@ -1,4 +1,4 @@
-import { A_Framework } from "../../types";
+import { A_Framework } from "../../../types";
 
 export class CoreFramework {
   private framework: A_Framework;

@@ -1,6 +1,6 @@
 import { A_Framework, A_Workspace } from "../types";
-import { getFramework } from "../compiler/frameworks/frameworkUtils";
-import { CoreFramework } from "../compiler/frameworks/CoreFramework";
+import { getFramework } from "../api/compiler/frameworks/frameworkUtils";
+import { CoreFramework } from "../api/compiler/frameworks/CoreFramework";
 
 export class CoreWorkspace {
   private readonly workspace: A_Workspace;

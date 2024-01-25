@@ -1,6 +1,6 @@
 import { A_Contract } from "../types";
-import { CoreFramework } from "../compiler/frameworks/CoreFramework";
-import { getFramework } from "../compiler/frameworks/frameworkUtils";
+import { CoreFramework } from "../api/compiler/frameworks/CoreFramework";
+import { getFramework } from "../api/compiler/frameworks/frameworkUtils";
 
 export class CoreContract {
   private contract: A_Contract;

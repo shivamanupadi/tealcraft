@@ -15,7 +15,7 @@ node_modules
 
 # Testing
 coverage
-apps/compiler/app/contracts
+apps/api/app/contracts
 
 # Turbo
 .turbo

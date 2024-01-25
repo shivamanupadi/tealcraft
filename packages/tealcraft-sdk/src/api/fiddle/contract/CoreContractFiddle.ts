@@ -3,8 +3,8 @@ import { getBaseUrl } from "@repo/utils";
 import { ContractClient } from "../../../clients/ContractClient";
 import { A_Contract, A_Framework, A_Workspace } from "../../../types";
 import { CoreWorkspace } from "../../../core/CoreWorkspace";
-import { getFramework } from "../../../compiler/frameworks/frameworkUtils";
-import { CoreFramework } from "../../../compiler/frameworks/CoreFramework";
+import { getFramework } from "../../compiler/frameworks/frameworkUtils";
+import { CoreFramework } from "../../compiler/frameworks/CoreFramework";
 
 export class CoreContractFiddle {
   private fiddle: ContractFiddleParams;

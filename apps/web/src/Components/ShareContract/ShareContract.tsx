@@ -7,13 +7,13 @@ import {
   CoreContractFiddle,
   CoreWorkspace,
 } from "@repo/tealcraft-sdk";
-import { REACT_APP_API_URL } from "../../env";
 import { ContractFiddleParams } from "@repo/types";
 import { LoadingTile, useLoader, useSnackbar } from "@repo/ui";
 import { useAppDispatch } from "../../Redux/store";
 import { loadWorkspaces } from "../../Redux/portal/portalReducer";
 import { Button, FormLabel, Grid } from "@mui/material";
 import WorkspaceSelector from "../../Pages/Share/WorkspaceSelector/WorkspaceSelector";
+import { API_FIDDLES_URL } from "../../constants";
 
 function ShareContract(): ReactElement {
   const dispatch = useAppDispatch();
@@ -62,9 +62,9 @@ function ShareContract(): ReactElement {
   async function loadFiddle(fiddleId: number) {
     try {
       setLoaderVisibility(true);
-      const fiddle = await new ContractFiddleClient(
-        REACT_APP_API_URL,
-      ).getFiddle(fiddleId);
+      const fiddle = await new ContractFiddleClient(API_FIDDLES_URL).getFiddle(
+        fiddleId,
+      );
       setFiddle(fiddle);
       setLoaderVisibility(false);
     } catch (e) {

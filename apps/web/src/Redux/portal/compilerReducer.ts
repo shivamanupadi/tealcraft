@@ -5,6 +5,7 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { A_Workspace, TealCraftCompiler } from "@repo/tealcraft-sdk";
+import { API_COMPILER_URL } from "../../constants";
 
 export type CompilerState = {
   version: string;
@@ -20,10 +21,9 @@ export const loadVersion: AsyncThunk<string, A_Workspace, {}> =
     async (workspace: A_Workspace, thunkAPI): Promise<string> => {
       const { dispatch } = thunkAPI;
       dispatch(resetCompiler());
-      const version = await new TealCraftCompiler().getCompilerVersion(
-        workspace,
-      );
-      return version;
+      return await new TealCraftCompiler().getCompilerVersion(workspace, {
+        compilerUrl: API_COMPILER_URL,
+      });
     },
   );
 
