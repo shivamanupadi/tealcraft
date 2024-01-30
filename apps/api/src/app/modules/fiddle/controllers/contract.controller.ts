@@ -5,20 +5,16 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  SetMetadata,
 } from "@nestjs/common";
 import { ContractService } from "../../database/services/contract.service";
 import { CreateContractFiddleParams } from "@repo/types";
 import { ContractEntity } from "../../database/Entities/contract.entity";
-
-export const Scopes = (...scopes: string[]) => SetMetadata("scopes", scopes);
 
 @Controller("fiddles")
 export class ContractController {
   constructor(private contractService: ContractService) {}
 
   @Post("contracts")
-  @Scopes("fiddles")
   async createFiddle(
     @Body() payload: CreateContractFiddleParams,
   ): Promise<ContractEntity> {
@@ -27,7 +23,6 @@ export class ContractController {
   }
 
   @Get("contracts/:id")
-  @Scopes("fiddles")
   async getFiddle(
     @Param("id", new ParseIntPipe()) id,
   ): Promise<ContractEntity> {

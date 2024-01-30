@@ -12,12 +12,14 @@ import { v4 as uuidv4 } from "uuid";
 import childProcess from "child_process";
 import { rimraf } from "rimraf";
 import { promisify } from "util";
+import { ContractService } from "../../database/services/contract.service";
 
 const rimrafAsync = promisify(rimraf);
 const CONTRACTS_PATH = "./app/contracts/";
 
 @Controller("compiler")
 export class CompilerController {
+  constructor(private contractService: ContractService) {}
   private containerName = "puya-compiler";
 
   @Get("version")
