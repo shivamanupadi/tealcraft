@@ -15,7 +15,7 @@ export class TealCraftCompiler {
         return new TealScriptCompiler();
       }
       if (framework.id === "puya") {
-        return new PuyaCompiler(meta.compilerUrl);
+        return new PuyaCompiler(meta?.compilerUrl);
       }
     }
   }
