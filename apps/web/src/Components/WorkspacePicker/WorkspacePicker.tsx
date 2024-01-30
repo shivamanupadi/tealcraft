@@ -6,7 +6,6 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-  Typography,
 } from "@mui/material";
 import { DeleteOutlined, Done, UnfoldMore } from "@mui/icons-material";
 import { useSelector } from "react-redux";
@@ -20,9 +19,22 @@ import {
 import CreateWorkspace from "../CreateWorkspace/CreateWorkspace";
 import { loadWorkspaces } from "../../Redux/portal/portalReducer";
 import { useConfirm } from "material-ui-confirm";
-import { confirmationProps, theme } from "@repo/theme";
+import { BaseColors, confirmationProps, GreyColors } from "@repo/theme";
 import { useLoader, useSnackbar } from "@repo/ui";
 import { useNavigate, useParams } from "react-router-dom";
+
+export const workspacesMenu = {
+  ".MuiPaper-root": {
+    boxShadow:
+      "0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%) !important",
+  },
+};
+
+export const workspaceItem = {
+  fontSize: "14px",
+  color: GreyColors.FormLabel,
+  svg: {},
+};
 
 function WorkspacePicker(): ReactElement {
   const dispatch = useAppDispatch();
@@ -94,12 +106,14 @@ function WorkspacePicker(): ReactElement {
             setWorkspaceAnchorEl(null);
           }}
           className="workspaces-list"
+          sx={workspacesMenu}
         >
           {workspaces.map((workspace, index) => {
             const workspaceInstance = new CoreWorkspace(workspace);
             return (
               <MenuItem
                 key={`${workspaceInstance.getId()}-${index}`}
+                sx={workspaceItem}
                 selected={false}
                 onClick={(e) => {
                   e.preventDefault();
@@ -112,10 +126,7 @@ function WorkspacePicker(): ReactElement {
                 {currentWorkspace ? (
                   <ListItemIcon>
                     {currentWorkspace.id === workspace.id ? (
-                      <Done
-                        fontSize="small"
-                        sx={{ color: theme.palette.common.black }}
-                      />
+                      <Done fontSize="small" sx={{ color: BaseColors.Black }} />
                     ) : (
                       ""
                     )}
@@ -124,17 +135,15 @@ function WorkspacePicker(): ReactElement {
                   ""
                 )}
                 <ListItemText>
-                  <Typography color="text.primary">
-                    <div className="workspace-picker-name">
-                      <div>
-                        <img
-                          src={new CoreWorkspace(workspace).getLogo()}
-                          alt="workspace-logo"
-                        />
-                      </div>
-                      <div>{workspaceInstance.getName()}</div>
+                  <div className="workspace-picker-name">
+                    <div>
+                      <img
+                        src={new CoreWorkspace(workspace).getLogo()}
+                        alt="workspace-logo"
+                      />
                     </div>
-                  </Typography>
+                    <div>{workspaceInstance.getName()}</div>
+                  </div>
                 </ListItemText>
 
                 <DeleteOutlined

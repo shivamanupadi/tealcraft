@@ -14,6 +14,7 @@ import { loadWorkspaces } from "../../Redux/portal/portalReducer";
 import { Button, FormLabel, Grid } from "@mui/material";
 import WorkspaceSelector from "../../Pages/Share/WorkspaceSelector/WorkspaceSelector";
 import { API_FIDDLES_URL } from "../../constants";
+import { convertUTCDateToLocalDate } from "@repo/utils";
 
 function ShareContract(): ReactElement {
   const dispatch = useAppDispatch();
@@ -137,7 +138,11 @@ function ShareContract(): ReactElement {
                   <FormLabel className="classic-label">Created at</FormLabel>
                   <div>
                     <FormLabel className="classic-value">
-                      {fiddle?.createdAt}
+                      {fiddle?.createdAt
+                        ? convertUTCDateToLocalDate(
+                            new Date(fiddle.createdAt),
+                          ).toLocaleString()
+                        : ""}
                     </FormLabel>
                   </div>
                 </Grid>

@@ -37,3 +37,7 @@ export function getBaseUrl(): string {
   const { protocol, host } = window.location;
   return `${protocol}//${host}`;
 }
+
+export function convertUTCDateToLocalDate(date: Date): Date {
+  return new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
+}

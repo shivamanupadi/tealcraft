@@ -25,6 +25,4 @@ export type A_Framework = {
 
 export type A_CompileResult = {
   appSpec: AppSpec;
-  AVMVersion: number;
-  srcMap: any;
 };

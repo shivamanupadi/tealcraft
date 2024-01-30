@@ -23,8 +23,6 @@ export class PuyaCompiler {
 
     return {
       appSpec: appSpec,
-      AVMVersion: 0,
-      srcMap: "",
     };
   }
 

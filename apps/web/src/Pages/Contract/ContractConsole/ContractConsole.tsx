@@ -2,112 +2,37 @@ import { ReactElement, useState } from "react";
 import "./ContractConsole.scss";
 import { useSelector } from "react-redux";
 import { theme } from "@repo/theme";
-import { LoadingTile, useLoader, useSnackbar } from "@repo/ui";
-import { Menu, MenuItem, Tab, Tabs, Tooltip } from "@mui/material";
+import { LoadingTile } from "@repo/ui";
+import { Tab, Tabs } from "@mui/material";
 import ContractAppSpec from "./ContractAppSpec/ContractAppSpec";
-import { CheckCircle, Error, MoreVert } from "@mui/icons-material";
+import { CheckCircle, Error } from "@mui/icons-material";
 import ABIVisualizer from "./ABIVisualizer/ABIVisualizer";
 import ContractSchema from "./ContractSchema/ContractSchema";
 import ContractPrograms from "./ContractPrograms/ContractPrograms";
-import { downloadFile } from "@repo/utils";
 import { RootState } from "../../../Redux/store";
 import ContractClient from "./ContractClient/ContractClient";
 
-const menuItemsSx = { fontSize: "13px" };
 function ContractConsole(): ReactElement {
-  const { compile, contract } = useSelector(
-    (state: RootState) => state.contract,
-  );
+  const { compile } = useSelector((state: RootState) => state.contract);
   const { success, completed, inProgress, result } = compile;
 
   const [tab, setTab] = useState<string>("abi");
-  const [consoleMenuAnchorEl, setConsoleMenuAnchorEl] =
-    useState<null | HTMLElement>(null);
-
-  const { showLoader, hideLoader } = useLoader();
-  const { showSnack, showException } = useSnackbar();
 
   return (
     <div className="contract-console-wrapper">
       <div className="contract-console-container">
         <div className="contract-console-header">
-          <div>Console</div>
+          <div className="title">
+            <div>Console</div>
+          </div>
 
           <div>
             {completed ? (
-              <div className="compile-status">
+              <div>
                 {success ? (
-                  <div className="avm-details">
-                    <div>
-                      <CheckCircle
-                        color={"secondary"}
-                        fontSize={"small"}
-                      ></CheckCircle>
-                    </div>
-                    {result.AVMVersion ? (
-                      <div className="version">AVM : {result.AVMVersion}</div>
-                    ) : (
-                      ""
-                    )}
-
-                    <div>
-                      {result.srcMap ? (
-                        <Tooltip title="More options">
-                          <MoreVert
-                            className="more-options hover"
-                            onClick={(ev: any) => {
-                              setConsoleMenuAnchorEl(ev.currentTarget);
-                            }}
-                          ></MoreVert>
-                        </Tooltip>
-                      ) : (
-                        ""
-                      )}
-
-                      <Menu
-                        anchorEl={consoleMenuAnchorEl}
-                        open={Boolean(consoleMenuAnchorEl)}
-                        disableAutoFocusItem={true}
-                        onClose={() => {
-                          setConsoleMenuAnchorEl(null);
-                        }}
-                      >
-                        <MenuItem
-                          sx={menuItemsSx}
-                          selected={false}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setConsoleMenuAnchorEl(null);
-
-                            if (!result.srcMap) {
-                              showSnack("Source map not available", "warning");
-                              return;
-                            }
-
-                            try {
-                              showLoader("Downloading source map ...");
-                              downloadFile(
-                                JSON.stringify(result.srcMap),
-                                `${contract?.name}.srcMap.map`,
-                              );
-                              hideLoader();
-                            } catch (e) {
-                              hideLoader();
-                              showException(e);
-                            }
-                          }}
-                        >
-                          Download source map
-                        </MenuItem>
-                      </Menu>
-                    </div>
-                  </div>
+                  <CheckCircle color={"secondary"}></CheckCircle>
                 ) : (
-                  <div className="error-status">
-                    <div>Failed</div>
-                    <Error color={"error"} fontSize={"small"}></Error>
-                  </div>
+                  <Error color={"error"}></Error>
                 )}
               </div>
             ) : (
@@ -116,7 +41,15 @@ function ContractConsole(): ReactElement {
           </div>
         </div>
         <div className="contract-console-body">
-          <div>{inProgress ? <LoadingTile></LoadingTile> : ""}</div>
+          <div>
+            {inProgress ? (
+              <div className="loading">
+                <LoadingTile></LoadingTile>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
           <div>
             {completed ? (
               <div>
@@ -143,19 +76,20 @@ function ContractConsole(): ReactElement {
                         }}
                       />
                       <Tab
-                        label="TEAL"
-                        value="teal"
-                        onClick={() => {
-                          setTab("teal");
-                        }}
-                      />
-                      <Tab
                         label="Schema"
                         value="schema"
                         onClick={() => {
                           setTab("schema");
                         }}
                       />
+                      <Tab
+                        label="TEAL"
+                        value="teal"
+                        onClick={() => {
+                          setTab("teal");
+                        }}
+                      />
+
                       <Tab
                         label="Client"
                         value="client"

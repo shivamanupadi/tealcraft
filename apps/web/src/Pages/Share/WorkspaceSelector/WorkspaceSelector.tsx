@@ -6,13 +6,16 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-  Typography,
 } from "@mui/material";
 import { Done, KeyboardArrowDown } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../Redux/store";
 import { A_Workspace, CoreWorkspace } from "@repo/tealcraft-sdk";
 import { theme } from "@repo/theme";
+import {
+  workspaceItem,
+  workspacesMenu,
+} from "../../../Components/WorkspacePicker/WorkspacePicker";
 
 type WorkspaceSelectorProps = {
   onSelect: (workspace: A_Workspace) => void;
@@ -55,6 +58,7 @@ function WorkspaceSelector({ onSelect }: WorkspaceSelectorProps): ReactElement {
           anchorEl={workspaceAnchorEl}
           open={Boolean(workspaceAnchorEl)}
           disableAutoFocusItem={true}
+          sx={workspacesMenu}
           onClose={() => {
             setWorkspaceAnchorEl(null);
           }}
@@ -63,6 +67,7 @@ function WorkspaceSelector({ onSelect }: WorkspaceSelectorProps): ReactElement {
             const workspaceInstance = new CoreWorkspace(eachWorkspace);
             return (
               <MenuItem
+                sx={workspaceItem}
                 key={`${workspaceInstance.getId()}-${index}`}
                 selected={false}
                 onClick={(e) => {
@@ -88,17 +93,15 @@ function WorkspaceSelector({ onSelect }: WorkspaceSelectorProps): ReactElement {
                   ""
                 )}
                 <ListItemText>
-                  <Typography color="text.primary">
-                    <div className="workspace-selector-name">
-                      <div>
-                        <img
-                          src={workspaceInstance.getLogo()}
-                          alt="workspace-logo"
-                        />
-                      </div>
-                      <div>{workspaceInstance.getName()}</div>
+                  <div className="workspace-selector-name">
+                    <div>
+                      <img
+                        src={workspaceInstance.getLogo()}
+                        alt="workspace-logo"
+                      />
                     </div>
-                  </Typography>
+                    <div>{workspaceInstance.getName()}</div>
+                  </div>
                 </ListItemText>
               </MenuItem>
             );

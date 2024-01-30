@@ -73,7 +73,6 @@ function WorkspaceSidebar(): ReactElement {
                       <Tooltip title="Create contract">
                         <AddCircleOutline
                           sx={{ marginTop: "5px" }}
-                          color={"secondary"}
                           onClick={(e) => {
                             setContractCreationVisibility(true);
                             e.stopPropagation();

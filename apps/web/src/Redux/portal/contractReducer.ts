@@ -25,8 +25,6 @@ export type ContractState = {
     completed: boolean;
     result: {
       appSpec: AppSpec | null;
-      AVMVersion: number;
-      srcMap: any;
     };
     error: ContractCompileErrorPayload;
   };
@@ -39,8 +37,6 @@ const initialState: ContractState = {
     inProgress: false,
     result: {
       appSpec: null,
-      AVMVersion: 0,
-      srcMap: null,
     },
     completed: false,
     error: {
@@ -122,8 +118,6 @@ export const contractSlice = createSlice({
         completed: true,
         result: {
           appSpec: compilerResult.appSpec,
-          AVMVersion: compilerResult.AVMVersion,
-          srcMap: compilerResult.srcMap,
         },
       };
     },

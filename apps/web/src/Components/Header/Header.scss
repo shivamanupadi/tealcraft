@@ -9,29 +9,30 @@
     justify-content: space-between;
     align-items: center;
     column-gap: 15px;
-    padding: 0 30px;
     .left-section {
       display: flex;
       justify-content: flex-start;
       align-items: center;
       column-gap: 15px;
       margin-top: -5px;
-      .greyed {
-        color: map-get($grey-colors, "dark-grey");
-      }
       .logo {
-        color: map-get($base-colors, "black");
-        font-size: 16px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        column-gap: 5px;
-        img {
-          width: 20px;
+        width: $left-panel-width;
+        .logo-container {
+          margin-left: 32px;
+          color: map-get($base-colors, "black");
+          font-size: 16px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          column-gap: 5px;
+          img {
+            width: 20px;
+          }
         }
       }
     }
     .right-section {
+      padding: 0 20px;
       .actions {
       }
     }

@@ -9,7 +9,7 @@
     "dev": "turbo run dev --concurrency 15",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "clean": "rimraf node_modules packages/*/node_modules apps/*/node_modules yarn.lock"
+    "clean": "rimraf node_modules packages/*/node_modules apps/*/node_modules apps/*/dist apps/*/.turbo packages/*/.turbo yarn.lock"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

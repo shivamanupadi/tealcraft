@@ -9,9 +9,6 @@
         color: map-get($grey-colors, "form-value");
       }
       .client-code-details {
-        padding: 20px;
-        border-radius: 5px;
-        border: 1px solid map-get($grey-colors, "light-grey");
         .client-code {
           font-size: 14px;
           color: map-get($grey-colors, "form-value");

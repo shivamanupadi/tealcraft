@@ -72,8 +72,6 @@ export class TealScriptCompiler {
 
     return {
       appSpec: compiler.appSpec(),
-      AVMVersion: compiler.programVersion,
-      srcMap: compiler.srcMap,
     };
   }
 

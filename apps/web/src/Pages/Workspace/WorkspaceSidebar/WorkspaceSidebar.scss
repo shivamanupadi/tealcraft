@@ -3,7 +3,7 @@
 
 .workspace-sidebar-wrapper {
   .workspace-sidebar-container {
-    width: 240px;
+    width: $left-panel-width;
     height: calc(100vh - $header-height - 10px);
     border-right: 1px solid map-get($grey-colors, "light-grey");
     overflow-y: auto;

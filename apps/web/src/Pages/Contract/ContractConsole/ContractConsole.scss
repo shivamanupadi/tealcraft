@@ -12,6 +12,12 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      .title {
+        display: flex;
+        justify-content: flex-start;
+        column-gap: 5px;
+        align-items: center;
+      }
       .compile-status {
         .error-status {
           display: flex;
@@ -34,6 +40,9 @@
     .contract-console-body {
       height: calc(100vh - $header-height - $contract-header-height - 50px);
       overflow-y: auto;
+      .loading {
+        margin: 40px;
+      }
       .compile-result {
         .console-tabs {
           margin-bottom: 20px;

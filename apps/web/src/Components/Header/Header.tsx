@@ -17,14 +17,20 @@ function Header(): ReactElement {
       <div className="header-container">
         <div className="left-section">
           <div className="logo">
-            <div>
-              <img src={logo} alt="logo" />
-            </div>
+            <div className="logo-container">
+              <div>
+                <img src={logo} alt="logo" />
+              </div>
 
-            <div>TealCraft</div>
+              <div>TealCraft</div>
+            </div>
           </div>
-          <div className="greyed">/</div>
-          <div className="greyed">Workspaces</div>
+
+          {workspaces.length > 0 ? (
+            <div style={{ marginLeft: "20px" }}>Workspaces</div>
+          ) : (
+            ""
+          )}
           {workspaces.length > 0 ? (
             <div>
               <WorkspacePicker></WorkspacePicker>

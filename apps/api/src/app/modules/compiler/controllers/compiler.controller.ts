@@ -5,6 +5,7 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  Req,
 } from "@nestjs/common";
 import * as fs from "fs/promises";
 import * as path from "path";
@@ -33,6 +34,7 @@ export class CompilerController {
   @Post("compile")
   async compile(@Body() body: { source: string; name: string }): Promise<any> {
     try {
+      console.log(body);
       const { source, name } = body;
       const folderName = uuidv4();
       const { folderPath } = await this.setupCompilation(
