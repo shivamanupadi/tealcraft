@@ -3,13 +3,19 @@ import "./NoWorkspaces.scss";
 import { RootState, useAppDispatch } from "../../../Redux/store";
 import { loadWorkspaces } from "../../../Redux/portal/portalReducer";
 import { useNavigate } from "react-router-dom";
-import { A_Workspace, TealCraft } from "@repo/tealcraft-sdk";
+import { A_Workspace, ContractClient, TealCraft } from "@repo/tealcraft-sdk";
 import { useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import CreateWorkspace from "../../../Components/CreateWorkspace/CreateWorkspace";
 import noWorkspacesImg from "../../../assets/images/no-workspaces.png";
+import { confirmationProps } from "@repo/theme";
+import { useConfirm } from "material-ui-confirm";
+import { useLoader, useSnackbar } from "@repo/ui";
 
 function NoWorkspaces(): ReactElement {
+  const confirmation = useConfirm();
+  const { showLoader, hideLoader } = useLoader();
+  const { showSnack, showException } = useSnackbar();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -40,6 +46,50 @@ function NoWorkspaces(): ReactElement {
                   }}
                 >
                   Create workspace
+                </Button>
+                <Button
+                  variant={"contained"}
+                  color={"secondary"}
+                  sx={{ marginLeft: "10px" }}
+                  onClick={async () => {
+                    confirmation({
+                      ...confirmationProps,
+                      description: `One TealScript and one Puya workspace with preloaded contracts will be created.`,
+                    })
+                      .then(async () => {
+                        try {
+                          showLoader("Creating demo workspace...");
+                          const workspaceId =
+                            await new TealCraft().loadDemoData();
+                          hideLoader();
+
+                          showSnack(
+                            "Demo workspace created successfully",
+                            "success",
+                          );
+                          dispatch(loadWorkspaces());
+
+                          new TealCraft().saveWorkspaceId(workspaceId);
+                          const contracts =
+                            await new ContractClient().findByWorkspace(
+                              workspaceId,
+                            );
+                          if (contracts && contracts.length > 0) {
+                            navigate(
+                              `/portal/workspace/${workspaceId}/contract/${contracts[0]?.id}`,
+                            );
+                          } else {
+                            navigate(`/portal/workspace/${workspaceId}`);
+                          }
+                        } catch (e) {
+                          hideLoader();
+                          showException(e);
+                        }
+                      })
+                      .catch(() => {});
+                  }}
+                >
+                  Demo workspaces
                 </Button>
                 <CreateWorkspace
                   show={isWorkspaceCreationVisible}

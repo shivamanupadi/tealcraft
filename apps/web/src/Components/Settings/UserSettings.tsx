@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import "./UserSettings.scss";
 import { Button, Drawer } from "@mui/material";
-import { TealCraft } from "@repo/tealcraft-sdk";
+import { ContractClient, TealCraft } from "@repo/tealcraft-sdk";
 import { confirmationProps } from "@repo/theme";
 import { loadWorkspaces } from "../../Redux/portal/portalReducer";
 import { useConfirm } from "material-ui-confirm";
@@ -79,7 +79,18 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
                                 "success",
                               );
                               dispatch(loadWorkspaces());
-                              navigate(`/portal/workspace/${workspaceId}`);
+                              new TealCraft().saveWorkspaceId(workspaceId);
+                              const contracts =
+                                await new ContractClient().findByWorkspace(
+                                  workspaceId,
+                                );
+                              if (contracts && contracts.length > 0) {
+                                navigate(
+                                  `/portal/workspace/${workspaceId}/contract/${contracts[0]?.id}`,
+                                );
+                              } else {
+                                navigate(`/portal/workspace/${workspaceId}`);
+                              }
                               handleClose();
                             } catch (e) {
                               hideLoader();

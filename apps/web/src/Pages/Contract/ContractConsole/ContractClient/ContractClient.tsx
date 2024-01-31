@@ -3,14 +3,12 @@ import "./ContractClient.scss";
 import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { copyContent, downloadFile } from "@repo/utils";
 import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
-import {
-  generate,
-  writeDocumentPartsToString,
-} from "@algorandfoundation/algokit-client-generator";
+
 import { LoadingTile } from "@repo/ui";
 import { Close, TextSnippetOutlined } from "@mui/icons-material";
 import { ModalGrowTransition } from "@repo/theme";
 import { CodeBlock, github } from "react-code-blocks";
+import { TSClient } from "@repo/tealcraft-sdk/src/TSClient/TSClient";
 
 export type ContractAppSpecProps = {
   appSpec: AppSpec;
@@ -28,9 +26,8 @@ function ContractClient({ appSpec }: ContractAppSpecProps): ReactElement {
     try {
       setGenerating(true);
       setSuccess(false);
-      const client = generate(appSpec);
-      const clientAsString = writeDocumentPartsToString(client);
-      setClientCode(clientAsString);
+      const clientCode = new TSClient().generate(appSpec);
+      setClientCode(clientCode);
       setSuccess(true);
     } catch (e) {
       /* empty */

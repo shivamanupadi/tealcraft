@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../Redux/store";
 import {
   A_Workspace,
+  ContractClient,
   CoreWorkspace,
   TealCraft,
   WorkspaceClient,
@@ -115,12 +116,21 @@ function WorkspacePicker(): ReactElement {
                 key={`${workspaceInstance.getId()}-${index}`}
                 sx={workspaceItem}
                 selected={false}
-                onClick={(e) => {
+                onClick={async (e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   setWorkspaceAnchorEl(null);
                   new TealCraft().saveWorkspaceId(workspaceInstance.getId());
-                  navigate(`/portal/workspace/${workspaceInstance.getId()}`);
+                  const contracts = await new ContractClient().findByWorkspace(
+                    workspaceInstance.getId(),
+                  );
+                  if (contracts && contracts.length > 0) {
+                    navigate(
+                      `/portal/workspace/${workspaceInstance.getId()}/contract/${contracts[0]?.id}`,
+                    );
+                  } else {
+                    navigate(`/portal/workspace/${workspaceInstance.getId()}`);
+                  }
                 }}
               >
                 {currentWorkspace ? (
