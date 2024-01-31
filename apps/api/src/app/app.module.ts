@@ -6,6 +6,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ContractEntity } from "./modules/database/Entities/contract.entity";
 import { DatabaseModule } from "./modules/database/database.module";
 import { FiddleModule } from "./modules/fiddle/fiddle.module";
+import { TealerModule } from "./modules/tealer/tealer.module";
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { FiddleModule } from "./modules/fiddle/fiddle.module";
     DatabaseModule,
     FiddleModule,
     CompilerModule,
+    TealerModule,
   ],
   controllers: [],
   providers: [],

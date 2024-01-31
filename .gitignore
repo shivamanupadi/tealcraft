@@ -16,6 +16,8 @@ node_modules
 # Testing
 coverage
 apps/api/app/contracts
+apps/api/app/tealer
+apps/api/app/tealer-export
 
 # Turbo
 .turbo
