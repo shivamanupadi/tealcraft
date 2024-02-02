@@ -12,5 +12,4 @@ export * from "./api/fiddle/contract/ContractFiddleClient";
 export * from "./api/fiddle/contract/CoreContractFiddle";
 export * from "./api/compiler/frameworks/frameworkUtils";
 export * from "./api/compiler/frameworks/CoreFramework";
-export * from "./scriptRunner/scriptRunner";
 export * from "./TSClient/TSClient";
