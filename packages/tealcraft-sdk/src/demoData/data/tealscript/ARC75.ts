@@ -1,8 +1,11 @@
 export const ARC75Contract = {
   name: "ARC75",
   source: `
+type Whitelist = { account: Address; boxIndex: uint16; arc: string };
+
+// eslint-disable-next-line no-unused-vars
 class ARC75 extends Contract {
-  whitelist = BoxMap<{ account: Address; boxIndex: uint16; arc: string }, uint64[]>();
+  whitelist = BoxMap<Whitelist, uint64[]>();
 
   private verifyMBRPayment(payment: PayTxn, preMBR: uint64): void {
     verifyPayTxn(payment, {
@@ -29,7 +32,7 @@ class ARC75 extends Contract {
    */
   addAppToWhiteList(arc: string, boxIndex: uint16, appID: uint64, payment: PayTxn): void {
     const preMBR = this.app.address.minBalance;
-    const whitelist: { account: Address; boxIndex: uint16; arc: string } = { account: this.txn.sender, boxIndex: boxIndex, arc: arc };
+    const whitelist: Whitelist = { account: this.txn.sender, boxIndex: boxIndex, arc: arc };
 
     if (this.whitelist(whitelist).exists) {
       this.whitelist(whitelist).value.push(appID);
@@ -51,7 +54,7 @@ class ARC75 extends Contract {
    */
   setAppWhitelist(arc: string, boxIndex: uint16, appIDs: uint64[]): void {
     const preMBR = this.app.address.minBalance;
-    const whitelist: { account: Address; boxIndex: uint16; arc: string } = { account: this.txn.sender, boxIndex: boxIndex, arc: arc };
+    const whitelist: Whitelist = { account: this.txn.sender, boxIndex: boxIndex, arc: arc };
 
     this.whitelist(whitelist).delete();
 
@@ -60,7 +63,7 @@ class ARC75 extends Contract {
     if (preMBR > this.app.address.minBalance) {
       this.sendMBRPayment(preMBR);
     } else {
-      this.verifyMBRPayment(this.txnGroup[this.txn.groupIndex - 1], preMBR);
+      this.verifyMBRPayment(this.txnGroup[this.txn.groupIndex - 1] as PayTxn, preMBR);
     }
   }
 
@@ -73,7 +76,7 @@ class ARC75 extends Contract {
    */
   deleteWhitelist(arc: string, boxIndex: uint16): void {
     const preMBR = this.app.address.minBalance;
-    const whitelist: { account: Address; boxIndex: uint16; arc: string } = { account: this.txn.sender, boxIndex: boxIndex, arc: arc };
+    const whitelist: Whitelist = { account: this.txn.sender, boxIndex: boxIndex, arc: arc };
 
     this.whitelist(whitelist).delete();
 
@@ -90,7 +93,7 @@ class ARC75 extends Contract {
    */
   deleteAppFromWhitelist(arc: string, boxIndex: uint16, appID: uint64, index: uint64): void {
     const preMBR = this.app.address.minBalance;
-    const whitelist: { account: Address; boxIndex: uint16; arc: string } = { account: this.txn.sender, boxIndex: boxIndex, arc: arc };
+    const whitelist: Whitelist = { account: this.txn.sender, boxIndex: boxIndex, arc: arc };
 
     const spliced = this.whitelist(whitelist).value.splice(index, 1);
 
