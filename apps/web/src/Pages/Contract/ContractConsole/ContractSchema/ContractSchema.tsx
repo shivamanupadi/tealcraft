@@ -61,7 +61,7 @@ function ContractSchema({
             <Alert
               icon={false}
               color={"success"}
-              className="micro-alert primary-light-alert"
+              className="mini-alert primary-light-alert"
             >
               Bytes: {storage.num_byte_slices}
             </Alert>
@@ -69,7 +69,7 @@ function ContractSchema({
             <Alert
               icon={false}
               color={"warning"}
-              className="micro-alert secondary-light-alert"
+              className="mini-alert secondary-light-alert"
               sx={{ marginLeft: "10px" }}
             >
               Uints: {storage.num_uints}

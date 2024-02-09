@@ -1,0 +1,31 @@
+@import "@repo/styles";
+@import "../../scss/constants";
+
+.code-viewer-wrapper {
+  .code-viewer-container {
+    .code-actions {
+      display: flex;
+      justify-content: flex-start;
+      column-gap: 10px;
+      align-items: center;
+    }
+    .code-content {
+      margin-top: 25px;
+      max-height: 500px;
+      overflow: auto;
+      .source {
+        code {
+          white-space: pre-wrap !important;
+          word-wrap: break-word;
+          font-size: 12px !important;
+          background: map-get($grey-colors, "very-light-grey");
+          border-radius: 5px;
+          padding: 10px;
+        }
+        > span {
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+}

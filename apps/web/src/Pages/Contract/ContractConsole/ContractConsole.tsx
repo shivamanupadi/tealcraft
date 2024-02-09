@@ -3,19 +3,22 @@ import "./ContractConsole.scss";
 import { useSelector } from "react-redux";
 import { theme } from "@repo/theme";
 import { LoadingTile } from "@repo/ui";
-import { Tab, Tabs } from "@mui/material";
-import ContractAppSpec from "./ContractAppSpec/ContractAppSpec";
+import { Button, Tab, Tabs } from "@mui/material";
+import AppSpecMore from "./AppSpecMore/AppSpecMore";
 import { CheckCircle, Error } from "@mui/icons-material";
 import ABIVisualizer from "./ABIVisualizer/ABIVisualizer";
 import ContractSchema from "./ContractSchema/ContractSchema";
 import ContractPrograms from "./ContractPrograms/ContractPrograms";
 import { RootState } from "../../../Redux/store";
+import JsonViewer from "../../../Components/JsonViewer/JsonViewer";
 
 function ContractConsole(): ReactElement {
   const { compile } = useSelector((state: RootState) => state.contract);
   const { success, completed, inProgress, result } = compile;
 
   const [tab, setTab] = useState<string>("abi");
+  const [isAppSpecJsonVisible, setAppSpecJsonVisibility] =
+    useState<boolean>(false);
 
   return (
     <div className="contract-console-wrapper">
@@ -54,6 +57,34 @@ function ContractConsole(): ReactElement {
               <div>
                 {success ? (
                   <div className="compile-result">
+                    <div className="app-spec-header">
+                      <div>Application Spec [ARC-32]</div>
+                      <div className="app-spec-header-actions">
+                        <div>
+                          <Button
+                            color={"primary"}
+                            onClick={() => {
+                              setAppSpecJsonVisibility(true);
+                            }}
+                            variant={"outlined"}
+                            className="small-button"
+                            size={"small"}
+                          >
+                            JSON
+                          </Button>
+
+                          <JsonViewer
+                            show={isAppSpecJsonVisible}
+                            onClose={() => {
+                              setAppSpecJsonVisibility(false);
+                            }}
+                            json={result.appSpec}
+                            title={"Application spec"}
+                            fileName={`${result.appSpec?.contract.name}.application`}
+                          ></JsonViewer>
+                        </div>
+                      </div>
+                    </div>
                     <Tabs
                       value={tab}
                       className="console-tabs"
@@ -75,45 +106,27 @@ function ContractConsole(): ReactElement {
                         }}
                       />
                       <Tab
-                        label="App Spec"
-                        value="app-spec"
-                        onClick={() => {
-                          setTab("app-spec");
-                        }}
-                      />
-                      <Tab
                         label="TEAL"
                         value="teal"
                         onClick={() => {
                           setTab("teal");
                         }}
                       />
+                      <Tab
+                        label="More ..."
+                        value="more"
+                        onClick={() => {
+                          setTab("more");
+                        }}
+                      />
                     </Tabs>
 
                     <div className="tab-content">
-                      {tab === "app-spec" && result.appSpec ? (
-                        <ContractAppSpec
-                          appSpec={result.appSpec}
-                        ></ContractAppSpec>
-                      ) : (
-                        ""
-                      )}
-
                       {tab === "abi" && result.appSpec ? (
                         <ABIVisualizer
                           abi={result.appSpec?.contract}
                           appSpec={result.appSpec}
                         ></ABIVisualizer>
-                      ) : (
-                        ""
-                      )}
-
-                      {tab === "teal" && result.appSpec ? (
-                        <div>
-                          <ContractPrograms
-                            appSpec={result.appSpec}
-                          ></ContractPrograms>
-                        </div>
                       ) : (
                         ""
                       )}
@@ -135,6 +148,22 @@ function ContractConsole(): ReactElement {
                             ></ContractSchema>
                           </div>
                         </div>
+                      ) : (
+                        ""
+                      )}
+
+                      {tab === "teal" && result.appSpec ? (
+                        <div>
+                          <ContractPrograms
+                            appSpec={result.appSpec}
+                          ></ContractPrograms>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+
+                      {tab === "more" && result.appSpec ? (
+                        <AppSpecMore appSpec={result.appSpec}></AppSpecMore>
                       ) : (
                         ""
                       )}

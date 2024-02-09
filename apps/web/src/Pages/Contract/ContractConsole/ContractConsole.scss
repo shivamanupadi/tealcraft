@@ -6,7 +6,7 @@
     border-left: 1px solid map-get($grey-colors, "light-grey");
     .contract-console-header {
       border-bottom: 1px solid map-get($grey-colors, "light-grey");
-      color: map-get($grey-colors, "form-label");
+      color: map-get($grey-colors, "form-value");
       height: $contract-header-height;
       padding: 5px 25px;
       display: flex;
@@ -44,6 +44,21 @@
         margin: 40px;
       }
       .compile-result {
+        .app-spec-header {
+          font-size: 15px;
+          padding: 10px 25px;
+          color: map-get($grey-colors, "form-label");
+          box-shadow: 0 4px 2px -2px map-get($grey-colors, "light-grey");
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .app-spec-header-actions {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            column-gap: 10px;
+          }
+        }
         .console-tabs {
           margin-bottom: 20px;
           border-bottom: 1px solid map-get($grey-colors, "light-grey");

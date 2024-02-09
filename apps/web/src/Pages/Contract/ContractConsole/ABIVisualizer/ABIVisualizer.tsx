@@ -1,8 +1,6 @@
 import "./ABIVisualizer.scss";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { ABIContract, ABIContractParams } from "algosdk";
-import { downloadJson } from "@repo/utils";
-import { Button } from "@mui/material";
 import ABIMethod from "./ABIMethod/ABIMethod";
 import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
 
@@ -16,6 +14,7 @@ function ABIVisualizer({
   appSpec,
 }: AbiVisualizerProps): ReactElement {
   const abiInstance = new ABIContract(abi);
+  const [isAbiJsonVisible, setAbiJsonVisibility] = useState<boolean>(false);
   return (
     <div className={"abi-visualizer-wrapper"}>
       <div className={"abi-visualizer-container"}>
@@ -23,29 +22,13 @@ function ABIVisualizer({
           <div className="abi">
             <div className="abi-header">
               <div>
-                <div className="abi-name">Name: {abiInstance.name}</div>
+                <div className="abi-name">Name : {abiInstance.name}</div>
                 <div className="abi-desc">
                   Description:{" "}
                   {abiInstance.description
                     ? abiInstance.description
                     : "--Empty--"}
                 </div>
-              </div>
-              <div>
-                <Button
-                  color={"primary"}
-                  onClick={() => {
-                    downloadJson(
-                      abiInstance.toJSON(),
-                      `${abiInstance.name}.abi.json`,
-                    );
-                  }}
-                  variant={"outlined"}
-                  className="small-button"
-                  size={"small"}
-                >
-                  Download
-                </Button>
               </div>
             </div>
             <div className="abi-body">

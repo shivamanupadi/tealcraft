@@ -1,0 +1,23 @@
+@import "@repo/styles";
+
+.bare-call-config-wrapper {
+  .bare-call-config-container {
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid map-get($grey-colors, "light-grey");
+    margin-top: 20px;
+    .bare-call-config-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      column-gap: 15px;
+      .title {
+        font-size: 16px;
+        color: map-get($grey-colors, "form-value");
+      }
+    }
+    .bare-call-config-body {
+      margin-top: 10px;
+    }
+  }
+}

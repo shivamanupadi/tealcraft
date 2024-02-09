@@ -136,7 +136,7 @@ export const theme = createTheme({
           "&.classic-modal": {
             ".MuiDialogTitle-root": {
               color: GreyColors.DarkGrey,
-              fontSize: 18,
+              fontSize: 16,
               display: "flex",
               justifyContent: "space-between",
               alignItems: "middle",
