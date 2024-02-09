@@ -5,7 +5,7 @@ import { copyContent, downloadFile } from "@repo/utils";
 import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
 
 import { LoadingTile } from "@repo/ui";
-import { Close, TextSnippetOutlined } from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
 import { ModalGrowTransition } from "@repo/theme";
 import { CodeBlock, github } from "react-code-blocks";
 import { TSClient } from "@repo/tealcraft-sdk/src/TSClient/TSClient";
@@ -60,38 +60,35 @@ function ContractClient({ appSpec }: ContractAppSpecProps): ReactElement {
               {success ? (
                 <div className="client-code-details">
                   <div className="client-code">
-                    <div>
-                      <TextSnippetOutlined
-                        fontSize={"small"}
-                      ></TextSnippetOutlined>
-                    </div>
+                    <div>TS Client</div>
+                    <div>:</div>
                     <div>{`${appSpec.contract.name}.client.ts`}</div>
                   </div>
                   <div className="client-code-actions">
                     <Button
-                      color={"secondary"}
+                      color={"primary"}
                       onClick={() => {
                         setClientCodeVisibility(true);
                       }}
                       variant={"outlined"}
-                      className="small-button"
+                      className="small-button white-background-button"
                       size={"small"}
                     >
                       View
                     </Button>
                     <Button
-                      color={"secondary"}
+                      color={"primary"}
                       onClick={(ev) => {
                         copyContent(ev, clientCode);
                       }}
                       variant={"outlined"}
-                      className="small-button"
+                      className="small-button white-background-button"
                       size={"small"}
                     >
                       Copy
                     </Button>
                     <Button
-                      color={"secondary"}
+                      color={"primary"}
                       onClick={() => {
                         downloadFile(
                           clientCode,
@@ -99,7 +96,7 @@ function ContractClient({ appSpec }: ContractAppSpecProps): ReactElement {
                         );
                       }}
                       variant={"outlined"}
-                      className="small-button"
+                      className="small-button white-background-button"
                       size={"small"}
                     >
                       Download

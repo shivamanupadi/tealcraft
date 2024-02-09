@@ -10,7 +10,6 @@ import ABIVisualizer from "./ABIVisualizer/ABIVisualizer";
 import ContractSchema from "./ContractSchema/ContractSchema";
 import ContractPrograms from "./ContractPrograms/ContractPrograms";
 import { RootState } from "../../../Redux/store";
-import ContractClient from "./ContractClient/ContractClient";
 
 function ContractConsole(): ReactElement {
   const { compile } = useSelector((state: RootState) => state.contract);
@@ -69,13 +68,6 @@ function ContractConsole(): ReactElement {
                         }}
                       />
                       <Tab
-                        label="App spec"
-                        value="app-spec"
-                        onClick={() => {
-                          setTab("app-spec");
-                        }}
-                      />
-                      <Tab
                         label="Schema"
                         value="schema"
                         onClick={() => {
@@ -83,18 +75,17 @@ function ContractConsole(): ReactElement {
                         }}
                       />
                       <Tab
+                        label="Application spec"
+                        value="app-spec"
+                        onClick={() => {
+                          setTab("app-spec");
+                        }}
+                      />
+                      <Tab
                         label="TEAL"
                         value="teal"
                         onClick={() => {
                           setTab("teal");
-                        }}
-                      />
-
-                      <Tab
-                        label="Client"
-                        value="client"
-                        onClick={() => {
-                          setTab("client");
                         }}
                       />
                     </Tabs>
@@ -142,16 +133,6 @@ function ContractConsole(): ReactElement {
                               storage={result.appSpec.state.local}
                             ></ContractSchema>
                           </div>
-                        </div>
-                      ) : (
-                        ""
-                      )}
-
-                      {tab === "client" && result.appSpec ? (
-                        <div>
-                          <ContractClient
-                            appSpec={result.appSpec}
-                          ></ContractClient>
                         </div>
                       ) : (
                         ""

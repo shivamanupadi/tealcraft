@@ -4,6 +4,7 @@ import ReactJson from "react-json-view";
 import { Button } from "@mui/material";
 import { downloadJson } from "@repo/utils";
 import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
+import ContractClient from "../ContractClient/ContractClient";
 
 export type ContractAppSpecProps = {
   appSpec: AppSpec;
@@ -42,6 +43,8 @@ function ContractAppSpec({ appSpec }: ContractAppSpecProps): ReactElement {
             iconStyle={"square"}
             collapsed={1}
           />
+
+          <ContractClient appSpec={appSpec}></ContractClient>
         </div>
       </div>
     </div>

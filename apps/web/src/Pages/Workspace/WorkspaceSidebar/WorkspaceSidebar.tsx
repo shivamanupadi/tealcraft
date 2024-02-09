@@ -6,7 +6,6 @@ import {
   ChevronRight,
   DeleteOutlined,
   ExpandMore,
-  TextSnippetOutlined,
 } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../Redux/store";
@@ -57,8 +56,8 @@ function WorkspaceSidebar(): ReactElement {
         <div className="workspace-menu">
           {workspace ? (
             <TreeView
-              defaultCollapseIcon={<ExpandMore />}
-              defaultExpandIcon={<ChevronRight />}
+              defaultCollapseIcon={<ExpandMore className="expand-collapse" />}
+              defaultExpandIcon={<ChevronRight className="expand-collapse" />}
               defaultExpanded={["contracts"]}
               selected={getContractNodeId(contractId)}
               multiSelect={false}
@@ -66,13 +65,14 @@ function WorkspaceSidebar(): ReactElement {
             >
               <TreeItem
                 nodeId="contracts"
+                className="indent"
                 label={
                   <div className="contracts-header">
                     <div>Contracts</div>
                     <div>
                       <Tooltip title="Create contract">
                         <AddCircleOutline
-                          sx={{ marginTop: "5px" }}
+                          sx={{ marginTop: "5px", marginRight: "10px" }}
                           onClick={(e) => {
                             setContractCreationVisibility(true);
                             e.stopPropagation();
@@ -103,7 +103,7 @@ function WorkspaceSidebar(): ReactElement {
                   }
                   return (
                     <TreeItem
-                      icon={
+                      endIcon={
                         <div className="contract-icons">
                           <DeleteOutlined
                             className="contract-icon delete"
@@ -144,16 +144,12 @@ function WorkspaceSidebar(): ReactElement {
                                 .catch(() => {});
                             }}
                           ></DeleteOutlined>
-                          <TextSnippetOutlined
-                            fontSize={"small"}
-                            className="contract-icon"
-                          ></TextSnippetOutlined>
                         </div>
                       }
-                      className="indent"
                       key={getContractNodeId(contractInstance.getId())}
                       nodeId={getContractNodeId(contractInstance.getId())}
                       label={contractInstance.getNameWithExtension()}
+                      // className="indent"
                       onClick={() => {
                         navigate(
                           `/portal/workspace/${workspaceInstance.getId()}/contract/${contractInstance.getId()}`,

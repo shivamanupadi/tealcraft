@@ -10,6 +10,11 @@ export const treeStyles = {
         paddingLeft: "30px",
       },
     },
+    ".MuiTreeItem-iconContainer": {
+      ".MuiSvgIcon-root.expand-collapse": {
+        fontSize: "24px",
+      },
+    },
     ".MuiTreeItem-content": {
       paddingTop: "8px",
       paddingBottom: "8px",

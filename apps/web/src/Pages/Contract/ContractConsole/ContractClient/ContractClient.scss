@@ -3,6 +3,11 @@
 
 .contract-client-wrapper {
   .contract-client-container {
+    padding: 20px;
+    background: map-get($grey-colors, "very-light-grey");
+    border: 1px solid map-get($grey-colors, "light-grey");
+    border-radius: 10px;
+    margin-top: 20px;
     .client-body {
       .error-msg {
         font-size: 14px;
@@ -11,7 +16,7 @@
       .client-code-details {
         .client-code {
           font-size: 14px;
-          color: map-get($grey-colors, "form-value");
+          color: map-get($grey-colors, "form-label");
           display: flex;
           justify-content: flex-start;
           column-gap: 5px;
