@@ -24,6 +24,7 @@ import { TealerModule } from "./modules/tealer/tealer.module";
         synchronize: true,
         logging: true,
         ssl: true,
+        timezone: "UTC",
       }),
     }),
     DatabaseModule,

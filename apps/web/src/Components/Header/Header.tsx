@@ -26,13 +26,9 @@ function Header(): ReactElement {
             </div>
           </div>
 
+          {workspaces.length > 0 ? <div>Workspaces</div> : ""}
           {workspaces.length > 0 ? (
-            <div style={{ marginLeft: "20px" }}>Workspaces</div>
-          ) : (
-            ""
-          )}
-          {workspaces.length > 0 ? (
-            <div>
+            <div style={{ marginLeft: "7px" }}>
               <WorkspacePicker></WorkspacePicker>
             </div>
           ) : (
