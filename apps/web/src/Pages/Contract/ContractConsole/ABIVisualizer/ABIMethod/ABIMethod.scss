@@ -10,6 +10,10 @@
         box-shadow: none;
       }
       .method-header {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        column-gap: 10px;
         .method-name {
           font-size: 14px;
         }
@@ -24,13 +28,13 @@
           margin-bottom: 20px;
         }
 
-        .method-arguments {
-          .arguments-title {
+        .method-section {
+          margin-top: 20px;
+          .method-section-title {
             font-size: 14px;
-            margin-top: 20px;
             color: map-get($grey-colors, "form-value");
           }
-          .arguments-value {
+          .method-section-value {
             margin-top: 10px;
             .empty {
               font-size: 13px;

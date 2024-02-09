@@ -61,7 +61,7 @@ function ContractSchema({
             <Alert
               icon={false}
               color={"success"}
-              className="mini-alert primary-light-alert"
+              className="micro-alert primary-light-alert"
             >
               Bytes: {storage.num_byte_slices}
             </Alert>
@@ -69,7 +69,7 @@ function ContractSchema({
             <Alert
               icon={false}
               color={"warning"}
-              className="mini-alert secondary-light-alert"
+              className="micro-alert secondary-light-alert"
               sx={{ marginLeft: "10px" }}
             >
               Uints: {storage.num_uints}
@@ -87,7 +87,6 @@ function ContractSchema({
                         <TableRow>
                           <TableCell>Key</TableCell>
                           <TableCell>Type</TableCell>
-                          <TableCell>Description</TableCell>
                           <TableCell>Variant</TableCell>
                         </TableRow>
                       </TableHead>
@@ -106,7 +105,6 @@ function ContractSchema({
                             >
                               <TableCell>{row?.key}</TableCell>
                               <TableCell>{row?.type}</TableCell>
-                              <TableCell>{row?.descr}</TableCell>
                               <TableCell>
                                 <div>Declared</div>
                               </TableCell>

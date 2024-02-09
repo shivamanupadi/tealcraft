@@ -4,13 +4,16 @@ import { ABIContract, ABIContractParams } from "algosdk";
 import { downloadJson } from "@repo/utils";
 import { Button } from "@mui/material";
 import ABIMethod from "./ABIMethod/ABIMethod";
+import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
 
 type AbiVisualizerProps = {
   abi: ABIContractParams;
+  appSpec: AppSpec;
 };
 
 function ABIVisualizer({
   abi = { methods: [], name: "" },
+  appSpec,
 }: AbiVisualizerProps): ReactElement {
   const abiInstance = new ABIContract(abi);
   return (
@@ -54,7 +57,10 @@ function ABIVisualizer({
                   {abiInstance.methods.map((method, index) => {
                     return (
                       <div key={"abi-method-" + index}>
-                        <ABIMethod method={method.toJSON()}></ABIMethod>
+                        <ABIMethod
+                          method={method.toJSON()}
+                          appSpec={appSpec}
+                        ></ABIMethod>
                       </div>
                     );
                   })}

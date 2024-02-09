@@ -100,6 +100,17 @@ export const theme = createTheme({
             textAlign: "center",
             ".MuiAlert-message": {},
           },
+          "&.micro-alert": {
+            padding: "0px 8px",
+            borderRadius: "3px",
+            display: "inline-block",
+            fontSize: "12px",
+            fontWeight: "bold",
+            textAlign: "center",
+            ".MuiAlert-message": {
+              padding: "3px 0",
+            },
+          },
           "&.primary-light-alert": {
             backgroundColor: ThemeColors.PrimaryLight,
             color: `#58595B`,

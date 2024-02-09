@@ -58,7 +58,7 @@ function ContractConsole(): ReactElement {
                       value={tab}
                       className="console-tabs"
                       orientation="horizontal"
-                      variant={"standard"}
+                      variant={"fullWidth"}
                     >
                       <Tab
                         label="ABI"
@@ -75,7 +75,7 @@ function ContractConsole(): ReactElement {
                         }}
                       />
                       <Tab
-                        label="Application spec"
+                        label="App Spec"
                         value="app-spec"
                         onClick={() => {
                           setTab("app-spec");
@@ -102,6 +102,7 @@ function ContractConsole(): ReactElement {
                       {tab === "abi" && result.appSpec ? (
                         <ABIVisualizer
                           abi={result.appSpec?.contract}
+                          appSpec={result.appSpec}
                         ></ABIVisualizer>
                       ) : (
                         ""
@@ -150,20 +151,6 @@ function ContractConsole(): ReactElement {
                           Message
                         </div>
                         <div className="content">{compile.error.msg}</div>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-
-                    {compile.error.stack ? (
-                      <div className="error">
-                        <div
-                          className="title"
-                          style={{ color: theme.palette.warning.dark }}
-                        >
-                          Call stack
-                        </div>
-                        <div className="content">{compile.error.stack}</div>
                       </div>
                     ) : (
                       ""
