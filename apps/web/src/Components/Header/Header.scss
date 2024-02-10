@@ -19,15 +19,19 @@
         .logo-container {
           margin-left: 32px;
           color: map-get($base-colors, "black");
-          font-size: 16px;
+          font-size: 18px;
           display: flex;
           justify-content: flex-start;
           align-items: center;
           column-gap: 5px;
           img {
-            width: 20px;
+            width: 24px;
           }
         }
+      }
+      .workspaces-title {
+        color: map-get($grey-colors, "form-label");
+        font-size: 16px;
       }
     }
     .right-section {

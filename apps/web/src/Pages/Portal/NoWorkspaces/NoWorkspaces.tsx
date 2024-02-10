@@ -38,71 +38,74 @@ function NoWorkspaces(): ReactElement {
                 <div>Looks like you don't have any workspaces.</div>
                 <div>Create a new workspace to get started.</div>
               </div>
-              <div>
-                <Button
-                  variant={"contained"}
-                  onClick={() => {
-                    setWorkspaceCreationVisibility(true);
-                  }}
-                >
-                  Create workspace
-                </Button>
-                <Button
-                  variant={"contained"}
-                  color={"secondary"}
-                  sx={{ marginLeft: "10px" }}
-                  onClick={async () => {
-                    confirmation({
-                      ...confirmationProps,
-                      description: `One TealScript and one Puya workspace with preloaded contracts will be created.`,
-                    })
-                      .then(async () => {
-                        try {
-                          showLoader("Creating demo workspace...");
-                          const workspaceId =
-                            await new TealCraft().loadDemoData();
-                          hideLoader();
-
-                          showSnack(
-                            "Demo workspace created successfully",
-                            "success",
-                          );
-                          dispatch(loadWorkspaces());
-
-                          new TealCraft().saveWorkspaceId(workspaceId);
-                          const contracts =
-                            await new ContractClient().findByWorkspace(
-                              workspaceId,
-                            );
-                          if (contracts && contracts.length > 0) {
-                            navigate(
-                              `/portal/workspace/${workspaceId}/contract/${contracts[0]?.id}`,
-                            );
-                          } else {
-                            navigate(`/portal/workspace/${workspaceId}`);
-                          }
-                        } catch (e) {
-                          hideLoader();
-                          showException(e);
-                        }
+              <div className="actions">
+                <div>
+                  <Button
+                    variant={"outlined"}
+                    color={"secondary"}
+                    onClick={async () => {
+                      confirmation({
+                        ...confirmationProps,
+                        description: `One TealScript and one Puya workspace with preloaded contracts will be created.`,
                       })
-                      .catch(() => {});
-                  }}
-                >
-                  Demo workspaces
-                </Button>
-                <CreateWorkspace
-                  show={isWorkspaceCreationVisible}
-                  onClose={() => {
-                    setWorkspaceCreationVisibility(false);
-                  }}
-                  onSuccess={(workspace: A_Workspace) => {
-                    setWorkspaceCreationVisibility(false);
-                    dispatch(loadWorkspaces());
-                    new TealCraft().saveWorkspaceId(workspace.id);
-                    navigate(`/portal/workspace/${workspace.id}`);
-                  }}
-                ></CreateWorkspace>
+                        .then(async () => {
+                          try {
+                            showLoader("Creating demo workspace...");
+                            const workspaceId =
+                              await new TealCraft().loadDemoData();
+                            hideLoader();
+
+                            showSnack(
+                              "Demo workspace created successfully",
+                              "success",
+                            );
+                            dispatch(loadWorkspaces());
+
+                            new TealCraft().saveWorkspaceId(workspaceId);
+                            const contracts =
+                              await new ContractClient().findByWorkspace(
+                                workspaceId,
+                              );
+                            if (contracts && contracts.length > 0) {
+                              navigate(
+                                `/portal/workspace/${workspaceId}/contract/${contracts[0]?.id}`,
+                              );
+                            } else {
+                              navigate(`/portal/workspace/${workspaceId}`);
+                            }
+                          } catch (e) {
+                            hideLoader();
+                            showException(e);
+                          }
+                        })
+                        .catch(() => {});
+                    }}
+                  >
+                    Demo workspaces
+                  </Button>
+                  <CreateWorkspace
+                    show={isWorkspaceCreationVisible}
+                    onClose={() => {
+                      setWorkspaceCreationVisibility(false);
+                    }}
+                    onSuccess={(workspace: A_Workspace) => {
+                      setWorkspaceCreationVisibility(false);
+                      dispatch(loadWorkspaces());
+                      new TealCraft().saveWorkspaceId(workspace.id);
+                      navigate(`/portal/workspace/${workspace.id}`);
+                    }}
+                  ></CreateWorkspace>
+                </div>
+                <div>
+                  <Button
+                    variant={"contained"}
+                    onClick={() => {
+                      setWorkspaceCreationVisibility(true);
+                    }}
+                  >
+                    Create workspace
+                  </Button>
+                </div>
               </div>
             </div>
           ) : (

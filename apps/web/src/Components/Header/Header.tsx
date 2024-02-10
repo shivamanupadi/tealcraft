@@ -26,9 +26,15 @@ function Header(): ReactElement {
             </div>
           </div>
 
-          {workspaces.length > 0 ? <div>Workspaces</div> : ""}
           {workspaces.length > 0 ? (
-            <div style={{ marginLeft: "7px" }}>
+            <div className="workspaces-title">
+              Workspaces&nbsp;&nbsp;/&nbsp;&nbsp;
+            </div>
+          ) : (
+            ""
+          )}
+          {workspaces.length > 0 ? (
+            <div>
               <WorkspacePicker></WorkspacePicker>
             </div>
           ) : (

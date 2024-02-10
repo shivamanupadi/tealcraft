@@ -20,7 +20,7 @@ import {
 import CreateWorkspace from "../CreateWorkspace/CreateWorkspace";
 import { loadWorkspaces } from "../../Redux/portal/portalReducer";
 import { useConfirm } from "material-ui-confirm";
-import { BaseColors, confirmationProps, GreyColors } from "@repo/theme";
+import { confirmationProps, GreyColors } from "@repo/theme";
 import { useLoader, useSnackbar } from "@repo/ui";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -136,7 +136,7 @@ function WorkspacePicker(): ReactElement {
                 {currentWorkspace ? (
                   <ListItemIcon>
                     {currentWorkspace.id === workspace.id ? (
-                      <Done fontSize="small" sx={{ color: BaseColors.Black }} />
+                      <Done fontSize="small" />
                     ) : (
                       ""
                     )}
@@ -158,7 +158,6 @@ function WorkspacePicker(): ReactElement {
 
                 <DeleteOutlined
                   fontSize="small"
-                  color={"error"}
                   sx={{ marginLeft: "15px" }}
                   onClick={async (e) => {
                     e.stopPropagation();
@@ -194,14 +193,18 @@ function WorkspacePicker(): ReactElement {
           })}
 
           <MenuItem
-            sx={{ marginTop: "10px", "&:hover": { background: "none" } }}
+            sx={{
+              marginTop: "10px",
+              marginBottom: "5px",
+              "&:hover": { background: "none" },
+            }}
             selected={false}
           >
             <Button
               color={"primary"}
               variant={"contained"}
               size={"small"}
-              fullWidth
+              sx={{ marginLeft: "32px" }}
               onClick={async () => {
                 setWorkspaceAnchorEl(null);
                 setWorkspaceCreationVisibility(true);

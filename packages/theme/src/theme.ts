@@ -72,8 +72,8 @@ export const theme = createTheme({
             color: BaseColors.White,
           },
           "&.grey-button": {
-            background: GreyColors.LightGrey,
-            color: GreyColors.DarkGrey,
+            background: GreyColors.F8F8F9,
+            color: GreyColors.FormLabel,
           },
           "&.white-background-button": {
             background: BaseColors.White,
