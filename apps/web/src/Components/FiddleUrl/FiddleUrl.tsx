@@ -28,7 +28,7 @@ function FiddleUrl({ show, onClose, url }: CreateContractProps): ReactElement {
           className="classic-modal"
         >
           <DialogTitle>
-            <div>Public url</div>
+            <div>Public URL</div>
             <div>
               <Close onClick={handleClose} className="close-modal" />
             </div>
@@ -46,8 +46,8 @@ function FiddleUrl({ show, onClose, url }: CreateContractProps): ReactElement {
                 </div>
                 <div className="actions">
                   <Button
-                    variant={"contained"}
-                    color="secondary"
+                    variant={"outlined"}
+                    color="primary"
                     onClick={(ev) => {
                       copyContent(ev, url);
                     }}

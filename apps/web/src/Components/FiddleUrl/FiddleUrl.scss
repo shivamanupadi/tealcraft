@@ -11,7 +11,10 @@
       word-break: break-all;
       line-height: 1.3;
       color: map-get($grey-colors, "form-label");
-      text-decoration: underline;
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
     }
     .actions {
       margin-top: 40px;

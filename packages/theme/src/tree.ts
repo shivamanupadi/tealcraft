@@ -13,17 +13,21 @@ export const treeStyles = {
     ".MuiTreeItem-iconContainer": {
       ".MuiSvgIcon-root.expand-collapse": {
         fontSize: "24px",
+        color: GreyColors.FormLabel,
       },
     },
     ".MuiTreeItem-content": {
       paddingTop: "8px",
       paddingBottom: "8px",
       "&.Mui-selected": {
-        background: "#F5F5F5",
+        background: GreyColors.F8F8F9,
+        ".MuiTreeItem-label": {
+          color: GreyColors.FormLabel,
+        },
       },
       ".MuiTreeItem-label": {
-        fontSize: "13px",
-        color: GreyColors.FormValue,
+        fontSize: "14px",
+        color: GreyColors.A7A9AC,
       },
     },
   },

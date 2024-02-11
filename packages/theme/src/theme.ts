@@ -135,7 +135,7 @@ export const theme = createTheme({
         root: {
           "&.classic-modal": {
             ".MuiDialogTitle-root": {
-              color: GreyColors.DarkGrey,
+              color: GreyColors.FormLabel,
               fontSize: 16,
               display: "flex",
               justifyContent: "space-between",
@@ -155,7 +155,6 @@ export const theme = createTheme({
         root: {
           "&.classic-label": {
             fontSize: "14px",
-            fontWeight: "bold",
             color: GreyColors.FormLabel,
           },
           "&.classic-value": {
@@ -176,7 +175,8 @@ export const ShadedInput = styled(InputBase)<InputBaseProps>(() => {
     marginTop: 5,
     border: "none",
     fontSize: "14px",
-    background: "#F1F2F2",
+    background: GreyColors.F8F8F9,
     borderRadius: 5,
+    color: GreyColors.A7A9AC,
   };
 });

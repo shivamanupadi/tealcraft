@@ -118,8 +118,8 @@ function CreateWorkspace({
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                       <Button
                         color={"primary"}
-                        fullWidth
                         type="submit"
+                        fullWidth
                         variant={"contained"}
                         sx={{ marginTop: "20px" }}
                         onClick={async () => {

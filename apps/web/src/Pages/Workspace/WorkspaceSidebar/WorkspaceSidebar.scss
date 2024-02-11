@@ -19,8 +19,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        color: map-get($base-colors, "black");
-        font-size: 16px;
+        color: map-get($grey-colors, "form-label");
+        font-size: 18px;
       }
       .MuiTreeItem-root {
         &:hover {
