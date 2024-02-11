@@ -8,9 +8,9 @@
     justify-content: space-between;
     align-items: center;
     column-gap: 15px;
-    border-bottom: 1px solid map-get($grey-colors, "light-grey");
+    border-bottom: 1px solid map-get($grey-colors, "E6E7E8");
     height: $contract-header-height;
-    background: map-get($grey-colors, "very-light-grey");
+    background: map-get($grey-colors, "F8F8F9");
     .contract-name-container {
       .contract-name {
         display: flex;
@@ -29,7 +29,7 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      column-gap: 10px;
+      column-gap: 15px;
       .compiler {
         color: map-get($grey-colors, "form-label");
         font-size: 13px;

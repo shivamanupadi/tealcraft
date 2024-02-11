@@ -146,9 +146,8 @@ function ContractHeader(): ReactElement {
           <div>
             <Button
               startIcon={<PlayArrow fontSize={"small"}></PlayArrow>}
-              variant={"outlined"}
-              color={"secondary"}
-              size={"small"}
+              variant={"contained"}
+              color={"primary"}
               className="small-button"
               onClick={async () => {
                 if (contract) {
