@@ -90,6 +90,8 @@ function ContractConsole(): ReactElement {
                       className="console-tabs"
                       orientation="horizontal"
                       variant={"fullWidth"}
+                      indicatorColor={"secondary"}
+                      textColor="secondary"
                     >
                       <Tab
                         label="ABI"

@@ -165,6 +165,16 @@ export const theme = createTheme({
         },
       },
     },
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          "& .MuiButtonBase-root": {
+            color: GreyColors.A7A9AC,
+          },
+          "& .MuiButtonBase-root.Mui-selected": {},
+        },
+      },
+    },
   },
 });
 
