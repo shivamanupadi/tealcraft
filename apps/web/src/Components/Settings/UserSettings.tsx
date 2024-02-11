@@ -9,6 +9,7 @@ import { useLoader, useSnackbar } from "@repo/ui";
 import { useAppDispatch } from "../../Redux/store";
 import { useNavigate } from "react-router-dom";
 import { Close } from "@mui/icons-material";
+import { Fragment } from "react";
 
 interface UserSettingsProps {
   show: boolean;
@@ -32,202 +33,207 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
 
   return (
     <div>
-      <Drawer
-        sx={{
-          ".MuiDrawer-paper": {
-            width: "450px",
-            background: GreyColors.F8F8F9,
-          },
-        }}
-        ModalProps={{
-          BackdropProps: {
-            style: {
-              background: "transparent",
+      <Fragment>
+        <Drawer
+          sx={{
+            ".MuiDrawer-paper": {
+              width: "450px",
+              background: GreyColors.F8F8F9,
             },
-          },
-        }}
-        anchor={"right"}
-        open={show}
-        onClose={handleClose}
-        transitionDuration={2000}
-      >
-        <div className="user-settings-wrapper">
-          <div className="user-settings-container">
-            <div className="user-settings-header">
-              <div className="title">Settings</div>
-              <div className="actions">
-                <Close className="hover" onClick={handleClose}></Close>
-              </div>
-            </div>
-            <div className="user-settings-body">
-              <div className="section">
-                <div className="section-title">
-                  One TealScript and one Puya workspace with preloaded example
-                  contracts.
+          }}
+          ModalProps={{
+            BackdropProps: {
+              style: {
+                background: "transparent",
+              },
+            },
+          }}
+          anchor={"right"}
+          open={show}
+          onClose={handleClose}
+        >
+          <div className="user-settings-wrapper">
+            <div className="user-settings-container">
+              <div className="user-settings-header">
+                <div className="title">Settings</div>
+                <div className="actions">
+                  <Close className="hover" onClick={handleClose}></Close>
                 </div>
-                <div className="section-body">
-                  <Button
-                    color={"primary"}
-                    variant={"contained"}
-                    sx={buttonSx}
-                    onClick={async () => {
-                      confirmation({
-                        ...confirmationProps,
-                        description: `One TealScript and one Puya workspace with preloaded contracts will be created.`,
-                      })
-                        .then(async () => {
-                          try {
-                            showLoader("Creating demo workspace...");
-                            const workspaceId =
-                              await new TealCraft().loadDemoData();
-                            hideLoader();
-
-                            showSnack(
-                              "Demo workspace created successfully",
-                              "success",
-                            );
-                            dispatch(loadWorkspaces());
-                            new TealCraft().saveWorkspaceId(workspaceId);
-                            const contracts =
-                              await new ContractClient().findByWorkspace(
-                                workspaceId,
-                              );
-                            if (contracts && contracts.length > 0) {
-                              navigate(
-                                `/portal/workspace/${workspaceId}/contract/${contracts[0]?.id}`,
-                              );
-                            } else {
-                              navigate(`/portal/workspace/${workspaceId}`);
-                            }
-                            handleClose();
-                          } catch (e) {
-                            hideLoader();
-                            showException(e);
-                          }
+              </div>
+              <div className="user-settings-body">
+                <div className="section">
+                  <div className="section-title">
+                    One TealScript and one Puya workspace with preloaded example
+                    contracts.
+                  </div>
+                  <div className="section-body">
+                    <Button
+                      color={"primary"}
+                      variant={"contained"}
+                      sx={buttonSx}
+                      onClick={async () => {
+                        confirmation({
+                          ...confirmationProps,
+                          description: `One TealScript and one Puya workspace with preloaded contracts will be created.`,
                         })
-                        .catch(() => {});
-                    }}
-                  >
-                    Create
-                  </Button>
-                </div>
-              </div>
-
-              <div className="section">
-                <div className="section-title">Export your TealCraft data</div>
-                <div className="section-body">
-                  <Button
-                    color={"primary"}
-                    variant={"contained"}
-                    sx={buttonSx}
-                    onClick={async () => {
-                      try {
-                        showLoader("Exporting your data...");
-                        await new TealCraft().exportData();
-                        hideLoader();
-                      } catch (e) {
-                        hideLoader();
-                        showException(e);
-                      }
-                    }}
-                  >
-                    Export
-                  </Button>
-                </div>
-              </div>
-
-              <div className="section">
-                <div className="section-title">Import your TealCraft data</div>
-                <div className="section-body">
-                  <Button
-                    color={"primary"}
-                    variant={"contained"}
-                    sx={buttonSx}
-                    component="label"
-                  >
-                    Import
-                    <input
-                      type="file"
-                      accept=".json"
-                      hidden
-                      multiple={false}
-                      onChange={async (ev) => {
-                        // @ts-ignore
-                        const file = ev.target.files[0];
-
-                        const reader = new FileReader();
-                        reader.addEventListener(
-                          "load",
-                          async function () {
+                          .then(async () => {
                             try {
-                              showLoader("Importing data ...");
-                              const data = reader.result?.toString();
-                              await new TealCraft().importData(data);
+                              showLoader("Creating demo workspace...");
+                              const workspaceId =
+                                await new TealCraft().loadDemoData();
+                              hideLoader();
 
                               showSnack(
-                                "Data imported successfully",
+                                "Demo workspace created successfully",
                                 "success",
                               );
                               dispatch(loadWorkspaces());
-                              hideLoader();
+                              new TealCraft().saveWorkspaceId(workspaceId);
+                              const contracts =
+                                await new ContractClient().findByWorkspace(
+                                  workspaceId,
+                                );
+                              if (contracts && contracts.length > 0) {
+                                navigate(
+                                  `/portal/workspace/${workspaceId}/contract/${contracts[0]?.id}`,
+                                );
+                              } else {
+                                navigate(`/portal/workspace/${workspaceId}`);
+                              }
                               handleClose();
-                            } catch (e: any) {
+                            } catch (e) {
                               hideLoader();
                               showException(e);
                             }
-                          },
-                          false,
-                        );
+                          })
+                          .catch(() => {});
+                      }}
+                    >
+                      Create
+                    </Button>
+                  </div>
+                </div>
 
-                        if (file) {
-                          reader.readAsText(file);
+                <div className="section">
+                  <div className="section-title">
+                    Export your TealCraft data
+                  </div>
+                  <div className="section-body">
+                    <Button
+                      color={"primary"}
+                      variant={"contained"}
+                      sx={buttonSx}
+                      onClick={async () => {
+                        try {
+                          showLoader("Exporting your data...");
+                          await new TealCraft().exportData();
+                          hideLoader();
+                        } catch (e) {
+                          hideLoader();
+                          showException(e);
                         }
                       }}
-                    />
-                  </Button>
+                    >
+                      Export
+                    </Button>
+                  </div>
                 </div>
-              </div>
 
-              <div className="section">
-                <div className="section-title">
-                  Factory reset your TealCraft data
-                </div>
-                <div className="section-body">
-                  <Button
-                    color={"primary"}
-                    variant={"contained"}
-                    sx={buttonSx}
-                    onClick={async () => {
-                      confirmation({
-                        ...confirmationProps,
-                        description: `Complete TealCraft data will be deleted.`,
-                      })
-                        .then(async () => {
-                          try {
-                            showLoader("Factory reset in progress...");
-                            await new TealCraft().factoryReset();
-                            hideLoader();
+                <div className="section">
+                  <div className="section-title">
+                    Import your TealCraft data
+                  </div>
+                  <div className="section-body">
+                    <Button
+                      color={"primary"}
+                      variant={"contained"}
+                      sx={buttonSx}
+                      component="label"
+                    >
+                      Import
+                      <input
+                        type="file"
+                        accept=".json"
+                        hidden
+                        multiple={false}
+                        onChange={async (ev) => {
+                          // @ts-ignore
+                          const file = ev.target.files[0];
 
-                            showSnack("Factory reset successful.", "success");
-                            dispatch(loadWorkspaces());
-                            navigate(`/portal`);
-                            handleClose();
-                          } catch (e) {
-                            hideLoader();
-                            showException(e);
+                          const reader = new FileReader();
+                          reader.addEventListener(
+                            "load",
+                            async function () {
+                              try {
+                                showLoader("Importing data ...");
+                                const data = reader.result?.toString();
+                                await new TealCraft().importData(data);
+
+                                showSnack(
+                                  "Data imported successfully",
+                                  "success",
+                                );
+                                dispatch(loadWorkspaces());
+                                hideLoader();
+                                handleClose();
+                              } catch (e: any) {
+                                hideLoader();
+                                showException(e);
+                              }
+                            },
+                            false,
+                          );
+
+                          if (file) {
+                            reader.readAsText(file);
                           }
+                        }}
+                      />
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="section">
+                  <div className="section-title">
+                    Factory reset your TealCraft data
+                  </div>
+                  <div className="section-body">
+                    <Button
+                      color={"primary"}
+                      variant={"contained"}
+                      sx={buttonSx}
+                      onClick={async () => {
+                        confirmation({
+                          ...confirmationProps,
+                          description: `Complete TealCraft data will be deleted.`,
                         })
-                        .catch(() => {});
-                    }}
-                  >
-                    Reset
-                  </Button>
+                          .then(async () => {
+                            try {
+                              showLoader("Factory reset in progress...");
+                              await new TealCraft().factoryReset();
+                              hideLoader();
+
+                              showSnack("Factory reset successful.", "success");
+                              dispatch(loadWorkspaces());
+                              navigate(`/portal`);
+                              handleClose();
+                            } catch (e) {
+                              hideLoader();
+                              showException(e);
+                            }
+                          })
+                          .catch(() => {});
+                      }}
+                    >
+                      Reset
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </Drawer>
+        </Drawer>
+      </Fragment>
     </div>
   );
 }

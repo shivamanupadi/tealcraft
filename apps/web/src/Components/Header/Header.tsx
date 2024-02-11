@@ -57,16 +57,12 @@ function Header(): ReactElement {
                 Settings
               </Button>
 
-              {isSettingsVisible ? (
-                <UserSettings
-                  show={isSettingsVisible}
-                  onClose={() => {
-                    setSettingsVisibility(false);
-                  }}
-                ></UserSettings>
-              ) : (
-                ""
-              )}
+              <UserSettings
+                show={isSettingsVisible}
+                onClose={() => {
+                  setSettingsVisibility(false);
+                }}
+              ></UserSettings>
             </div>
           </div>
         </div>

@@ -1,8 +1,10 @@
 import "./ABIVisualizer.scss";
 import { ReactElement, useState } from "react";
 import { ABIContract, ABIContractParams } from "algosdk";
+import { Button } from "@mui/material";
 import ABIMethod from "./ABIMethod/ABIMethod";
 import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
+import JsonViewer from "../../../../Components/JsonViewer/JsonViewer";
 
 type AbiVisualizerProps = {
   abi: ABIContractParams;
@@ -29,6 +31,28 @@ function ABIVisualizer({
                     ? abiInstance.description
                     : "--Empty--"}
                 </div>
+              </div>
+              <div>
+                <Button
+                  color={"primary"}
+                  onClick={() => {
+                    setAbiJsonVisibility(true);
+                  }}
+                  variant={"outlined"}
+                  className="small-button"
+                  size={"small"}
+                >
+                  JSON
+                </Button>
+                <JsonViewer
+                  show={isAbiJsonVisible}
+                  onClose={() => {
+                    setAbiJsonVisibility(false);
+                  }}
+                  json={abi}
+                  title={"Application binary interface (ABI)"}
+                  fileName={`${abiInstance.name}.abi`}
+                ></JsonViewer>
               </div>
             </div>
             <div className="abi-body">
