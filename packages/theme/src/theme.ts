@@ -175,7 +175,9 @@ export const theme = createTheme({
           "& .MuiButtonBase-root": {
             color: GreyColors.A7A9AC,
           },
-          "& .MuiButtonBase-root.Mui-selected": {},
+          "& .MuiButtonBase-root.Mui-selected": {
+            color: GreyColors.FormLabel,
+          },
         },
       },
     },
