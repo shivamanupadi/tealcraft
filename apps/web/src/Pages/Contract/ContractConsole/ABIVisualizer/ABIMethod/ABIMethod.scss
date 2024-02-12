@@ -3,19 +3,26 @@
 .abi-method-wrapper {
   .abi-method-container {
     .abi-method {
-      margin-top: 10px;
-      border: 1px solid map-get($grey-colors, "light-grey");
+      margin-top: 12px;
       border-radius: 5px;
+
       .accordion {
         box-shadow: none;
+        background: map-get($grey-colors, "F8F8F9");
       }
       .method-header {
         display: flex;
         justify-content: flex-start;
         align-items: center;
         column-gap: 10px;
+        .cm-method {
+          font-size: 13px;
+          border-radius: 3px;
+          padding: 5px;
+        }
         .method-name {
           font-size: 14px;
+          color: map-get($grey-colors, "form-label");
         }
       }
       .method-body {
@@ -32,13 +39,13 @@
           margin-top: 20px;
           .method-section-title {
             font-size: 14px;
-            color: map-get($grey-colors, "form-value");
+            color: map-get($grey-colors, "form-label");
           }
           .method-section-value {
             margin-top: 10px;
             .empty {
               font-size: 13px;
-              color: map-get($grey-colors, "form-label");
+              color: map-get($grey-colors, "A7A9AC");
             }
           }
         }

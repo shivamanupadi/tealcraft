@@ -4,7 +4,6 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Alert,
   Paper,
   Table,
   TableBody,
@@ -17,29 +16,10 @@ import {
 import { ExpandMore } from "@mui/icons-material";
 import { ABIMethodParams, ABIMethod as ABIMethodSDK } from "algosdk";
 import ABIMethodSignature from "../ABIMethodSignature/ABIMethodSignature";
-import { GreyColors, theme } from "@repo/theme";
 import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
 import { getMethodCallConfig, isCreateMethod } from "@repo/algocore";
-
-const tableStyles = {
-  width: "100%",
-  borderRadius: "5px",
-  boxShadow: "none !important",
-  border: `1px solid ${theme.palette.grey[100]}`,
-  th: {
-    fontSize: "14px",
-    background: theme.palette.grey[100],
-    color: GreyColors.FormValue,
-  },
-  td: {
-    color: GreyColors.FormLabel,
-  },
-  "th, td": {
-    fontSize: "14px",
-    padding: "5px 10px",
-    borderColor: theme.palette.grey[100],
-  },
-};
+import { tableStyles } from "../../ContractSchema/ContractSchema";
+import { GreyColors, ThemeColors } from "@repo/theme";
 
 type ABIMethodProps = {
   method: ABIMethodParams;
@@ -57,20 +37,21 @@ function ABIMethod({ method, appSpec }: ABIMethodProps): ReactElement {
       <div className={"abi-method-container"}>
         <div className="abi-method">
           <Accordion className="accordion">
-            <AccordionSummary expandIcon={<ExpandMore />}>
+            <AccordionSummary
+              expandIcon={<ExpandMore sx={{ color: GreyColors.A7A9AC }} />}
+            >
               <div className="method-header">
                 <div className="method-name">{abiMethodInstance.name}</div>
                 <div>
                   {isCreateMethod(method, appSpec) ? (
                     <div>
                       <Tooltip title="Creation method">
-                        <Alert
-                          icon={false}
-                          color={"warning"}
-                          className="micro-alert secondary-light-alert"
+                        <div
+                          className="cm-method"
+                          style={{ color: ThemeColors.Secondary }}
                         >
                           CM
-                        </Alert>
+                        </div>
                       </Tooltip>
                     </div>
                   ) : (

@@ -23,12 +23,21 @@ export const tableStyles = {
     color: GreyColors.FormLabel,
   },
   td: {
-    color: GreyColors.FormLabel,
+    color: GreyColors.A7A9AC,
   },
   "th, td": {
     fontSize: "14px",
     padding: "5px 10px",
     borderColor: GreyColors.E6E7E8,
+  },
+  tbody: {
+    ".MuiTableRow-root": {
+      "&:last-child": {
+        td: {
+          border: "none !important",
+        },
+      },
+    },
   },
 };
 

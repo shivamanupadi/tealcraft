@@ -56,7 +56,7 @@ function ABIMethodSignature({ method }: ABIMethodProps): ReactElement {
                   <ButtonGroup color="primary" variant="outlined">
                     <Button
                       size="small"
-                      className="small-button"
+                      className="small-button secondary-light-button"
                       variant={
                         encoding === TEXT_ENCODING.HEX
                           ? "contained"
@@ -70,7 +70,7 @@ function ABIMethodSignature({ method }: ABIMethodProps): ReactElement {
                     </Button>
                     <Button
                       size="small"
-                      className="small-button"
+                      className="small-button secondary-light-button"
                       variant={
                         encoding === TEXT_ENCODING.BASE64
                           ? "contained"

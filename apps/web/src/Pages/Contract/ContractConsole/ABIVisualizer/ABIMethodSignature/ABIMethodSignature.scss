@@ -12,16 +12,16 @@
         }
         .method-sig-section-key {
           font-size: 14px;
-          color: map-get($grey-colors, "form-value");
+          color: map-get($grey-colors, "form-label");
           margin-bottom: 5px;
           display: flex;
-          justify-content: space-between;
+          justify-content: flex-start;
           align-items: center;
-          column-gap: 10px;
+          column-gap: 15px;
         }
         .method-sig-section-value {
-          font-size: 14px;
-          color: map-get($grey-colors, "form-label");
+          font-size: 13px;
+          color: map-get($grey-colors, "A7A9AC");
           &.break {
             word-break: break-word;
           }
