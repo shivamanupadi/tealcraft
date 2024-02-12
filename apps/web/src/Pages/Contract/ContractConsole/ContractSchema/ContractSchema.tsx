@@ -12,15 +12,15 @@ import {
   TableRow,
 } from "@mui/material";
 
-const tableStyles = {
+export const tableStyles = {
   width: "100%",
   borderRadius: "5px",
   boxShadow: "none !important",
-  border: `1px solid ${theme.palette.grey[100]}`,
+  border: `1px solid ${GreyColors.E6E7E8}`,
   th: {
     fontSize: "14px",
-    background: theme.palette.grey[100],
-    color: GreyColors.FormValue,
+    background: GreyColors.E6E7E8,
+    color: GreyColors.FormLabel,
   },
   td: {
     color: GreyColors.FormLabel,
@@ -28,11 +28,11 @@ const tableStyles = {
   "th, td": {
     fontSize: "14px",
     padding: "5px 10px",
-    borderColor: theme.palette.grey[100],
+    borderColor: GreyColors.E6E7E8,
   },
 };
 
-import { GreyColors, theme } from "@repo/theme";
+import { GreyColors } from "@repo/theme";
 import {
   Schema,
   StateSchema,

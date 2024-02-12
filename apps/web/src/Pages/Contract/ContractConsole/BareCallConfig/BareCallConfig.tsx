@@ -11,28 +11,8 @@ import {
   TableRow,
 } from "@mui/material";
 
-const tableStyles = {
-  width: "100%",
-  borderRadius: "5px",
-  boxShadow: "none !important",
-  border: `1px solid ${theme.palette.grey[100]}`,
-  th: {
-    fontSize: "14px",
-    background: theme.palette.grey[100],
-    color: GreyColors.FormValue,
-  },
-  td: {
-    color: GreyColors.FormLabel,
-  },
-  "th, td": {
-    fontSize: "14px",
-    padding: "5px 10px",
-    borderColor: theme.palette.grey[100],
-  },
-};
-
-import { GreyColors, theme } from "@repo/theme";
 import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
+import { tableStyles } from "../ContractSchema/ContractSchema";
 
 export interface BareCallConfigProps {
   appSpec: AppSpec;

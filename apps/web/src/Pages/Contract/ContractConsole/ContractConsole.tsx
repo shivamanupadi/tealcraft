@@ -66,7 +66,7 @@ function ContractConsole(): ReactElement {
                             onClick={() => {
                               setAppSpecJsonVisibility(true);
                             }}
-                            variant={"outlined"}
+                            variant={"contained"}
                             className="small-button"
                             size={"small"}
                           >

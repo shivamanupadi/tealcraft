@@ -61,7 +61,7 @@ export const theme = createTheme({
           },
           "&.secondary-light-button": {
             background: ThemeColors.SecondaryLight,
-            color: BaseColors.Black,
+            color: GreyColors.A7A9AC,
           },
           "&.error-light-button": {
             background: ThemeColors.ErrorLight,
@@ -84,6 +84,10 @@ export const theme = createTheme({
             borderColor: BaseColors.Black,
             color: BaseColors.Black,
             background: BaseColors.White,
+          },
+          "&.secondary-light-button": {
+            borderColor: ThemeColors.SecondaryLight,
+            color: GreyColors.A7A9AC,
           },
         },
       },

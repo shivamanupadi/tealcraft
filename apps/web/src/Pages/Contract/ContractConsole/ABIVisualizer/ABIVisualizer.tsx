@@ -38,7 +38,7 @@ function ABIVisualizer({
                   onClick={() => {
                     setAbiJsonVisibility(true);
                   }}
-                  variant={"outlined"}
+                  variant={"contained"}
                   className="small-button"
                   size={"small"}
                 >

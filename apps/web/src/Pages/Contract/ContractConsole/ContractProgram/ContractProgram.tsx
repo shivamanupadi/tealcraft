@@ -41,7 +41,8 @@ function ContractProgram({
               <ButtonGroup variant="outlined">
                 <Button
                   size={"small"}
-                  className="small-button"
+                  color={"secondary"}
+                  className="small-button secondary-light-button"
                   variant={
                     encoding === PROGRAM_ENCODING.TEXT
                       ? "contained"
@@ -54,8 +55,9 @@ function ContractProgram({
                   Text
                 </Button>
                 <Button
+                  color={"secondary"}
                   size={"small"}
-                  className="small-button"
+                  className="small-button secondary-light-button"
                   variant={
                     encoding === PROGRAM_ENCODING.TEAL
                       ? "contained"
@@ -78,7 +80,7 @@ function ContractProgram({
                 onClick={(ev) => {
                   copyContent(ev, prg);
                 }}
-                variant={"outlined"}
+                variant={"contained"}
               >
                 Copy
               </Button>
@@ -92,7 +94,7 @@ function ContractProgram({
                 onClick={() => {
                   downloadFile(prg, `${contract.name}.${type}.teal`);
                 }}
-                variant={"outlined"}
+                variant={"contained"}
               >
                 Download
               </Button>

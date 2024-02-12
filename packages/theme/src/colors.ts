@@ -11,6 +11,7 @@ export enum GreyColors {
   FormValue = "#58595B",
   F8F8F9 = "#F8F8F9",
   A7A9AC = "#A7A9AC",
+  E6E7E8 = "#E6E7E8",
 }
 
 export enum ThemeColors {

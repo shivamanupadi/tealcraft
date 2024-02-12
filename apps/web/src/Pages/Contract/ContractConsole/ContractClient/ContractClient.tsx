@@ -57,7 +57,7 @@ function ContractClient({ appSpec }: ContractAppSpecProps): ReactElement {
                     generateClient(appSpec);
                   }}
                   variant={"contained"}
-                  // className="small-button"
+                  size={"small"}
                 >
                   Generate
                 </Button>
