@@ -162,6 +162,7 @@ function ShareContract(): ReactElement {
                   <Button
                     variant={"contained"}
                     color={"primary"}
+                    sx={{ marginTop: "5px" }}
                     fullWidth
                     onClick={() => {
                       importFiddle();

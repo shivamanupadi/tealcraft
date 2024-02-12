@@ -13,7 +13,9 @@ function Share(): ReactElement {
               <img src={logo} alt="logo" />
             </div>
 
-            <div>TealCraft | Share</div>
+            <div>
+              TealCraft <span className="share">| Share</span>
+            </div>
           </div>
         </div>
         <div className="share-body">

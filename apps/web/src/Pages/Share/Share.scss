@@ -23,6 +23,9 @@ $top-margin: 100px;
         justify-content: flex-start;
         align-items: center;
         column-gap: 5px;
+        .share {
+          color: map-get($grey-colors, "form-label");
+        }
         img {
           width: 20px;
         }

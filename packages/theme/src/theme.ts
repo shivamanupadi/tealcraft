@@ -161,11 +161,6 @@ export const theme = createTheme({
             fontSize: "14px",
             color: GreyColors.FormLabel,
           },
-          "&.classic-value": {
-            fontSize: "15px",
-            fontWeight: "bold",
-            color: GreyColors.FormValue,
-          },
         },
       },
     },

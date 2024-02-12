@@ -3,6 +3,10 @@
 
 .share-contract-wrapper {
   .share-contract-container {
+    .classic-value {
+      color: map-get($grey-colors, "A7A9AC");
+      font-size: 14px;
+    }
     .framework {
       margin-top: 10px;
       display: flex;
@@ -10,7 +14,7 @@
       column-gap: 10px;
       align-items: center;
       img {
-        width: 20px;
+        width: 18px;
         vertical-align: middle;
         border-radius: 2px;
       }
