@@ -1,10 +1,10 @@
 FROM python:3.12
 
 # Set working directory
-WORKDIR /app
+WORKDIR /mount
 
 # Copy requirements.txt to the container
-COPY app/requirements.txt .
+COPY mount/python /mount/python
 
 # Create and activate a virtual environment
 RUN python -m venv venv
@@ -12,7 +12,7 @@ RUN /bin/bash -c "source venv/bin/activate"
 
 # Install dependencies
 RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install -r python/requirements.txt
 
 # Copy the rest of the application code
 COPY . .

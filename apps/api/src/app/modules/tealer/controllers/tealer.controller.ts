@@ -15,13 +15,13 @@ import { promisify } from "util";
 import { ContractService } from "../../database/services/contract.service";
 
 const rimrafAsync = promisify(rimraf);
-const TEALER_PATH = "./app/tealer/";
-const TEALER_EXPORT_PATH = "./app/tealer-export/tealer/";
+const CONTRACTS_PATH = "./mount/python/tealer/contracts/";
+const TEALER_EXPORT_PATH = "./mount/tealer-export/python/tealer/contracts/";
 
 @Controller("tealer")
 export class TealerController {
   constructor(private contractService: ContractService) {}
-  private containerName = "puya-compiler";
+  private containerName = "api-container";
 
   @Get("version")
   async version(): Promise<string> {
@@ -39,18 +39,19 @@ export class TealerController {
       const { source, name } = body;
       const folderName = uuidv4();
       const { folderPath } = await this.setupAudit(folderName, name, source);
-      const dockerFilePath = `tealer/${folderName}/${name}.teal`;
+      const dockerFolderPath = `python/tealer/contracts/${folderName}`;
+      const dockerFilePath = `${dockerFolderPath}/${name}.teal`;
       const dockerCommand = `docker exec ${this.containerName} tealer detect --contracts ${dockerFilePath}`;
 
-      const outputPath = path.resolve(`${TEALER_EXPORT_PATH}${folderName}`);
       try {
-        const stdout: string = await this.execCommand(dockerCommand);
+        const stdout = await this.execCommand(dockerCommand);
+        const resultFolder = path.resolve(`${TEALER_EXPORT_PATH}${folderName}`);
+
         rimrafAsync(folderPath, {});
-        rimrafAsync(outputPath, {});
+        rimrafAsync(resultFolder, {});
         return stdout;
       } catch (e) {
         rimrafAsync(folderPath, {});
-        rimrafAsync(outputPath, {});
         throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
       }
     } catch (error) {
@@ -63,7 +64,7 @@ export class TealerController {
     name: string,
     source: string,
   ): Promise<{ folderPath: string; filePath: string }> {
-    const folderPath = path.resolve(`${TEALER_PATH}${folderName}`);
+    const folderPath = path.resolve(`${CONTRACTS_PATH}${folderName}`);
     const filePath = path.resolve(`${folderPath}/${name}.teal`);
     await fs.mkdir(folderPath, { recursive: true });
     await fs.writeFile(filePath, source);

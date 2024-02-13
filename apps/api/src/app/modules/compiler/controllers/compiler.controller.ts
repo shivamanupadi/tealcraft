@@ -15,12 +15,12 @@ import { promisify } from "util";
 import { ContractService } from "../../database/services/contract.service";
 
 const rimrafAsync = promisify(rimraf);
-const CONTRACTS_PATH = "./app/contracts/";
+const CONTRACTS_PATH = "./mount/python/puya/contracts/";
 
 @Controller("compiler")
 export class CompilerController {
   constructor(private contractService: ContractService) {}
-  private containerName = "puya-compiler";
+  private containerName = "api-container";
 
   @Get("version")
   async version(): Promise<string> {
@@ -42,7 +42,7 @@ export class CompilerController {
         name,
         source,
       );
-      const dockerFilePath = `contracts/${folderName}`;
+      const dockerFilePath = `python/puya/contracts/${folderName}`;
       const dockerCommand = `docker exec ${this.containerName} puyapy --no-output-teal ${dockerFilePath}`;
 
       try {

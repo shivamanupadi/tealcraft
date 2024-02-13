@@ -13,3 +13,4 @@ export * from "./api/fiddle/contract/CoreContractFiddle";
 export * from "./api/compiler/frameworks/frameworkUtils";
 export * from "./api/compiler/frameworks/CoreFramework";
 export * from "./TSClient/TSClient";
+export * from "./api/tealer/Tealer";

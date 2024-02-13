@@ -15,9 +15,9 @@ node_modules
 
 # Testing
 coverage
-apps/api/app/contracts
-apps/api/app/tealer
-apps/api/app/tealer-export
+apps/api/mount/python/puya/contracts
+apps/api/mount/python/tealer/contracts
+apps/api/mount/tealer-export
 
 # Turbo
 .turbo

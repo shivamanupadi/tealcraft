@@ -1,9 +1,9 @@
 version: '3'
 services:
-  puya-compiler:
-    container_name: puya-compiler
+  api-container:
+    container_name: api-container
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./app:/app
+      - ./mount:/mount
