@@ -1,0 +1,53 @@
+@import "@repo/styles";
+@import "../../scss/constants";
+
+.application-program-wrapper {
+  .application-program-container {
+    .application-program-header {
+      padding: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .title {
+        font-size: 16px;
+        font-weight: bold;
+        color: map-get($grey-colors, "form-label");
+      }
+      .actions {
+        color: map-get($grey-colors, "form-label");
+      }
+    }
+    .application-program-body {
+      padding: 0 40px;
+      .contract-program-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+      }
+      .contract-program-body {
+        height: calc(100vh - 200px);
+        overflow: auto;
+        .byte {
+          font-size: 12px;
+          word-break: break-all;
+          color: map-get($grey-colors, "form-label");
+        }
+        .source {
+          margin-left: -25px;
+          code {
+            white-space: pre-wrap !important;
+            word-wrap: break-word;
+            font-size: 12px !important;
+            border-radius: 10px;
+            background: map-get($grey-colors, "F8F8F9");
+          }
+          > span {
+            border-radius: 10px !important;
+            background: map-get($grey-colors, "F8F8F9") !important;
+          }
+        }
+      }
+    }
+  }
+}
