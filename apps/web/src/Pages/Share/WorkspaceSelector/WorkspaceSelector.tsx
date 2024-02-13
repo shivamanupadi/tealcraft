@@ -9,21 +9,26 @@ import {
 } from "@mui/material";
 import { Done, KeyboardArrowDown } from "@mui/icons-material";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../Redux/store";
+import { RootState, useAppDispatch } from "../../../Redux/store";
 import { A_Workspace, CoreWorkspace } from "@repo/tealcraft-sdk";
 import { theme } from "@repo/theme";
 import {
   workspaceItem,
   workspacesMenu,
 } from "../../../Components/WorkspacePicker/WorkspacePicker";
+import { loadWorkspaces } from "../../../Redux/portal/portalReducer";
+import CreateWorkspace from "../../../Components/CreateWorkspace/CreateWorkspace";
 
 type WorkspaceSelectorProps = {
   onSelect: (workspace: A_Workspace) => void;
 };
 
 function WorkspaceSelector({ onSelect }: WorkspaceSelectorProps): ReactElement {
+  const dispatch = useAppDispatch();
   const [workspaceAnchorEl, setWorkspaceAnchorEl] =
     useState<null | HTMLElement>(null);
+  const [isWorkspaceCreationVisible, setWorkspaceCreationVisibility] =
+    useState<boolean>(false);
 
   const [workspace, setWorkspace] = useState<null | A_Workspace>(null);
   const { workspaces } = useSelector((state: RootState) => state.portal);
@@ -106,8 +111,42 @@ function WorkspaceSelector({ onSelect }: WorkspaceSelectorProps): ReactElement {
               </MenuItem>
             );
           })}
+
+          <MenuItem
+            sx={{
+              marginTop: "10px",
+              marginBottom: "5px",
+              "&:hover": { background: "none" },
+            }}
+            selected={false}
+          >
+            <Button
+              color={"primary"}
+              variant={"contained"}
+              size={"small"}
+              onClick={async () => {
+                setWorkspaceAnchorEl(null);
+                setWorkspaceCreationVisibility(true);
+              }}
+            >
+              Create workspace
+            </Button>
+          </MenuItem>
         </Menu>
       </div>
+
+      <CreateWorkspace
+        show={isWorkspaceCreationVisible}
+        onClose={() => {
+          setWorkspaceCreationVisibility(false);
+        }}
+        onSuccess={(workspace: A_Workspace) => {
+          setWorkspaceCreationVisibility(false);
+          dispatch(loadWorkspaces());
+          setWorkspace(workspace);
+          onSelect(workspace);
+        }}
+      ></CreateWorkspace>
     </div>
   );
 }
