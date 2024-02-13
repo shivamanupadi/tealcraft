@@ -1,6 +1,6 @@
 import { ReactElement, useState } from "react";
 import "./Header.scss";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/full-logo.png";
 import UserSettings from "../Settings/UserSettings";
 
 import WorkspacePicker from "../WorkspacePicker/WorkspacePicker";
@@ -21,8 +21,6 @@ function Header(): ReactElement {
               <div>
                 <img src={logo} alt="logo" />
               </div>
-
-              <div>TealCraft</div>
             </div>
           </div>
 

@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import "./Share.scss";
 import { Outlet } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/full-logo.png";
 
 function Share(): ReactElement {
   return (
@@ -12,9 +12,8 @@ function Share(): ReactElement {
             <div>
               <img src={logo} alt="logo" />
             </div>
-
             <div>
-              TealCraft <span className="share">| Share</span>
+              <span className="share">| Share</span>
             </div>
           </div>
         </div>
