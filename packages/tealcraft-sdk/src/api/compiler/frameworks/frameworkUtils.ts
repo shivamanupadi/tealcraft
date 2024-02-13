@@ -8,12 +8,12 @@ export function getFrameworks(): A_Framework[] {
       language: "typescript",
       extension: "ts",
     },
-    {
-      id: "puya",
-      label: "Puya",
-      language: "python",
-      extension: "py",
-    },
+    // {
+    //   id: "puya",
+    //   label: "Puya",
+    //   language: "python",
+    //   extension: "py",
+    // },
   ];
 }
 

@@ -63,8 +63,7 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
               <div className="user-settings-body">
                 <div className="section">
                   <div className="section-title">
-                    One TealScript and one Puya workspace with preloaded example
-                    contracts.
+                    Demo workspace with preloaded contracts will be created.
                   </div>
                   <div className="section-body">
                     <Button
@@ -74,7 +73,7 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
                       onClick={async () => {
                         confirmation({
                           ...confirmationProps,
-                          description: `One TealScript and one Puya workspace with preloaded contracts will be created.`,
+                          description: `Demo workspace with preloaded contracts will be created.`,
                         })
                           .then(async () => {
                             try {

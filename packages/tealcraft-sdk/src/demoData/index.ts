@@ -69,6 +69,6 @@ async function loadPuyaDemoData(): Promise<string> {
 }
 
 export async function loadDemoData(): Promise<string> {
-  await loadPuyaDemoData();
+  // await loadPuyaDemoData();
   return await loadTealScriptDemoData();
 }

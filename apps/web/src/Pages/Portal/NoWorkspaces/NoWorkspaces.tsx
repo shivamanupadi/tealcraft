@@ -42,11 +42,11 @@ function NoWorkspaces(): ReactElement {
                 <div>
                   <Button
                     variant={"outlined"}
-                    color={"secondary"}
+                    color={"primary"}
                     onClick={async () => {
                       confirmation({
                         ...confirmationProps,
-                        description: `One TealScript and one Puya workspace with preloaded contracts will be created.`,
+                        description: `Demo workspace with preloaded contracts will be created.`,
                       })
                         .then(async () => {
                           try {
@@ -81,7 +81,7 @@ function NoWorkspaces(): ReactElement {
                         .catch(() => {});
                     }}
                   >
-                    Demo workspaces
+                    Demo workspace
                   </Button>
                   <CreateWorkspace
                     show={isWorkspaceCreationVisible}
