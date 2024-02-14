@@ -26,3 +26,9 @@ export type A_Framework = {
 export type A_CompileResult = {
   appSpec: AppSpec;
 };
+
+export type A_Account = {
+  id: string;
+  timestamp: number;
+  mnemonic: string;
+};

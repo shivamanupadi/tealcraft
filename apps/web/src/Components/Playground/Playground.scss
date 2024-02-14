@@ -1,0 +1,30 @@
+@import "@repo/styles";
+@import "../../scss/constants";
+
+.playground-wrapper {
+  .playground-container {
+    .playground-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 4px 2px -2px map-get($grey-colors, "light-grey");
+      .title {
+        font-size: 18px;
+        color: map-get($grey-colors, "form-label");
+      }
+      .actions {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        column-gap: 15px;
+        .close {
+          color: map-get($grey-colors, "form-label");
+        }
+      }
+    }
+    .playground-body {
+      padding: 20px;
+    }
+  }
+}

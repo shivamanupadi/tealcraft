@@ -113,6 +113,26 @@ export const theme = createTheme({
         },
       },
     },
+    MuiMenu: {
+      styleOverrides: {
+        root: {
+          "&.classic-menu": {
+            ".MuiMenuItem-root": {
+              fontSize: "13px",
+              color: GreyColors.FormLabel,
+              svg: {
+                color: GreyColors.FormLabel,
+              },
+              ".MuiListItemText-root": {
+                ".MuiTypography-root": {
+                  fontSize: "14px",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
     MuiAlert: {
       styleOverrides: {
         root: {

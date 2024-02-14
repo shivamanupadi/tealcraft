@@ -10,6 +10,7 @@ import { useAppDispatch } from "../../Redux/store";
 import { useNavigate } from "react-router-dom";
 import { Close } from "@mui/icons-material";
 import { Fragment } from "react";
+import { initApp } from "../../Redux/app/appReducer";
 
 interface UserSettingsProps {
   show: boolean;
@@ -214,6 +215,7 @@ function UserSettings({ show, onClose }: UserSettingsProps): ReactElement {
 
                               showSnack("Factory reset successful.", "success");
                               dispatch(loadWorkspaces());
+                              dispatch(initApp());
                               navigate(`/portal`);
                               handleClose();
                             } catch (e) {

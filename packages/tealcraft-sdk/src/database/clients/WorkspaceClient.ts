@@ -1,5 +1,5 @@
-import { dataStore } from "../database/datastore";
-import { A_Workspace } from "../types";
+import { dataStore } from "../datastore";
+import { A_Workspace } from "../../types";
 import { v4 } from "uuid";
 import { ContractClient } from "./ContractClient";
 

@@ -12,10 +12,6 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../Redux/store";
 import { A_Workspace, CoreWorkspace } from "@repo/tealcraft-sdk";
 import { theme } from "@repo/theme";
-import {
-  workspaceItem,
-  workspacesMenu,
-} from "../../../Components/WorkspacePicker/WorkspacePicker";
 import { loadWorkspaces } from "../../../Redux/portal/portalReducer";
 import CreateWorkspace from "../../../Components/CreateWorkspace/CreateWorkspace";
 
@@ -63,16 +59,15 @@ function WorkspaceSelector({ onSelect }: WorkspaceSelectorProps): ReactElement {
           anchorEl={workspaceAnchorEl}
           open={Boolean(workspaceAnchorEl)}
           disableAutoFocusItem={true}
-          sx={workspacesMenu}
           onClose={() => {
             setWorkspaceAnchorEl(null);
           }}
+          className="classic-menu"
         >
           {workspaces.map((eachWorkspace, index) => {
             const workspaceInstance = new CoreWorkspace(eachWorkspace);
             return (
               <MenuItem
-                sx={workspaceItem}
                 key={`${workspaceInstance.getId()}-${index}`}
                 selected={false}
                 onClick={(e) => {

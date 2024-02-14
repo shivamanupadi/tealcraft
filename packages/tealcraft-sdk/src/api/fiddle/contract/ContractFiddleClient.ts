@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ContractFiddleParams } from "@repo/types";
-import { ContractClient } from "../../../clients/ContractClient";
+import { ContractClient } from "../../../database/clients/ContractClient";
 
 export class ContractFiddleClient {
   private readonly fiddlesApiUrl: string;

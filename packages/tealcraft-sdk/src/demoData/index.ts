@@ -1,5 +1,5 @@
-import { WorkspaceClient } from "../clients/WorkspaceClient";
-import { ContractClient } from "../clients/ContractClient";
+import { WorkspaceClient } from "../database/clients/WorkspaceClient";
+import { ContractClient } from "../database/clients/ContractClient";
 import { getFramework } from "../api/compiler/frameworks/frameworkUtils";
 
 import { AuctionContract } from "./data/tealscript/Auction";

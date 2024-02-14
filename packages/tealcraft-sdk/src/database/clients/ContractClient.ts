@@ -1,7 +1,7 @@
-import { dataStore } from "../database/datastore";
-import { A_Contract, A_Workspace } from "../types";
+import { dataStore } from "../datastore";
+import { A_Contract, A_Workspace } from "../../types";
 import { v4 } from "uuid";
-import { CoreWorkspace } from "../core/CoreWorkspace";
+import { CoreWorkspace } from "../../core/CoreWorkspace";
 
 export class ContractClient {
   async save(

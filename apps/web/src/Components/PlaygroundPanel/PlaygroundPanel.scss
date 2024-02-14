@@ -1,0 +1,23 @@
+@import "@repo/styles";
+@import "../../scss/constants";
+
+.playground-panel-wrapper {
+  .playground-panel-container {
+    .playground-panel-header {
+      padding: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .title {
+        font-size: 16px;
+        font-weight: bold;
+        color: map-get($grey-colors, "form-label");
+      }
+      .actions {
+        color: map-get($grey-colors, "form-label");
+      }
+    }
+    .playground-panel-body {
+    }
+  }
+}
