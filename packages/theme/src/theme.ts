@@ -72,6 +72,10 @@ export const theme = createTheme({
           "&.secondary-light-button": {
             background: ThemeColors.SecondaryLight,
             color: GreyColors.A7A9AC,
+            ":hover": {
+              background: ThemeColors.SecondaryLight,
+              color: GreyColors.A7A9AC,
+            },
           },
           "&.error-light-button": {
             background: ThemeColors.ErrorLight,
@@ -101,6 +105,10 @@ export const theme = createTheme({
           "&.secondary-light-button": {
             borderColor: ThemeColors.SecondaryLight,
             color: GreyColors.A7A9AC,
+            ":hover": {
+              borderColor: ThemeColors.SecondaryLight,
+              color: GreyColors.A7A9AC,
+            },
           },
         },
       },

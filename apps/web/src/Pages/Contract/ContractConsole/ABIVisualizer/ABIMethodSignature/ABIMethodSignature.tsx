@@ -53,7 +53,7 @@ function ABIMethodSignature({ method }: ABIMethodProps): ReactElement {
               <div className="method-sig-section-key">
                 <div>Selector</div>
                 <div>
-                  <ButtonGroup color="primary" variant="outlined">
+                  <ButtonGroup color="secondary" variant="outlined">
                     <Button
                       size="small"
                       className="small-button secondary-light-button"
