@@ -54,6 +54,16 @@ export const theme = createTheme({
             },
           },
         },
+        containedPrimary: {
+          ":hover": {
+            background: ThemeColors.Primary,
+          },
+        },
+        containedSecondary: {
+          ":hover": {
+            background: ThemeColors.Secondary,
+          },
+        },
         contained: {
           "&.primary-light-button": {
             background: ThemeColors.PrimaryLight,
@@ -74,6 +84,9 @@ export const theme = createTheme({
           "&.grey-button": {
             background: GreyColors.F8F8F9,
             color: GreyColors.FormLabel,
+            ":hover": {
+              background: GreyColors.F8F8F9,
+            },
           },
           "&.white-background-button": {
             background: BaseColors.White,
@@ -124,12 +137,14 @@ export const theme = createTheme({
             color: `#58595B`,
           },
           "&.success-snack-bar": {
-            backgroundColor: ThemeColors.PrimaryLight,
+            backgroundColor: ThemeColors.SecondaryLight,
             color: BaseColors.Black,
+            marginTop: "-12px",
           },
           "&.error-snack-bar": {
             backgroundColor: ThemeColors.WarningLight,
             color: BaseColors.Black,
+            marginTop: "-12px",
           },
         },
       },
