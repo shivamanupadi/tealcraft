@@ -36,13 +36,16 @@ function NoWorkspaces(): ReactElement {
               </div>
               <div className="info">
                 <div>Looks like you don't have any workspaces.</div>
-                <div>Create a new workspace to get started.</div>
+                <div style={{ marginTop: "10px" }}>
+                  Import demo workspace or Create a new workspace to get
+                  started.
+                </div>
               </div>
               <div className="actions">
                 <div>
                   <Button
                     variant={"outlined"}
-                    color={"primary"}
+                    color={"secondary"}
                     onClick={async () => {
                       confirmation({
                         ...confirmationProps,
