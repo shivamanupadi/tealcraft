@@ -56,9 +56,9 @@ function AccountPicker(): ReactElement {
     <div className="account-picker-wrapper">
       <div className="account-picker-container">
         <Button
-          color={"primary"}
-          variant={"contained"}
-          className="grey-button"
+          color={"secondary"}
+          variant={"outlined"}
+          size={"small"}
           startIcon={
             <span style={{ fontSize: "14px" }}>
               {selectedAccount ? (
@@ -211,11 +211,11 @@ function AccountPicker(): ReactElement {
             }}
             selected={false}
           >
+            {selectedAccount ? <ListItemIcon></ListItemIcon> : ""}
             <Button
               color={"primary"}
               variant={"contained"}
               size={"small"}
-              sx={{ marginLeft: "32px" }}
               onClick={async () => {
                 setAccountAnchorEl(null);
                 const account = generateAccount();

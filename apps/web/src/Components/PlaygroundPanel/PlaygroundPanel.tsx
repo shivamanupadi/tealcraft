@@ -33,7 +33,7 @@ function PlaygroundPanel({
           ModalProps={{
             BackdropProps: {
               style: {
-                //background: "transparent",
+                background: "transparent",
               },
             },
           }}

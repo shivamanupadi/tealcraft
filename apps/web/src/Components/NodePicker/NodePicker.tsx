@@ -26,9 +26,9 @@ function NodePicker(): ReactElement {
     <div className="node-picker-wrapper">
       <div className="node-picker-container">
         <Button
-          color={"secondary"}
-          variant={"contained"}
-          className="grey-button"
+          color={"primary"}
+          variant={"outlined"}
+          size={"small"}
           endIcon={<UnfoldMore />}
           onClick={(ev) => {
             setNetworkAnchorEl(ev.currentTarget);
