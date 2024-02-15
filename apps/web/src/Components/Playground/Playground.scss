@@ -8,7 +8,8 @@
       justify-content: space-between;
       align-items: center;
       padding: 10px 20px;
-      box-shadow: 0 4px 2px -2px map-get($grey-colors, "light-grey");
+      border-bottom: 1px solid map-get($grey-colors, "light-grey");
+      background: map-get($grey-colors, "F8F8F9");
       .title {
         font-size: 18px;
         color: map-get($grey-colors, "form-label");
@@ -24,7 +25,16 @@
       }
     }
     .playground-body {
-      padding: 20px;
+      .app-spec {
+        .app-spec-header {
+          box-shadow: 0 4px 2px -2px map-get($grey-colors, "light-grey");
+          padding: 20px;
+          .contract-title {
+            font-size: 14px;
+            color: map-get($grey-colors, "form-label");
+          }
+        }
+      }
     }
   }
 }

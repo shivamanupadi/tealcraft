@@ -27,7 +27,7 @@ function NodePicker(): ReactElement {
       <div className="node-picker-container">
         <Button
           color={"primary"}
-          variant={"outlined"}
+          variant={"contained"}
           size={"small"}
           endIcon={<UnfoldMore />}
           onClick={(ev) => {

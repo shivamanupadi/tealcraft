@@ -58,7 +58,7 @@ function AccountPicker(): ReactElement {
         <Button
           color={"primary"}
           variant={"contained"}
-          className="grey-button"
+          size={"small"}
           startIcon={
             <span style={{ fontSize: "14px" }}>
               {selectedAccount ? (

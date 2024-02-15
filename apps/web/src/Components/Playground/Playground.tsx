@@ -32,7 +32,13 @@ export function Playground({
             </div>
           </div>
         </div>
-        <div className="playground-body"></div>
+        <div className="playground-body">
+          <div className="app-spec">
+            <div className="app-spec-header">
+              <div className="contract-title">{appSpec.contract.name}</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
