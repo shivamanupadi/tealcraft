@@ -56,9 +56,9 @@ function AccountPicker(): ReactElement {
     <div className="account-picker-wrapper">
       <div className="account-picker-container">
         <Button
-          color={"secondary"}
-          variant={"outlined"}
-          size={"small"}
+          color={"primary"}
+          variant={"contained"}
+          className="grey-button"
           startIcon={
             <span style={{ fontSize: "14px" }}>
               {selectedAccount ? (
@@ -135,7 +135,12 @@ function AccountPicker(): ReactElement {
                 )}
                 <ListItemText>
                   <div className="account-picker-name">
-                    <div>{mnemonicAccount(account.mnemonic).addr}</div>
+                    <div>
+                      {ellipseString(
+                        mnemonicAccount(account.mnemonic).addr,
+                        20,
+                      )}
+                    </div>
                   </div>
                 </ListItemText>
                 <Tooltip title="View in explorer">
