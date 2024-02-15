@@ -60,21 +60,30 @@ function AccountPicker(): ReactElement {
           variant={"contained"}
           className="grey-button"
           startIcon={
-            <Tooltip title="View in explorer">
-              <OpenInNew
-                fontSize={"small"}
-                sx={{ fontSize: "16px !important" }}
-                onClick={(ev) => {
-                  ev.stopPropagation();
-                  ev.preventDefault();
-                  if (selectedAccount) {
-                    new Explorer(coreNodeInstance).openAddress(
-                      mnemonicAccount(selectedAccount.mnemonic).addr,
-                    );
-                  }
-                }}
-              ></OpenInNew>
-            </Tooltip>
+            <span style={{ fontSize: "14px" }}>
+              {selectedAccount ? (
+                <Tooltip title="View in explorer">
+                  <OpenInNew
+                    fontSize={"small"}
+                    sx={{
+                      fontSize: "18px !important",
+                      verticalAlign: "middle",
+                    }}
+                    onClick={(ev) => {
+                      ev.stopPropagation();
+                      ev.preventDefault();
+                      if (selectedAccount) {
+                        new Explorer(coreNodeInstance).openAddress(
+                          mnemonicAccount(selectedAccount.mnemonic).addr,
+                        );
+                      }
+                    }}
+                  ></OpenInNew>
+                </Tooltip>
+              ) : (
+                ""
+              )}
+            </span>
           }
           endIcon={<UnfoldMore />}
           onClick={(ev) => {
