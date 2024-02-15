@@ -6,26 +6,34 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+  Tooltip,
 } from "@mui/material";
-import { Done, UnfoldMore } from "@mui/icons-material";
+import {
+  ContentPaste,
+  DeleteOutlined,
+  Done,
+  OpenInNew,
+  UnfoldMore,
+} from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../Redux/store";
 import { AccountClient, TealCraft } from "@repo/tealcraft-sdk";
 import { useConfirm } from "material-ui-confirm";
 import { useLoader, useSnackbar } from "@repo/ui";
-import { useNavigate } from "react-router-dom";
 import {
   loadAccounts,
   loadSelectedAccount,
 } from "../../Redux/portal/accountReducer";
 import { mnemonicAccount } from "@algorandfoundation/algokit-utils";
 import { generateAccount, secretKeyToMnemonic } from "algosdk";
-import { ellipseString } from "@repo/utils";
+import { copyContent, ellipseString } from "@repo/utils";
+import { confirmationProps } from "@repo/theme";
+import { CoreNode } from "@repo/algocore";
+import { Explorer } from "@repo/algocore/src/explorer/explorer";
 
 function AccountPicker(): ReactElement {
   const dispatch = useAppDispatch();
   const confirmation = useConfirm();
-  const navigate = useNavigate();
 
   const { showLoader, hideLoader } = useLoader();
   const { showSnack, showException } = useSnackbar();
@@ -38,13 +46,36 @@ function AccountPicker(): ReactElement {
     (state: RootState) => state.accounts,
   );
 
+  const { status, health, genesis, versionsCheck } = useSelector(
+    (state: RootState) => state.node,
+  );
+
+  const coreNodeInstance = new CoreNode(status, versionsCheck, genesis, health);
+
   return (
-    <div className="workspace-picker-wrapper">
-      <div className="workspace-picker-container">
+    <div className="account-picker-wrapper">
+      <div className="account-picker-container">
         <Button
           color={"primary"}
           variant={"contained"}
           className="grey-button"
+          startIcon={
+            <Tooltip title="View in explorer">
+              <OpenInNew
+                fontSize={"small"}
+                sx={{ fontSize: "16px !important" }}
+                onClick={(ev) => {
+                  ev.stopPropagation();
+                  ev.preventDefault();
+                  if (selectedAccount) {
+                    new Explorer(coreNodeInstance).openAddress(
+                      mnemonicAccount(selectedAccount.mnemonic).addr,
+                    );
+                  }
+                }}
+              ></OpenInNew>
+            </Tooltip>
+          }
           endIcon={<UnfoldMore />}
           onClick={(ev) => {
             setAccountAnchorEl(ev.currentTarget);
@@ -67,7 +98,7 @@ function AccountPicker(): ReactElement {
           onClose={() => {
             setAccountAnchorEl(null);
           }}
-          className="classic-menu workspaces-list"
+          className="classic-menu accounts-list"
         >
           {accounts.map((account, index) => {
             return (
@@ -94,10 +125,71 @@ function AccountPicker(): ReactElement {
                   ""
                 )}
                 <ListItemText>
-                  <div className="workspace-picker-name">
+                  <div className="account-picker-name">
                     <div>{mnemonicAccount(account.mnemonic).addr}</div>
                   </div>
                 </ListItemText>
+                <Tooltip title="View in explorer">
+                  <OpenInNew
+                    fontSize={"small"}
+                    sx={{ marginLeft: "20px", fontSize: "16px !important" }}
+                    onClick={(ev) => {
+                      ev.stopPropagation();
+                      ev.preventDefault();
+                      setAccountAnchorEl(null);
+                      new Explorer(coreNodeInstance).openAddress(
+                        mnemonicAccount(account.mnemonic).addr,
+                      );
+                    }}
+                  ></OpenInNew>
+                </Tooltip>
+                <Tooltip title="Copy address">
+                  <ContentPaste
+                    sx={{ marginLeft: "10px", fontSize: "16px !important" }}
+                    fontSize={"small"}
+                    onClick={(ev) => {
+                      ev.stopPropagation();
+                      ev.preventDefault();
+                      setAccountAnchorEl(null);
+                      copyContent(ev, mnemonicAccount(account.mnemonic).addr);
+                      showSnack("Account address copied", "success");
+                    }}
+                  ></ContentPaste>
+                </Tooltip>
+
+                <Tooltip title="Delete account">
+                  <DeleteOutlined
+                    sx={{ marginLeft: "10px" }}
+                    fontSize="small"
+                    onClick={async (e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      setAccountAnchorEl(null);
+
+                      confirmation({
+                        ...confirmationProps,
+                        description: `You are trying to delete the account ${mnemonicAccount(account.mnemonic).addr}`,
+                      })
+                        .then(async () => {
+                          try {
+                            showLoader("Deleting account...");
+                            await new AccountClient().delete(account.id);
+                            hideLoader();
+                            showSnack("Account deleted", "success");
+                            dispatch(loadAccounts());
+                            if (account.id === selectedAccount?.id) {
+                              new TealCraft().removeAccountId();
+                              dispatch(loadSelectedAccount());
+                            }
+                          } catch (e) {
+                            hideLoader();
+                            showException(e);
+                          }
+                        })
+                        .catch(() => {});
+                    }}
+                  />
+                </Tooltip>
               </MenuItem>
             );
           })}

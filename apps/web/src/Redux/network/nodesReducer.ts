@@ -6,6 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import { NodeConnectionParams } from "@repo/algocore";
 import { TealCraft } from "@repo/tealcraft-sdk";
+import { loadNodeDetails } from "./nodeReducer";
 
 export function getNodes(): NodeConnectionParams[] {
   return [
@@ -84,12 +85,18 @@ export const loadSelectedNode: AsyncThunk<
   NodeConnectionParams | undefined,
   void,
   {}
-> = createAsyncThunk("nodes/loadSelectedNode", async () => {
+> = createAsyncThunk("nodes/loadSelectedNode", async (_, thunkApi) => {
   const availableNodes = getNodes();
 
+  const { dispatch } = thunkApi;
   const selectedNodeId = new TealCraft().getNodeId();
 
-  return availableNodes.find((node) => node.id === selectedNodeId);
+  const node = availableNodes.find((node) => node.id === selectedNodeId);
+
+  if (node) {
+    dispatch(loadNodeDetails(node));
+  }
+  return node;
 });
 
 export const nodesSlice = createSlice({
