@@ -3,6 +3,10 @@
 
 .account-balance-wrapper {
   .account-balance-container {
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
     font-size: 14px;
     color: map-get($grey-colors, "A7A9AC");
   }
