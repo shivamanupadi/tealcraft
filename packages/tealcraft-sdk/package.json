@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@algorandfoundation/algokit-client-generator": "^2.5.0",
-    "@algorandfoundation/tealscript": "^0.80.1",
+    "@algorandfoundation/tealscript": "^0.82.2",
     "@repo/types": "*",
     "@repo/utils": "*",
     "@types/axios": "^0.14.0",

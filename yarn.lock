@@ -31,10 +31,10 @@
   dependencies:
     buffer "^6.0.3"
 
-"@algorandfoundation/tealscript@^0.80.1":
-  version "0.80.1"
-  resolved "https://registry.yarnpkg.com/@algorandfoundation/tealscript/-/tealscript-0.80.1.tgz#4c98558003f2012d76c99ba740ac66670891c8e6"
-  integrity sha512-mrv//EiLQuD09KaW1NFHyFuWXjDa8EiKmCg8hQAOnDMhQ7fgwDwVbqyjFX47+DAGTXoxpn3x7iptKc4tBd61aQ==
+"@algorandfoundation/tealscript@^0.82.2":
+  version "0.82.2"
+  resolved "https://registry.yarnpkg.com/@algorandfoundation/tealscript/-/tealscript-0.82.2.tgz#0e57ca6a4c60c4adf54277ca8fd29a14812933d6"
+  integrity sha512-xP1gVMbSyK28PaRqqBaofu6PttsxJb9lAcvWbQsQandZtfWgf07VmMU8eCvTU75jkgB0CYgSr84qJmIA8vQpUg==
   dependencies:
     "@microsoft/tsdoc" "^0.14.2"
     "@playwright/test" "^1.40.1"

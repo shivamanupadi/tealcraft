@@ -7,6 +7,7 @@ import { ConstantProductAMMContract } from "./data/tealscript/ConstantProductAMM
 import { CalculatorContract } from "./data/tealscript/Calculator";
 import { ARC72Contract } from "./data/tealscript/ARC72";
 import { ARC75Contract } from "./data/tealscript/ARC75";
+import { ContactsApp } from "./data/tealscript/ContactsApp";
 
 import { ConstantProductAMMContract as ConstantProductAMMContractPuya } from "./data/puya/ConstantProductAMM";
 import { VotingContract } from "./data/puya/Voting";
@@ -25,6 +26,7 @@ async function loadTealScriptDemoData(): Promise<string> {
       CalculatorContract,
       ARC72Contract,
       ARC75Contract,
+      ContactsApp,
     ];
     const contractClient = new ContractClient();
     const promises: any = [];

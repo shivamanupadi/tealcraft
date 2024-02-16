@@ -26,6 +26,7 @@ export class TealScriptCompiler {
     const indexPath = `${libDir}/index.ts`;
     const compilerPath = `${libDir}/compiler.ts`;
     const contractPath = `${libDir}/contract.ts`;
+    const optimizePath = `${libDir}/optimize.ts`;
     const lsigPath = `${libDir}/lsig.ts`;
 
     const typesPath = "types/global.d.ts";
@@ -37,6 +38,7 @@ export class TealScriptCompiler {
       contractPath,
       lsigPath,
       compilerPath,
+      optimizePath,
     ].map(async (p) => {
       const url = `https://raw.githubusercontent.com/algorandfoundation/TEALScript/${tealScriptVersion}/${p}`;
       const response = await axios.get(url);
