@@ -19,6 +19,14 @@ export function isCreateMethod(
   return new ABIMethod(methodParams).getSignature() === signature;
 }
 
+export function getCreationMethod(
+  appSpec: AppSpec,
+): ABIMethodParams | undefined {
+  return appSpec.contract.methods.find((method) => {
+    return isCreateMethod(method, appSpec);
+  });
+}
+
 export function getMethodCallConfig(
   methodParams: ABIMethodParams,
   appSpec: AppSpec,

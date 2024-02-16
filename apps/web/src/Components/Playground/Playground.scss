@@ -29,8 +29,23 @@
         .app-spec-header {
           box-shadow: 0 4px 2px -2px map-get($grey-colors, "light-grey");
           padding: 20px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
           .contract-title {
             font-size: 14px;
+            color: map-get($grey-colors, "A7A9AC");
+          }
+        }
+        .app-spec-actions {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          column-gap: 15px;
+          .app-id {
+            font-size: 15px;
+          }
+          .greyed {
             color: map-get($grey-colors, "A7A9AC");
           }
         }
