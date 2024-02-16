@@ -18,6 +18,8 @@ import {
 import { useLoader, useSnackbar } from "@repo/ui";
 import { Explorer } from "@repo/algocore/src/explorer/explorer";
 import TransactionDetails from "../TransactionDetails/TransactionDetails";
+import MethodPicker from "../MethodPicker/MethodPicker";
+import { ABIMethodParams } from "algosdk";
 
 interface PlaygroundProps {
   appSpec: AppSpec;
@@ -37,6 +39,10 @@ export function Playground({
   >(null);
   const [isAppCreateTxnVisible, setAppCreateTxnVisibility] =
     useState<boolean>(false);
+
+  const [currentMethod, setCurrentMethod] = useState<ABIMethodParams | null>(
+    null,
+  );
 
   const { showLoader, hideLoader } = useLoader();
   const { showSnack, showException } = useSnackbar();
@@ -163,6 +169,23 @@ export function Playground({
                   )}
                 </div>
               </div>
+            </div>
+            <div className="app-spec-body">
+              {appCreateResult ? (
+                <div className="method-executor">
+                  <MethodPicker
+                    onPick={(method) => {
+                      setCurrentMethod(method);
+                    }}
+                    selectedMethod={currentMethod}
+                    appSpec={appSpec}
+                  ></MethodPicker>
+                </div>
+              ) : (
+                <div className="no-app-info">
+                  Deploy an application to invoke methods
+                </div>
+              )}
             </div>
           </div>
         </div>

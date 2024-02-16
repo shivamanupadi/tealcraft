@@ -35,17 +35,25 @@
             font-size: 14px;
             color: map-get($grey-colors, "A7A9AC");
           }
-        }
-        .app-spec-actions {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          column-gap: 15px;
-          .app-id {
-            font-size: 15px;
+          .app-spec-actions {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            column-gap: 15px;
+            .app-id {
+              font-size: 15px;
+            }
+            .greyed {
+              color: map-get($grey-colors, "A7A9AC");
+            }
           }
-          .greyed {
+        }
+        .app-spec-body {
+          padding: 20px 20px;
+          .no-app-info {
+            font-size: 14px;
             color: map-get($grey-colors, "A7A9AC");
+            margin-top: 20px;
           }
         }
       }
