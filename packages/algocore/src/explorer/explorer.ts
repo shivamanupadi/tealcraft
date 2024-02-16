@@ -22,4 +22,8 @@ export class Explorer {
   openAddress(address: string): void {
     this.getExplorer().openAddress(address);
   }
+
+  openApplication(id: string): void {
+    this.getExplorer().openApplication(id);
+  }
 }

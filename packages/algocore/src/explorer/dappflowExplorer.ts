@@ -35,4 +35,8 @@ export class DappflowExplorer {
   openAddress(address: string): void {
     window.open(`${this.getBaseUrl()}/account/${address}`, "_blank");
   }
+
+  openApplication(id: string): void {
+    window.open(`${this.getBaseUrl()}/application/${id}`, "_blank");
+  }
 }

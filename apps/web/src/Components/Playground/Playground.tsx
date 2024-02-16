@@ -8,7 +8,7 @@ import { Button } from "@mui/material";
 import { createApp, mnemonicAccount } from "@algorandfoundation/algokit-utils";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/store";
-import { getCreationMethod, Network } from "@repo/algocore";
+import { CoreNode, getCreationMethod, Network } from "@repo/algocore";
 import {
   AppCallTransactionResult,
   AppCompilationResult,
@@ -16,6 +16,7 @@ import {
   CreateAppParams,
 } from "@algorandfoundation/algokit-utils/types/app";
 import { useLoader, useSnackbar } from "@repo/ui";
+import { Explorer } from "@repo/algocore/src/explorer/explorer";
 
 interface PlaygroundProps {
   appSpec: AppSpec;
@@ -36,6 +37,13 @@ export function Playground({
 
   const { showLoader, hideLoader } = useLoader();
   const { showSnack, showException } = useSnackbar();
+
+  const { status, health, genesis, versionsCheck } = useSelector(
+    (state: RootState) => state.node,
+  );
+
+  const coreNodeInstance = new CoreNode(status, versionsCheck, genesis, health);
+
   return (
     <div className={"playground-wrapper"}>
       <div className={"playground-container"}>
@@ -62,7 +70,19 @@ export function Playground({
               <div className="app-spec-actions">
                 <div className="app-id greyed">
                   {appCreateResult ? (
-                    <div>Application : {appCreateResult.appId.toString()}</div>
+                    <div>
+                      Application :{" "}
+                      <span
+                        className="underline hover"
+                        onClick={() => {
+                          new Explorer(coreNodeInstance).openApplication(
+                            appCreateResult?.appId.toString(),
+                          );
+                        }}
+                      >
+                        {appCreateResult.appId.toString()}
+                      </span>
+                    </div>
                   ) : (
                     ""
                   )}
