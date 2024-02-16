@@ -27,9 +27,10 @@ import {
 import { mnemonicAccount } from "@algorandfoundation/algokit-utils";
 import { generateAccount, secretKeyToMnemonic } from "algosdk";
 import { copyContent, ellipseString } from "@repo/utils";
-import { confirmationProps } from "@repo/theme";
+import { BaseColors, confirmationProps } from "@repo/theme";
 import { CoreNode } from "@repo/algocore";
 import { Explorer } from "@repo/algocore/src/explorer/explorer";
+import AccountBalance from "../AccountBalance/AccountBalance";
 
 function AccountPicker(): ReactElement {
   const dispatch = useAppDispatch();
@@ -55,51 +56,66 @@ function AccountPicker(): ReactElement {
   return (
     <div className="account-picker-wrapper">
       <div className="account-picker-container">
-        <Button
-          color={"primary"}
-          variant={"contained"}
-          size={"small"}
-          startIcon={
-            <span style={{ fontSize: "14px" }}>
-              {selectedAccount ? (
-                <Tooltip title="View in explorer">
-                  <OpenInNew
-                    fontSize={"small"}
-                    sx={{
-                      fontSize: "18px !important",
-                      verticalAlign: "middle",
-                    }}
-                    onClick={(ev) => {
-                      ev.stopPropagation();
-                      ev.preventDefault();
-                      if (selectedAccount) {
-                        new Explorer(coreNodeInstance).openAddress(
-                          mnemonicAccount(selectedAccount.mnemonic).addr,
-                        );
-                      }
-                    }}
-                  ></OpenInNew>
-                </Tooltip>
-              ) : (
-                ""
-              )}
-            </span>
-          }
-          endIcon={<UnfoldMore />}
-          onClick={(ev) => {
-            setAccountAnchorEl(ev.currentTarget);
-          }}
-        >
-          {selectedAccount ? (
-            <div className="current-workspace">
-              <div>
-                {ellipseString(mnemonicAccount(selectedAccount.mnemonic).addr)}
+        <div>
+          <Button
+            color={"primary"}
+            variant={"outlined"}
+            size={"small"}
+            sx={{ background: BaseColors.White }}
+            startIcon={
+              <span style={{ fontSize: "14px" }}>
+                {selectedAccount ? (
+                  <Tooltip title="View in explorer">
+                    <OpenInNew
+                      fontSize={"small"}
+                      sx={{
+                        fontSize: "18px !important",
+                        verticalAlign: "middle",
+                      }}
+                      onClick={(ev) => {
+                        ev.stopPropagation();
+                        ev.preventDefault();
+                        if (selectedAccount) {
+                          new Explorer(coreNodeInstance).openAddress(
+                            mnemonicAccount(selectedAccount.mnemonic).addr,
+                          );
+                        }
+                      }}
+                    ></OpenInNew>
+                  </Tooltip>
+                ) : (
+                  ""
+                )}
+              </span>
+            }
+            endIcon={<UnfoldMore />}
+            onClick={(ev) => {
+              setAccountAnchorEl(ev.currentTarget);
+            }}
+          >
+            {selectedAccount ? (
+              <div className="current-account">
+                <div>
+                  {ellipseString(
+                    mnemonicAccount(selectedAccount.mnemonic).addr,
+                  )}
+                </div>
               </div>
-            </div>
+            ) : (
+              "Select account"
+            )}
+          </Button>
+        </div>
+        <div>
+          {selectedAccount ? (
+            <AccountBalance
+              address={mnemonicAccount(selectedAccount.mnemonic).addr}
+            ></AccountBalance>
           ) : (
-            "Select account"
+            ""
           )}
-        </Button>
+        </div>
+
         <Menu
           anchorEl={accountAnchorEl}
           open={Boolean(accountAnchorEl)}

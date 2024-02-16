@@ -13,6 +13,10 @@
 
 .account-picker-wrapper {
   .account-picker-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 10px;
     .picker-actions {
       display: flex;
       justify-content: flex-start;

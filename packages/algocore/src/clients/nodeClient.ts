@@ -1,6 +1,6 @@
 import { Algodv2 } from "algosdk";
-import { Network } from "../network";
 import { A_Genesis, A_Status, A_VersionsCheck } from "../types";
+import { Network } from "../network";
 
 export class NodeClient {
   client: Algodv2;

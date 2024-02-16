@@ -1,5 +1,5 @@
-import { CoreNode } from "../packages/core-sdk/classes/core/CoreNode";
 import { DappflowExplorer } from "./dappflowExplorer";
+import { CoreNode } from "../CoreClasses/CoreNode";
 
 export class Explorer {
   private nodeInstance: CoreNode;

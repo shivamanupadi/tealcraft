@@ -10,7 +10,7 @@ import {
 import { Done, UnfoldMore } from "@mui/icons-material";
 import { TealCraft } from "@repo/tealcraft-sdk";
 import { loadSelectedNode } from "../../Redux/network/nodesReducer";
-import { theme } from "@repo/theme";
+import { BaseColors, theme } from "@repo/theme";
 import { RootState, useAppDispatch } from "../../Redux/store";
 import { useSelector } from "react-redux";
 
@@ -27,9 +27,10 @@ function NodePicker(): ReactElement {
       <div className="node-picker-container">
         <Button
           color={"primary"}
-          variant={"contained"}
+          variant={"outlined"}
           size={"small"}
           endIcon={<UnfoldMore />}
+          sx={{ background: BaseColors.White }}
           onClick={(ev) => {
             setNetworkAnchorEl(ev.currentTarget);
           }}

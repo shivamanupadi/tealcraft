@@ -1,0 +1,9 @@
+@import "@repo/styles";
+@import "../../scss/constants";
+
+.account-balance-wrapper {
+  .account-balance-container {
+    font-size: 14px;
+    color: map-get($grey-colors, "A7A9AC");
+  }
+}

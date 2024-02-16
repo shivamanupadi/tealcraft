@@ -22,10 +22,10 @@ export function Playground({
           <div className="title">Playground</div>
           <div className="actions">
             <div>
-              <AccountPicker></AccountPicker>
+              <NodePicker></NodePicker>
             </div>
             <div>
-              <NodePicker></NodePicker>
+              <AccountPicker></AccountPicker>
             </div>
             <div>
               <Close className="close hover" onClick={onClose}></Close>

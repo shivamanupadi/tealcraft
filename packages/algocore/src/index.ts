@@ -5,3 +5,4 @@ export * from "./types";
 export * from "./network";
 export * from "./clients/nodeClient";
 export * from "./CoreClasses/CoreNode";
+export * from "./clients/accountClient";
