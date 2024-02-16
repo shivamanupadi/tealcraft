@@ -14,7 +14,11 @@ import { BaseColors, theme } from "@repo/theme";
 import { RootState, useAppDispatch } from "../../Redux/store";
 import { useSelector } from "react-redux";
 
-function NodePicker(): ReactElement {
+interface NodePickerProps {
+  onPick: () => void;
+}
+
+function NodePicker({ onPick }: NodePickerProps): ReactElement {
   const dispatch = useAppDispatch();
   const { nodes, selectedNode } = useSelector(
     (state: RootState) => state.nodes,
@@ -72,6 +76,7 @@ function NodePicker(): ReactElement {
                   setNetworkAnchorEl(null);
                   new TealCraft().saveNodeId(node.id);
                   dispatch(loadSelectedNode());
+                  onPick();
                 }}
               >
                 {selectedNode ? (

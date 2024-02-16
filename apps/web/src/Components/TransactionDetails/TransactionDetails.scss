@@ -1,0 +1,43 @@
+@import "@repo/styles";
+@import "../../scss/constants";
+
+.transaction-details-wrapper {
+  .transaction-details-container {
+    text-align: center;
+    margin-top: -20px;
+    .success-icon {
+      font-size: 70px;
+      color: map-get($grey-colors, "A7A9AC");
+    }
+    .message {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .txn {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 10px;
+      text-align: center;
+      .name {
+        color: map-get($grey-colors, "A7A9AC");
+        margin-bottom: 5px;
+        font-size: 20px;
+        margin-top: 10px;
+      }
+      .msg {
+        color: map-get($grey-colors, "A7A9AC");
+        font-size: 14px;
+        margin-top: 20px;
+      }
+      .id {
+        color: map-get($grey-colors, "A7A9AC");
+        word-break: break-all;
+        font-size: 13px;
+        width: 60%;
+        margin: 0 auto;
+        line-height: 1.2;
+        margin-top: 25px;
+      }
+    }
+  }
+}

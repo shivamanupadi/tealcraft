@@ -17,6 +17,7 @@ import {
 } from "@algorandfoundation/algokit-utils/types/app";
 import { useLoader, useSnackbar } from "@repo/ui";
 import { Explorer } from "@repo/algocore/src/explorer/explorer";
+import TransactionDetails from "../TransactionDetails/TransactionDetails";
 
 interface PlaygroundProps {
   appSpec: AppSpec;
@@ -34,6 +35,8 @@ export function Playground({
     | null
     | (Partial<AppCompilationResult> & AppCallTransactionResult & AppReference)
   >(null);
+  const [isAppCreateTxnVisible, setAppCreateTxnVisibility] =
+    useState<boolean>(false);
 
   const { showLoader, hideLoader } = useLoader();
   const { showSnack, showException } = useSnackbar();
@@ -51,7 +54,11 @@ export function Playground({
           <div className="title">Playground</div>
           <div className="actions">
             <div>
-              <NodePicker></NodePicker>
+              <NodePicker
+                onPick={() => {
+                  setAppCreateResult(null);
+                }}
+              ></NodePicker>
             </div>
             <div>
               <AccountPicker></AccountPicker>
@@ -132,10 +139,7 @@ export function Playground({
 
                         setAppCreateResult(result);
                         hideLoader();
-                        showSnack(
-                          `Application ${result.appId} deployed successfully`,
-                          "success",
-                        );
+                        setAppCreateTxnVisibility(true);
                       } catch (e) {
                         hideLoader();
                         showException(e);
@@ -144,6 +148,19 @@ export function Playground({
                   >
                     Deploy app
                   </Button>
+                  {appCreateResult ? (
+                    <div>
+                      <TransactionDetails
+                        show={isAppCreateTxnVisible}
+                        id={appCreateResult.transaction.txID()}
+                        onClose={() => {
+                          setAppCreateTxnVisibility(false);
+                        }}
+                      ></TransactionDetails>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>
