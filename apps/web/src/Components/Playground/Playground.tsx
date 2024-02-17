@@ -4,7 +4,7 @@ import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
 import { Close } from "@mui/icons-material";
 import AccountPicker from "../AccountPicker/AccountPicker";
 import NodePicker from "../NodePicker/NodePicker";
-import { Button } from "@mui/material";
+import { Button, FormLabel, Grid } from "@mui/material";
 import { createApp, mnemonicAccount } from "@algorandfoundation/algokit-utils";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/store";
@@ -47,6 +47,11 @@ export function Playground({
   const { showLoader, hideLoader } = useLoader();
   const { showSnack, showException } = useSnackbar();
 
+  function resetState() {
+    setAppCreateResult(null);
+    setCurrentMethod(null);
+  }
+
   const { status, health, genesis, versionsCheck } = useSelector(
     (state: RootState) => state.node,
   );
@@ -62,7 +67,7 @@ export function Playground({
             <div>
               <NodePicker
                 onPick={() => {
-                  setAppCreateResult(null);
+                  resetState();
                 }}
               ></NodePicker>
             </div>
@@ -173,13 +178,30 @@ export function Playground({
             <div className="app-spec-body">
               {appCreateResult ? (
                 <div className="method-executor">
-                  <MethodPicker
-                    onPick={(method) => {
-                      setCurrentMethod(method);
-                    }}
-                    selectedMethod={currentMethod}
-                    appSpec={appSpec}
-                  ></MethodPicker>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                      <FormLabel
+                        className="classic-label"
+                        sx={{
+                          marginBottom: "5px",
+                          display: "inline-block",
+                          marginLeft: "5px",
+                        }}
+                      >
+                        Select method
+                      </FormLabel>
+                      <MethodPicker
+                        onPick={(method) => {
+                          setCurrentMethod(method);
+                        }}
+                        selectedMethod={currentMethod}
+                        appSpec={appSpec}
+                      ></MethodPicker>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                      {currentMethod?.args.length}
+                    </Grid>
+                  </Grid>
                 </div>
               ) : (
                 <div className="no-app-info">

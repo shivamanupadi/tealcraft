@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@algorandfoundation/algokit-client-generator": "^2.5.0",
-    "@algorandfoundation/tealscript": "^0.82.2",
+    "@algorandfoundation/tealscript": "^0.84.0",
     "@repo/types": "*",
     "@repo/utils": "*",
     "@types/axios": "^0.14.0",
@@ -19,7 +19,6 @@
     "axios": "^1.6.5",
     "dexie": "^3.2.4",
     "dexie-export-import": "^4.0.7",
-    "ts-morph": "^20.0.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

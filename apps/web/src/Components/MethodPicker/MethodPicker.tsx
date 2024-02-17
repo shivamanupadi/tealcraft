@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import { Done, UnfoldMore } from "@mui/icons-material";
 import { theme } from "@repo/theme";
-import { useAppDispatch } from "../../Redux/store";
 import { ABIMethodParams } from "algosdk";
 import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
 
@@ -24,7 +23,6 @@ function MethodPicker({
   appSpec,
   selectedMethod,
 }: MethodPickerProps): ReactElement {
-  const dispatch = useAppDispatch();
   const [methodAnchorEl, setMethodAnchorEl] = useState<null | HTMLElement>(
     null,
   );
@@ -48,7 +46,7 @@ function MethodPicker({
               <div>{selectedMethod.name}</div>
             </div>
           ) : (
-            "Select method"
+            "--None--"
           )}
         </Button>
 
