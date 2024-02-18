@@ -55,6 +55,34 @@
             color: map-get($grey-colors, "A7A9AC");
             margin-top: 20px;
           }
+          .method-executor {
+            .method-selector {
+              color: map-get($grey-colors, "A7A9AC");
+              margin-bottom: 10px;
+              display: inline-block;
+            }
+            .abi-method-execute {
+              margin-top: 20px;
+            }
+            .abi-method-args-form-wrapper {
+              .abi-method-args-form-container {
+                margin-top: 20px;
+                .abi-method-args-form-title {
+                  color: map-get($grey-colors, "A7A9AC");
+                  margin-bottom: 10px;
+                }
+                .abi-method-arg {
+                  margin-bottom: 15px;
+                  .arg-transaction-wrapper {
+                    margin-top: 10px;
+                    padding: 15px;
+                    border-radius: 5px;
+                    border: 1px solid map-get($grey-colors, "light-grey");
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

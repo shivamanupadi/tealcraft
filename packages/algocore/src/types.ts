@@ -1,4 +1,4 @@
-import { AlgodTokenHeader, CustomTokenHeader } from "algosdk";
+import { ABIArgumentType, AlgodTokenHeader, CustomTokenHeader } from "algosdk";
 
 export type AlgodConnectionParams = {
   url: string;
@@ -61,3 +61,10 @@ export type A_Genesis = {
   timestamp: number;
   devmode: boolean;
 };
+
+export interface A_ABI_METHOD_EXECUTOR_ARG {
+  type: ABIArgumentType;
+  name?: string;
+  description?: string;
+  value: any;
+}

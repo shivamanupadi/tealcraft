@@ -1,5 +1,5 @@
 import "./Playground.scss";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
 import { Close } from "@mui/icons-material";
 import AccountPicker from "../AccountPicker/AccountPicker";
@@ -8,7 +8,12 @@ import { Button, FormLabel, Grid } from "@mui/material";
 import { createApp, mnemonicAccount } from "@algorandfoundation/algokit-utils";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/store";
-import { CoreNode, getCreationMethod, Network } from "@repo/algocore";
+import {
+  A_ABI_METHOD_EXECUTOR_ARG,
+  CoreNode,
+  getCreationMethod,
+  Network,
+} from "@repo/algocore";
 import {
   AppCallTransactionResult,
   AppCompilationResult,
@@ -19,7 +24,13 @@ import { useLoader, useSnackbar } from "@repo/ui";
 import { Explorer } from "@repo/algocore/src/explorer/explorer";
 import TransactionDetails from "../TransactionDetails/TransactionDetails";
 import MethodPicker from "../MethodPicker/MethodPicker";
-import { ABIMethodParams } from "algosdk";
+import {
+  ABIMethod,
+  ABIMethodParams,
+  abiTypeIsTransaction,
+  TransactionType,
+} from "algosdk";
+import { ShadedInput } from "@repo/theme";
 
 interface PlaygroundProps {
   appSpec: AppSpec;
@@ -43,6 +54,11 @@ export function Playground({
   const [currentMethod, setCurrentMethod] = useState<ABIMethodParams | null>(
     null,
   );
+  const [executorArgs, setExecutorArgs] = useState<A_ABI_METHOD_EXECUTOR_ARG[]>(
+    [],
+  );
+  const [fee, setFee] = useState<string>("");
+  const [onComplete, setOnComplete] = useState<string>("");
 
   const { showLoader, hideLoader } = useLoader();
   const { showSnack, showException } = useSnackbar();
@@ -51,6 +67,16 @@ export function Playground({
     setAppCreateResult(null);
     setCurrentMethod(null);
   }
+
+  useEffect(() => {
+    if (currentMethod) {
+      const processedArgs = new ABIMethod(currentMethod).args.map((arg) => ({
+        ...arg,
+        value: "",
+      }));
+      setExecutorArgs(processedArgs);
+    }
+  }, [currentMethod]);
 
   const { status, health, genesis, versionsCheck } = useSelector(
     (state: RootState) => state.node,
@@ -179,15 +205,8 @@ export function Playground({
               {appCreateResult ? (
                 <div className="method-executor">
                   <Grid container spacing={2}>
-                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                      <FormLabel
-                        className="classic-label"
-                        sx={{
-                          marginBottom: "5px",
-                          display: "inline-block",
-                          marginLeft: "5px",
-                        }}
-                      >
+                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                      <FormLabel className="method-selector">
                         Select method
                       </FormLabel>
                       <MethodPicker
@@ -197,9 +216,203 @@ export function Playground({
                         selectedMethod={currentMethod}
                         appSpec={appSpec}
                       ></MethodPicker>
-                    </Grid>
-                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                      {currentMethod?.args.length}
+
+                      {currentMethod ? (
+                        <div className="abi-method-args-form-wrapper">
+                          <div className="abi-method-args-form-container">
+                            {executorArgs.length > 0 ? (
+                              <div className="abi-method-args-form-title">
+                                Arguments
+                              </div>
+                            ) : (
+                              ""
+                            )}
+
+                            {executorArgs.map((arg, index) => {
+                              return (
+                                <div className="abi-method-arg" key={arg.name}>
+                                  <FormLabel className="classic-label">{`${
+                                    arg.name
+                                  } (${arg.type.toString()})`}</FormLabel>
+                                  {abiTypeIsTransaction(arg.type.toString()) ? (
+                                    <div>
+                                      <div className="arg-transaction-wrapper">
+                                        <div className="arg-transaction-container">
+                                          {arg.type.toString() ===
+                                          TransactionType.pay ? (
+                                            <div>
+                                              <FormLabel className="classic-label">
+                                                To
+                                              </FormLabel>
+                                              <ShadedInput
+                                                placeholder="To address"
+                                                multiline
+                                                rows={2}
+                                                value={arg.value.to}
+                                                onChange={(ev) => {
+                                                  const processedArgs = [
+                                                    ...executorArgs,
+                                                  ];
+                                                  processedArgs[index] = {
+                                                    ...arg,
+                                                    value: {
+                                                      ...arg.value,
+                                                      to: ev.target.value,
+                                                    },
+                                                  };
+
+                                                  setExecutorArgs(
+                                                    processedArgs,
+                                                  );
+                                                }}
+                                                fullWidth
+                                              />
+
+                                              <FormLabel className="classic-label">
+                                                Amount
+                                              </FormLabel>
+                                              <ShadedInput
+                                                placeholder="Amount"
+                                                value={arg.value.amount}
+                                                onChange={(ev) => {
+                                                  const processedArgs = [
+                                                    ...executorArgs,
+                                                  ];
+                                                  processedArgs[index] = {
+                                                    ...arg,
+                                                    value: {
+                                                      ...arg.value,
+                                                      amount: ev.target.value,
+                                                    },
+                                                  };
+
+                                                  setExecutorArgs(
+                                                    processedArgs,
+                                                  );
+                                                }}
+                                                fullWidth
+                                              />
+                                            </div>
+                                          ) : (
+                                            ""
+                                          )}
+
+                                          {arg.type.toString() ===
+                                          TransactionType.axfer ? (
+                                            <div>
+                                              <FormLabel className="classic-label">
+                                                Asset ID
+                                              </FormLabel>
+                                              <ShadedInput
+                                                placeholder="Asset ID"
+                                                value={arg.value.assetId}
+                                                onChange={(ev) => {
+                                                  const processedArgs = [
+                                                    ...executorArgs,
+                                                  ];
+                                                  processedArgs[index] = {
+                                                    ...arg,
+                                                    value: {
+                                                      ...arg.value,
+                                                      assetId: ev.target.value,
+                                                    },
+                                                  };
+
+                                                  setExecutorArgs(
+                                                    processedArgs,
+                                                  );
+                                                }}
+                                                fullWidth
+                                              />
+
+                                              <FormLabel className="classic-label">
+                                                To
+                                              </FormLabel>
+                                              <ShadedInput
+                                                placeholder="To address"
+                                                multiline
+                                                rows={2}
+                                                value={arg.value.to}
+                                                onChange={(ev) => {
+                                                  const processedArgs = [
+                                                    ...executorArgs,
+                                                  ];
+                                                  processedArgs[index] = {
+                                                    ...arg,
+                                                    value: {
+                                                      ...arg.value,
+                                                      to: ev.target.value,
+                                                    },
+                                                  };
+
+                                                  setExecutorArgs(
+                                                    processedArgs,
+                                                  );
+                                                }}
+                                                fullWidth
+                                              />
+
+                                              <FormLabel className="classic-label">
+                                                Amount
+                                              </FormLabel>
+                                              <ShadedInput
+                                                placeholder="Amount"
+                                                value={arg.value.amount}
+                                                onChange={(ev) => {
+                                                  const processedArgs = [
+                                                    ...executorArgs,
+                                                  ];
+                                                  processedArgs[index] = {
+                                                    ...arg,
+                                                    value: {
+                                                      ...arg.value,
+                                                      amount: ev.target.value,
+                                                    },
+                                                  };
+
+                                                  setExecutorArgs(
+                                                    processedArgs,
+                                                  );
+                                                }}
+                                                fullWidth
+                                              />
+                                            </div>
+                                          ) : (
+                                            ""
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <ShadedInput
+                                      placeholder={arg.type.toString()}
+                                      value={arg.value}
+                                      onChange={(ev) => {
+                                        const processedArgs = [...executorArgs];
+                                        processedArgs[index] = {
+                                          ...arg,
+                                          value: ev.target.value,
+                                        };
+
+                                        setExecutorArgs(processedArgs);
+                                      }}
+                                      fullWidth
+                                    />
+                                  )}
+                                </div>
+                              );
+                            })}
+
+                            <div className="abi-method-execute">
+                              <Button variant={"contained"} onClick={() => {}}>
+                                Execute
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </Grid>
                   </Grid>
                 </div>

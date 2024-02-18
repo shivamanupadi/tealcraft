@@ -34,7 +34,7 @@ function MethodPicker({
         <Button
           color={"primary"}
           variant={"contained"}
-          size={"small"}
+          size={"large"}
           className="grey-button"
           endIcon={<UnfoldMore />}
           onClick={(ev) => {
