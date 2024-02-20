@@ -7,7 +7,7 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { Done, UnfoldMore } from "@mui/icons-material";
+import { Done, KeyboardArrowDown } from "@mui/icons-material";
 import { theme } from "@repo/theme";
 import { ABIMethodParams } from "algosdk";
 import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
@@ -32,11 +32,10 @@ function MethodPicker({
     <div className="method-picker-wrapper">
       <div className="method-picker-container">
         <Button
-          color={"primary"}
-          variant={"contained"}
-          size={"large"}
-          className="grey-button"
-          endIcon={<UnfoldMore />}
+          color={"secondary"}
+          variant={"outlined"}
+          endIcon={<KeyboardArrowDown />}
+          size={"small"}
           onClick={(ev) => {
             setMethodAnchorEl(ev.currentTarget);
           }}

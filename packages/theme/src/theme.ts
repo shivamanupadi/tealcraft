@@ -164,6 +164,10 @@ export const theme = createTheme({
             backgroundColor: ThemeColors.SecondaryLight,
             color: `#58595B`,
           },
+          "&.warning-light-alert": {
+            backgroundColor: ThemeColors.WarningLight,
+            color: `#58595B`,
+          },
           "&.success-snack-bar": {
             backgroundColor: ThemeColors.SecondaryLight,
             color: BaseColors.Black,

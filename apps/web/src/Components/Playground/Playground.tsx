@@ -1,10 +1,23 @@
 import "./Playground.scss";
 import { ReactElement, useEffect, useState } from "react";
 import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
-import { Close } from "@mui/icons-material";
+import { Close, PlayCircle } from "@mui/icons-material";
 import AccountPicker from "../AccountPicker/AccountPicker";
 import NodePicker from "../NodePicker/NodePicker";
-import { Button, FormLabel, Grid } from "@mui/material";
+import {
+  Alert,
+  Button,
+  CircularProgress,
+  FormLabel,
+  Grid,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import {
   callApp,
   createApp,
@@ -31,7 +44,7 @@ import {
   AppState,
   CreateAppParams,
 } from "@algorandfoundation/algokit-utils/types/app";
-import { useLoader, useSnackbar } from "@repo/ui";
+import { LoadingTile, useLoader, useSnackbar } from "@repo/ui";
 import { Explorer } from "@repo/algocore/src/explorer/explorer";
 import MethodPicker from "../MethodPicker/MethodPicker";
 import {
@@ -41,6 +54,8 @@ import {
   TransactionType,
 } from "algosdk";
 import { ShadedInput } from "@repo/theme";
+import { tableStyles } from "../../Pages/Contract/ContractConsole/ContractSchema/ContractSchema";
+import { getExceptionMsg } from "@repo/utils";
 
 interface PlaygroundProps {
   appSpec: AppSpec;
@@ -70,6 +85,12 @@ export function Playground({
   const [globalStateDelta, setGlobalStateDelta] = useState<AppState | null>(
     null,
   );
+  const [isExecutionInProgress, setExecutionProgress] =
+    useState<boolean>(false);
+  const [isExecutionSuccessful, setExecutionSuccess] = useState<boolean>(false);
+  const [isExecutionCompleted, setExecutionCompletion] =
+    useState<boolean>(false);
+  const [executionErrorMsg, setExecutionErrorMsg] = useState<string>("");
 
   const { showLoader, hideLoader } = useLoader();
   const { showSnack, showException } = useSnackbar();
@@ -77,6 +98,16 @@ export function Playground({
   function resetState() {
     setAppCreateResult(null);
     setCurrentMethod(null);
+    resetMethodExecutionState();
+  }
+
+  function resetMethodExecutionState() {
+    setExecutionProgress(false);
+    setExecutorResult(null);
+    setGlobalStateDelta(null);
+    setExecutionSuccess(false);
+    setExecutionErrorMsg("");
+    setExecutionCompletion(false);
   }
 
   useEffect(() => {
@@ -105,47 +136,42 @@ export function Playground({
       return;
     }
 
+    const isCreation = isCreateMethod(method, appSpec);
+    if (isCreation) {
+      if (!appCreateResult) {
+        showSnack("Deploy an application before invoking the methods", "error");
+        return;
+      }
+    }
+
     try {
+      resetMethodExecutionState();
+      setExecutionProgress(true);
+
       const algod = new Network(selectedNode).getClient();
       const sp = await algod.getTransactionParams().do();
-      const isCreation = isCreateMethod(method, appSpec);
 
       if (isCreation) {
-        try {
-          showLoader("Deploying application ...");
-          const params: CreateAppParams = {
-            approvalProgram: atob(appSpec.source.approval),
-            clearStateProgram: atob(appSpec.source.clear),
-            from: mnemonicAccount(selectedAccount.mnemonic),
-            schema: {
-              globalInts: appSpec.state.global.num_uints,
-              localInts: appSpec.state.local.num_uints,
-              localByteSlices: appSpec.state.local.num_byte_slices,
-              globalByteSlices: appSpec.state.global.num_byte_slices,
-            },
-            args: {
-              methodArgs: [],
-              method: method,
-            },
-          };
-          const result = await createApp(params, algod);
-          setAppCreateResult(result);
-          hideLoader();
-        } catch (e) {
-          hideLoader();
-          showException(e);
-        }
+        const params: CreateAppParams = {
+          approvalProgram: atob(appSpec.source.approval),
+          clearStateProgram: atob(appSpec.source.clear),
+          from: mnemonicAccount(selectedAccount.mnemonic),
+          schema: {
+            globalInts: appSpec.state.global.num_uints,
+            localInts: appSpec.state.local.num_uints,
+            localByteSlices: appSpec.state.local.num_byte_slices,
+            globalByteSlices: appSpec.state.global.num_byte_slices,
+          },
+          args: {
+            methodArgs: [],
+            method: method,
+          },
+        };
+        const result = await createApp(params, algod);
+        setAppCreateResult(result);
       } else {
-        if (!appCreateResult) {
-          showSnack(
-            "Deploy an application before invoking the methods",
-            "error",
-          );
-          return;
-        }
-        showLoader("Invoking method call ...");
         const params: AppCallParams = {
-          appId: appCreateResult.appId,
+          appId: appCreateResult?.appId || 0,
           callType: getMethodCallConfigValue(method, appSpec),
           from: mnemonicAccount(selectedAccount.mnemonic),
           populateAppCallResources: true,
@@ -162,15 +188,19 @@ export function Playground({
         const result = await callApp(params, algod);
         setExecutorResult(result);
         if (result.confirmation?.globalStateDelta) {
-          const test = decodeAppState(result.confirmation.globalStateDelta);
-          setGlobalStateDelta(test);
+          const appState = decodeAppState(result.confirmation.globalStateDelta);
+          setGlobalStateDelta(appState);
         }
-
-        hideLoader();
       }
+      setExecutionProgress(false);
+      setExecutionSuccess(true);
+      setExecutionCompletion(true);
     } catch (e) {
-      hideLoader();
-      showException(e);
+      setExecutionProgress(false);
+      setExecutionSuccess(false);
+      setExecutionCompletion(true);
+      const msg = getExceptionMsg(e) || "";
+      setExecutionErrorMsg(msg);
     }
   }
 
@@ -295,6 +325,7 @@ export function Playground({
                       </FormLabel>
                       <MethodPicker
                         onPick={(method) => {
+                          resetMethodExecutionState();
                           setCurrentMethod(method);
                         }}
                         selectedMethod={currentMethod}
@@ -504,10 +535,21 @@ export function Playground({
 
                             <div className="abi-method-execute">
                               <Button
+                                color={"primary"}
                                 variant={"contained"}
                                 onClick={() => {
                                   executeMethod(currentMethod);
                                 }}
+                                disabled={isExecutionInProgress}
+                                startIcon={
+                                  isExecutionInProgress ? (
+                                    <CircularProgress
+                                      size={20}
+                                    ></CircularProgress>
+                                  ) : (
+                                    <PlayCircle></PlayCircle>
+                                  )
+                                }
                               >
                                 Execute
                               </Button>
@@ -519,61 +561,134 @@ export function Playground({
                       )}
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                      {executorResult ? (
-                        <div className="result-wrapper">
-                          <div className="result-container">
-                            <div className="title">Result</div>
-                            <div className="details">
-                              <div className="section">
-                                <div className="key">Return</div>
-                                <div className="value">
-                                  {executorResult?.return?.returnValue?.toString()}
-                                </div>
-                              </div>
-                              <div className="section">
-                                <div className="key">Transaction</div>
-                                <div
-                                  className="value underline hover"
-                                  onClick={() => {
-                                    new Explorer(
-                                      coreNodeInstance,
-                                    ).openTransaction(
-                                      executorResult?.transaction.txID(),
-                                    );
-                                  }}
-                                >
-                                  {executorResult?.transaction.txID()}
-                                </div>
-                              </div>
-                              <div className="section">
-                                <div className="key">Global state delta</div>
-                                {globalStateDelta ? (
-                                  <div className="value">
-                                    {Object.keys(globalStateDelta).map(
-                                      (globalStateKey) => {
-                                        return (
-                                          <div>
-                                            <div>{globalStateKey}</div>
-                                            <div>
-                                              {globalStateDelta[
-                                                globalStateKey
-                                              ]?.value.toString()}
-                                            </div>
-                                          </div>
-                                        );
-                                      },
+                      <div className="result-wrapper">
+                        <div className="result-container">
+                          <div className="title">Result</div>
+                          {isExecutionInProgress ? (
+                            <LoadingTile></LoadingTile>
+                          ) : (
+                            <div>
+                              {isExecutionCompleted ? (
+                                <div>
+                                  <div>
+                                    {isExecutionSuccessful ? (
+                                      <Alert
+                                        icon={false}
+                                        color={"success"}
+                                        className="execution-final-result mini-alert secondary-light-alert"
+                                      >
+                                        Method execution successful
+                                      </Alert>
+                                    ) : (
+                                      <Alert
+                                        icon={false}
+                                        color={"warning"}
+                                        className="execution-final-result mini-alert warning-light-alert"
+                                      >
+                                        Method execution failed
+                                      </Alert>
                                     )}
                                   </div>
-                                ) : (
-                                  ""
-                                )}
-                              </div>
+
+                                  {isExecutionSuccessful ? (
+                                    <div>
+                                      {executorResult ? (
+                                        <div className="details">
+                                          <div className="section">
+                                            <div className="key">
+                                              Transaction
+                                            </div>
+                                            <div
+                                              className="value underline hover"
+                                              onClick={() => {
+                                                new Explorer(
+                                                  coreNodeInstance,
+                                                ).openTransaction(
+                                                  executorResult?.transaction.txID(),
+                                                );
+                                              }}
+                                            >
+                                              {executorResult?.transaction.txID()}
+                                            </div>
+                                          </div>
+                                          <div className="section">
+                                            <div className="key">Return</div>
+                                            <div className="value">
+                                              {executorResult?.return?.returnValue?.toString()}
+                                            </div>
+                                          </div>
+                                          <div className="section">
+                                            <div className="key">
+                                              Global state delta
+                                            </div>
+                                            <div className="value">
+                                              <TableContainer
+                                                component={Paper}
+                                                sx={tableStyles}
+                                              >
+                                                <Table>
+                                                  <TableHead>
+                                                    <TableRow>
+                                                      <TableCell>Key</TableCell>
+                                                      <TableCell>
+                                                        Type
+                                                      </TableCell>
+                                                    </TableRow>
+                                                  </TableHead>
+                                                  {globalStateDelta ? (
+                                                    <TableBody>
+                                                      {Object.keys(
+                                                        globalStateDelta,
+                                                      ).map(
+                                                        (globalStateKey) => {
+                                                          return (
+                                                            <TableRow
+                                                              key={`global_state_delta_key_${globalStateKey}`}
+                                                              sx={{
+                                                                "&:last-child td, &:last-child th":
+                                                                  {
+                                                                    border: 0,
+                                                                  },
+                                                              }}
+                                                            >
+                                                              <TableCell>
+                                                                {globalStateKey}
+                                                              </TableCell>
+                                                              <TableCell>
+                                                                {globalStateDelta[
+                                                                  globalStateKey
+                                                                ]?.value?.toString()}
+                                                              </TableCell>
+                                                            </TableRow>
+                                                          );
+                                                        },
+                                                      )}
+                                                    </TableBody>
+                                                  ) : (
+                                                    ""
+                                                  )}
+                                                </Table>
+                                              </TableContainer>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </div>
+                                  ) : (
+                                    <div className="error-msg">
+                                      {executionErrorMsg}
+                                    </div>
+                                  )}
+                                </div>
+                              ) : (
+                                ""
+                              )}
                             </div>
-                          </div>
+                          )}
                         </div>
-                      ) : (
-                        ""
-                      )}
+                      </div>
                     </Grid>
                   </Grid>
                 </div>
