@@ -3,17 +3,15 @@ import { Network } from "../network";
 import { AccountResult } from "@algorandfoundation/algokit-utils/types/indexer";
 
 export class AccountClient {
-  client: Algodv2;
+  algod: Algodv2;
   network: Network;
 
   constructor(network: Network) {
     this.network = network;
-    this.client = network.getAlgodClient();
+    this.algod = network.getAlgodClient();
   }
 
   async getAccountInformation(address: string): Promise<AccountResult> {
-    return (await this.client
-      .accountInformation(address)
-      .do()) as AccountResult;
+    return (await this.algod.accountInformation(address).do()) as AccountResult;
   }
 }

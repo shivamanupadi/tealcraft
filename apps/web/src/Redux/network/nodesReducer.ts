@@ -26,6 +26,12 @@ export function getNodes(): NodeConnectionParams[] {
         token:
           "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       },
+      indexer: {
+        url: "http://localhost",
+        port: "8980",
+        token:
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      },
     },
     {
       id: "algonode_mainnet",
@@ -33,6 +39,11 @@ export function getNodes(): NodeConnectionParams[] {
       name: "mainnet",
       algod: {
         url: "https://mainnet-api.algonode.cloud",
+        port: "",
+        token: "",
+      },
+      indexer: {
+        url: "https://mainnet-idx.algonode.cloud",
         port: "",
         token: "",
       },
@@ -46,6 +57,11 @@ export function getNodes(): NodeConnectionParams[] {
         port: "",
         token: "",
       },
+      indexer: {
+        url: "https://testnet-idx.algonode.cloud",
+        port: "",
+        token: "",
+      },
     },
     {
       id: "algonode_betanet",
@@ -56,6 +72,11 @@ export function getNodes(): NodeConnectionParams[] {
         port: "",
         token: "",
       },
+      indexer: {
+        url: "https://betanet-idx.algonode.cloud",
+        port: "",
+        token: "",
+      },
     },
     {
       id: "nodly_voinet",
@@ -63,6 +84,11 @@ export function getNodes(): NodeConnectionParams[] {
       name: "testnet",
       algod: {
         url: "https://testnet-api.voi.nodly.io",
+        port: "",
+        token: "",
+      },
+      indexer: {
+        url: "https://testnet-idx.voi.nodly.io",
         port: "",
         token: "",
       },

@@ -1,7 +1,7 @@
 import "./Playground.scss";
 import { ReactElement, useEffect, useState } from "react";
 import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
-import { Close, PlayCircle, ShowerOutlined } from "@mui/icons-material";
+import { Close, Edit, PlayCircle, ShowerOutlined } from "@mui/icons-material";
 import AccountPicker from "../AccountPicker/AccountPicker";
 import NodePicker from "../NodePicker/NodePicker";
 import {
@@ -58,6 +58,9 @@ import { ShadedInput, theme } from "@repo/theme";
 import { tableStyles } from "../../Pages/Contract/ContractConsole/ContractSchema/ContractSchema";
 import { getExceptionMsg } from "@repo/utils";
 import Dispenser from "../Dispenser/Dispenser";
+import { AssetResult } from "@algorandfoundation/algokit-utils/types/indexer";
+import AssetPicker from "../AssetPicker/AssetPicker";
+import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount";
 
 interface PlaygroundProps {
   appSpec: AppSpec;
@@ -185,6 +188,7 @@ export function Playground({
           callType: getMethodCallConfigValue(method, appSpec),
           from: mnemonicAccount(selectedAccount.mnemonic),
           populateAppCallResources: true,
+          fee: new AlgoAmount({ algos: 0.1 }),
           args: {
             method: method,
             methodArgs: convertExecutorArgsToMethodArgs(
@@ -390,11 +394,13 @@ export function Playground({
                             )}
 
                             {executorArgs.map((arg, index) => {
+                              const argType = arg.type.toString();
+                              const normalInput =
+                                !abiTypeIsTransaction(arg.type.toString()) &&
+                                argType != "asset";
                               return (
                                 <div className="abi-method-arg" key={arg.name}>
-                                  <FormLabel className="classic-label">{`${
-                                    arg.name
-                                  } (${arg.type.toString()})`}</FormLabel>
+                                  <FormLabel className="classic-label">{`${arg.name} (${argType})`}</FormLabel>
                                   {abiTypeIsTransaction(arg.type.toString()) ? (
                                     <div>
                                       <div className="arg-transaction-wrapper">
@@ -545,20 +551,101 @@ export function Playground({
                                       </div>
                                     </div>
                                   ) : (
-                                    <ShadedInput
-                                      placeholder={arg.type.toString()}
-                                      value={arg.value}
-                                      onChange={(ev) => {
-                                        const processedArgs = [...executorArgs];
-                                        processedArgs[index] = {
-                                          ...arg,
-                                          value: ev.target.value,
-                                        };
+                                    <div>
+                                      {argType === "asset" ? (
+                                        <ShadedInput
+                                          placeholder={arg.type.toString()}
+                                          value={arg.value.assetId}
+                                          disabled
+                                          endAdornment={
+                                            <div>
+                                              <Edit
+                                                className="hover"
+                                                fontSize={"small"}
+                                                color={"primary"}
+                                                onClick={() => {
+                                                  const processedArgs = [
+                                                    ...executorArgs,
+                                                  ];
+                                                  processedArgs[index] = {
+                                                    ...arg,
+                                                    value: {
+                                                      ...arg.value,
+                                                      show: true,
+                                                    },
+                                                  };
 
-                                        setExecutorArgs(processedArgs);
-                                      }}
-                                      fullWidth
-                                    />
+                                                  setExecutorArgs(
+                                                    processedArgs,
+                                                  );
+                                                }}
+                                              ></Edit>
+                                              <AssetPicker
+                                                onPick={(
+                                                  asset: AssetResult,
+                                                ) => {
+                                                  const processedArgs = [
+                                                    ...executorArgs,
+                                                  ];
+                                                  processedArgs[index] = {
+                                                    ...arg,
+                                                    value: {
+                                                      ...arg.value,
+                                                      assetId: asset.index,
+                                                      asset: asset,
+                                                      show: false,
+                                                    },
+                                                  };
+                                                  setExecutorArgs(
+                                                    processedArgs,
+                                                  );
+                                                }}
+                                                onClose={() => {
+                                                  const processedArgs = [
+                                                    ...executorArgs,
+                                                  ];
+                                                  processedArgs[index] = {
+                                                    ...arg,
+                                                    value: {
+                                                      ...arg.value,
+                                                      show: false,
+                                                    },
+                                                  };
+                                                  setExecutorArgs(
+                                                    processedArgs,
+                                                  );
+                                                }}
+                                                show={arg.value.show}
+                                                title="Pick asset"
+                                              ></AssetPicker>
+                                            </div>
+                                          }
+                                          fullWidth
+                                        />
+                                      ) : (
+                                        ""
+                                      )}
+                                      {normalInput ? (
+                                        <ShadedInput
+                                          placeholder={arg.type.toString()}
+                                          value={arg.value}
+                                          onChange={(ev) => {
+                                            const processedArgs = [
+                                              ...executorArgs,
+                                            ];
+                                            processedArgs[index] = {
+                                              ...arg,
+                                              value: ev.target.value,
+                                            };
+
+                                            setExecutorArgs(processedArgs);
+                                          }}
+                                          fullWidth
+                                        />
+                                      ) : (
+                                        ""
+                                      )}
+                                    </div>
                                   )}
                                 </div>
                               );

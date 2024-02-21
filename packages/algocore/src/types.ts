@@ -2,6 +2,7 @@ import {
   ABIArgumentType,
   AlgodTokenHeader,
   CustomTokenHeader,
+  IndexerTokenHeader,
   KMDTokenHeader,
 } from "algosdk";
 
@@ -17,12 +18,19 @@ export type KmdConnectionParams = {
   token: string | KMDTokenHeader | CustomTokenHeader;
 };
 
+export type IndexerConnectionParams = {
+  url: string;
+  port: string;
+  token: string | IndexerTokenHeader | CustomTokenHeader;
+};
+
 export type NodeConnectionParams = {
   id: string;
   label: string;
   name: string;
   algod: AlgodConnectionParams;
   kmd?: KmdConnectionParams;
+  indexer: IndexerConnectionParams;
 };
 
 export type A_VersionsCheck = {

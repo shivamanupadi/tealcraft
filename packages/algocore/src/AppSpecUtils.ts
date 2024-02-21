@@ -19,6 +19,7 @@ import {
 } from "algosdk";
 import { A_ABI_METHOD_EXECUTOR_ARG } from "./types";
 import { ABIAppCallArg } from "@algorandfoundation/algokit-utils/types/app";
+import { CoreAsset } from "./CoreClasses/CoreAsset";
 
 export function getCreateMethodSignature(appSpec: AppSpec): string {
   const signature = Object.keys(appSpec.hints).find(
@@ -124,10 +125,12 @@ export function parseMethodArgumentValue(arg: A_ABI_METHOD_EXECUTOR_ARG): any {
     dataType.startsWith("uint") ||
     dataType.startsWith("ufixed") ||
     dataType === "byte" ||
-    dataType === "asset" ||
     dataType === "application"
   ) {
     return BigInt(val);
+  }
+  if (dataType === "asset") {
+    return BigInt(val.assetId);
   }
   if (dataType === "bool") {
     return val === "true";
@@ -176,6 +179,17 @@ export function convertExecutorArgsToMethodArgs(
             from: account.addr,
             to: val.to,
             amount: algosToMicroalgos(val.amount),
+            ...sp,
+          });
+        } else if (argType === TransactionType.axfer) {
+          txn = new Transaction({
+            type: TransactionType.axfer,
+            assetIndex: Number(val.assetId),
+            from: account.addr,
+            to: val.to,
+            amount: new CoreAsset(val.asset).getAmountToDecimals(
+              Number(val.amount),
+            ),
             ...sp,
           });
         }
