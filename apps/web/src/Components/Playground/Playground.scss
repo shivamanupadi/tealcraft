@@ -61,6 +61,11 @@
                 padding: 0 20px;
                 border-left: 1px solid map-get($grey-colors, "light-grey");
                 min-height: 500px;
+                .execution-final-result {
+                  font-size: 14px;
+                  border-radius: 5px;
+                  font-weight: normal;
+                }
                 .error-msg {
                   color: map-get($grey-colors, "A7A9AC");
                   font-size: 14px;

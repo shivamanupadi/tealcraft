@@ -5,7 +5,6 @@ import { Close, PlayCircle } from "@mui/icons-material";
 import AccountPicker from "../AccountPicker/AccountPicker";
 import NodePicker from "../NodePicker/NodePicker";
 import {
-  Alert,
   Button,
   CircularProgress,
   FormLabel,
@@ -54,7 +53,7 @@ import {
   abiTypeIsTransaction,
   TransactionType,
 } from "algosdk";
-import { ShadedInput } from "@repo/theme";
+import { ShadedInput, theme } from "@repo/theme";
 import { tableStyles } from "../../Pages/Contract/ContractConsole/ContractSchema/ContractSchema";
 import { getExceptionMsg } from "@repo/utils";
 
@@ -580,24 +579,26 @@ export function Playground({
                                 <div>
                                   <div>
                                     {isExecutionSuccessful ? (
-                                      <Alert
-                                        icon={false}
-                                        color={"success"}
-                                        className="execution-final-result mini-alert secondary-light-alert"
+                                      <div
+                                        style={{
+                                          color: theme.palette.primary.main,
+                                        }}
+                                        className="execution-final-result"
                                       >
                                         {currentMethod &&
                                         isCreateMethod(currentMethod, appSpec)
                                           ? `Application ${appCreateResult?.appId} deployed successfully`
                                           : "Method execution successful"}
-                                      </Alert>
+                                      </div>
                                     ) : (
-                                      <Alert
-                                        icon={false}
-                                        color={"warning"}
-                                        className="execution-final-result mini-alert warning-light-alert"
+                                      <div
+                                        style={{
+                                          color: theme.palette.error.main,
+                                        }}
+                                        className="execution-final-result"
                                       >
                                         Method execution failed
-                                      </Alert>
+                                      </div>
                                     )}
                                   </div>
 
