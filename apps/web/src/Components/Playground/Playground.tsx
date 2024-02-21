@@ -33,6 +33,7 @@ import {
   creationMethodHasArguments,
   getCreationMethod,
   getMethodCallConfigValue,
+  hasCreationMethod,
   isCreateMethod,
   Network,
 } from "@repo/algocore";
@@ -137,7 +138,7 @@ export function Playground({
     }
 
     const isCreation = isCreateMethod(method, appSpec);
-    if (isCreation) {
+    if (!isCreation) {
       if (!appCreateResult) {
         showSnack("Deploy an application before invoking the methods", "error");
         return;
@@ -169,6 +170,14 @@ export function Playground({
         };
         const result = await createApp(params, algod);
         setAppCreateResult(result);
+        const appCallTxnResult: AppCallTransactionResult = {
+          confirmation: result.confirmation,
+          confirmations: result.confirmations,
+          return: result.return,
+          transaction: result.transaction,
+          transactions: result.transactions,
+        };
+        setExecutorResult(appCallTxnResult);
       } else {
         const params: AppCallParams = {
           appId: appCreateResult?.appId || 0,
@@ -275,38 +284,36 @@ export function Playground({
                         return;
                       }
 
-                      try {
-                        showLoader("Deploying application ...");
-                        const creationMethod = getCreationMethod(appSpec);
-                        const params: CreateAppParams = {
-                          approvalProgram: atob(appSpec.source.approval),
-                          clearStateProgram: atob(appSpec.source.clear),
-                          from: mnemonicAccount(selectedAccount.mnemonic),
-                          schema: {
-                            globalInts: appSpec.state.global.num_uints,
-                            localInts: appSpec.state.local.num_uints,
-                            localByteSlices:
-                              appSpec.state.local.num_byte_slices,
-                            globalByteSlices:
-                              appSpec.state.global.num_byte_slices,
-                          },
-                        };
-
-                        if (creationMethod) {
-                          params.args = {
-                            methodArgs: [],
-                            method: creationMethod,
-                          };
+                      if (hasCreationMethod(appSpec)) {
+                        const method = getCreationMethod(appSpec);
+                        if (method) {
+                          await executeMethod(method);
+                          setCurrentMethod(method);
                         }
-
-                        const algod = new Network(selectedNode).getClient();
-                        const result = await createApp(params, algod);
-
-                        setAppCreateResult(result);
-                        hideLoader();
-                      } catch (e) {
-                        hideLoader();
-                        showException(e);
+                      } else {
+                        try {
+                          showLoader("Deploying application ...");
+                          const params: CreateAppParams = {
+                            approvalProgram: atob(appSpec.source.approval),
+                            clearStateProgram: atob(appSpec.source.clear),
+                            from: mnemonicAccount(selectedAccount.mnemonic),
+                            schema: {
+                              globalInts: appSpec.state.global.num_uints,
+                              localInts: appSpec.state.local.num_uints,
+                              localByteSlices:
+                                appSpec.state.local.num_byte_slices,
+                              globalByteSlices:
+                                appSpec.state.global.num_byte_slices,
+                            },
+                          };
+                          const algod = new Network(selectedNode).getClient();
+                          const result = await createApp(params, algod);
+                          setAppCreateResult(result);
+                          hideLoader();
+                        } catch (e) {
+                          hideLoader();
+                          showException(e);
+                        }
                       }
                     }}
                   >
@@ -577,7 +584,10 @@ export function Playground({
                                         color={"success"}
                                         className="execution-final-result mini-alert secondary-light-alert"
                                       >
-                                        Method execution successful
+                                        {currentMethod &&
+                                        isCreateMethod(currentMethod, appSpec)
+                                          ? `Application ${appCreateResult?.appId} deployed successfully`
+                                          : "Method execution successful"}
                                       </Alert>
                                     ) : (
                                       <Alert
@@ -614,7 +624,8 @@ export function Playground({
                                           <div className="section">
                                             <div className="key">Return</div>
                                             <div className="value">
-                                              {executorResult?.return?.returnValue?.toString()}
+                                              {executorResult?.return?.returnValue?.toString() ||
+                                                "void"}
                                             </div>
                                           </div>
                                           <div className="section">
@@ -622,20 +633,24 @@ export function Playground({
                                               Global state delta
                                             </div>
                                             <div className="value">
-                                              <TableContainer
-                                                component={Paper}
-                                                sx={tableStyles}
-                                              >
-                                                <Table>
-                                                  <TableHead>
-                                                    <TableRow>
-                                                      <TableCell>Key</TableCell>
-                                                      <TableCell>
-                                                        Type
-                                                      </TableCell>
-                                                    </TableRow>
-                                                  </TableHead>
-                                                  {globalStateDelta ? (
+                                              {globalStateDelta &&
+                                              Object.keys(globalStateDelta)
+                                                .length > 0 ? (
+                                                <TableContainer
+                                                  component={Paper}
+                                                  sx={tableStyles}
+                                                >
+                                                  <Table>
+                                                    <TableHead>
+                                                      <TableRow>
+                                                        <TableCell>
+                                                          Key
+                                                        </TableCell>
+                                                        <TableCell>
+                                                          Type
+                                                        </TableCell>
+                                                      </TableRow>
+                                                    </TableHead>
                                                     <TableBody>
                                                       {Object.keys(
                                                         globalStateDelta,
@@ -664,11 +679,11 @@ export function Playground({
                                                         },
                                                       )}
                                                     </TableBody>
-                                                  ) : (
-                                                    ""
-                                                  )}
-                                                </Table>
-                                              </TableContainer>
+                                                  </Table>
+                                                </TableContainer>
+                                              ) : (
+                                                "--Empty--"
+                                              )}
                                             </div>
                                           </div>
                                         </div>
