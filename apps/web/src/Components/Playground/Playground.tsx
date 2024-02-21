@@ -266,6 +266,7 @@ export function Playground({
                     variant={"contained"}
                     size={"small"}
                     color={"secondary"}
+                    disabled={isExecutionInProgress}
                     onClick={async () => {
                       if (!selectedNode) {
                         showSnack("Please select a network", "error");
@@ -287,8 +288,8 @@ export function Playground({
                       if (hasCreationMethod(appSpec)) {
                         const method = getCreationMethod(appSpec);
                         if (method) {
-                          await executeMethod(method);
                           setCurrentMethod(method);
+                          await executeMethod(method);
                         }
                       } else {
                         try {
@@ -323,7 +324,7 @@ export function Playground({
               </div>
             </div>
             <div className="app-spec-body">
-              {appCreateResult || creationMethodHasArguments(appSpec) ? (
+              {appCreateResult || hasCreationMethod(appSpec) ? (
                 <div className="method-executor">
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
