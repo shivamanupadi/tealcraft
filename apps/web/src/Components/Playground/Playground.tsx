@@ -62,6 +62,11 @@ import { AssetResult } from "@algorandfoundation/algokit-utils/types/indexer";
 import AssetPicker from "../AssetPicker/AssetPicker";
 import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount";
 
+const txnFieldStyles = {
+  marginTop: "15px",
+  display: "inline-block",
+};
+
 interface PlaygroundProps {
   appSpec: AppSpec;
   onClose: () => void;
@@ -435,7 +440,10 @@ export function Playground({
                                                 fullWidth
                                               />
 
-                                              <FormLabel className="classic-label">
+                                              <FormLabel
+                                                className="classic-label"
+                                                sx={txnFieldStyles}
+                                              >
                                                 Amount
                                               </FormLabel>
                                               <ShadedInput
@@ -473,26 +481,88 @@ export function Playground({
                                               <ShadedInput
                                                 placeholder="Asset ID"
                                                 value={arg.value.assetId}
-                                                onChange={(ev) => {
-                                                  const processedArgs = [
-                                                    ...executorArgs,
-                                                  ];
-                                                  processedArgs[index] = {
-                                                    ...arg,
-                                                    value: {
-                                                      ...arg.value,
-                                                      assetId: ev.target.value,
-                                                    },
-                                                  };
-
-                                                  setExecutorArgs(
-                                                    processedArgs,
-                                                  );
-                                                }}
                                                 fullWidth
+                                                disabled
+                                                endAdornment={
+                                                  <div className="asset-edit">
+                                                    <div>
+                                                      {
+                                                        arg.value?.asset
+                                                          ?.params?.[
+                                                          "unit-name"
+                                                        ]
+                                                      }
+                                                    </div>
+                                                    <div>
+                                                      <Edit
+                                                        className="hover"
+                                                        fontSize={"small"}
+                                                        color={"primary"}
+                                                        onClick={() => {
+                                                          const processedArgs =
+                                                            [...executorArgs];
+                                                          processedArgs[index] =
+                                                            {
+                                                              ...arg,
+                                                              value: {
+                                                                ...arg.value,
+                                                                show: true,
+                                                              },
+                                                            };
+
+                                                          setExecutorArgs(
+                                                            processedArgs,
+                                                          );
+                                                        }}
+                                                      ></Edit>
+                                                      <AssetPicker
+                                                        onPick={(
+                                                          asset: AssetResult,
+                                                        ) => {
+                                                          const processedArgs =
+                                                            [...executorArgs];
+                                                          processedArgs[index] =
+                                                            {
+                                                              ...arg,
+                                                              value: {
+                                                                ...arg.value,
+                                                                assetId:
+                                                                  asset.index,
+                                                                asset: asset,
+                                                                show: false,
+                                                              },
+                                                            };
+                                                          setExecutorArgs(
+                                                            processedArgs,
+                                                          );
+                                                        }}
+                                                        onClose={() => {
+                                                          const processedArgs =
+                                                            [...executorArgs];
+                                                          processedArgs[index] =
+                                                            {
+                                                              ...arg,
+                                                              value: {
+                                                                ...arg.value,
+                                                                show: false,
+                                                              },
+                                                            };
+                                                          setExecutorArgs(
+                                                            processedArgs,
+                                                          );
+                                                        }}
+                                                        show={arg.value.show}
+                                                        title="Pick asset"
+                                                      ></AssetPicker>
+                                                    </div>
+                                                  </div>
+                                                }
                                               />
 
-                                              <FormLabel className="classic-label">
+                                              <FormLabel
+                                                className="classic-label"
+                                                sx={txnFieldStyles}
+                                              >
                                                 To
                                               </FormLabel>
                                               <ShadedInput
@@ -519,7 +589,10 @@ export function Playground({
                                                 fullWidth
                                               />
 
-                                              <FormLabel className="classic-label">
+                                              <FormLabel
+                                                className="classic-label"
+                                                sx={txnFieldStyles}
+                                              >
                                                 Amount
                                               </FormLabel>
                                               <ShadedInput
@@ -558,66 +631,75 @@ export function Playground({
                                           value={arg.value.assetId}
                                           disabled
                                           endAdornment={
-                                            <div>
-                                              <Edit
-                                                className="hover"
-                                                fontSize={"small"}
-                                                color={"primary"}
-                                                onClick={() => {
-                                                  const processedArgs = [
-                                                    ...executorArgs,
-                                                  ];
-                                                  processedArgs[index] = {
-                                                    ...arg,
-                                                    value: {
-                                                      ...arg.value,
-                                                      show: true,
-                                                    },
-                                                  };
+                                            <div className="asset-edit">
+                                              <div>
+                                                {
+                                                  arg.value?.asset?.params?.[
+                                                    "unit-name"
+                                                  ]
+                                                }
+                                              </div>
+                                              <div>
+                                                <Edit
+                                                  className="hover"
+                                                  fontSize={"small"}
+                                                  color={"primary"}
+                                                  onClick={() => {
+                                                    const processedArgs = [
+                                                      ...executorArgs,
+                                                    ];
+                                                    processedArgs[index] = {
+                                                      ...arg,
+                                                      value: {
+                                                        ...arg.value,
+                                                        show: true,
+                                                      },
+                                                    };
 
-                                                  setExecutorArgs(
-                                                    processedArgs,
-                                                  );
-                                                }}
-                                              ></Edit>
-                                              <AssetPicker
-                                                onPick={(
-                                                  asset: AssetResult,
-                                                ) => {
-                                                  const processedArgs = [
-                                                    ...executorArgs,
-                                                  ];
-                                                  processedArgs[index] = {
-                                                    ...arg,
-                                                    value: {
-                                                      ...arg.value,
-                                                      assetId: asset.index,
-                                                      asset: asset,
-                                                      show: false,
-                                                    },
-                                                  };
-                                                  setExecutorArgs(
-                                                    processedArgs,
-                                                  );
-                                                }}
-                                                onClose={() => {
-                                                  const processedArgs = [
-                                                    ...executorArgs,
-                                                  ];
-                                                  processedArgs[index] = {
-                                                    ...arg,
-                                                    value: {
-                                                      ...arg.value,
-                                                      show: false,
-                                                    },
-                                                  };
-                                                  setExecutorArgs(
-                                                    processedArgs,
-                                                  );
-                                                }}
-                                                show={arg.value.show}
-                                                title="Pick asset"
-                                              ></AssetPicker>
+                                                    setExecutorArgs(
+                                                      processedArgs,
+                                                    );
+                                                  }}
+                                                ></Edit>
+                                                <AssetPicker
+                                                  onPick={(
+                                                    asset: AssetResult,
+                                                  ) => {
+                                                    const processedArgs = [
+                                                      ...executorArgs,
+                                                    ];
+                                                    processedArgs[index] = {
+                                                      ...arg,
+                                                      value: {
+                                                        ...arg.value,
+                                                        assetId: asset.index,
+                                                        asset: asset,
+                                                        show: false,
+                                                      },
+                                                    };
+                                                    setExecutorArgs(
+                                                      processedArgs,
+                                                    );
+                                                  }}
+                                                  onClose={() => {
+                                                    const processedArgs = [
+                                                      ...executorArgs,
+                                                    ];
+                                                    processedArgs[index] = {
+                                                      ...arg,
+                                                      value: {
+                                                        ...arg.value,
+                                                        show: false,
+                                                      },
+                                                    };
+                                                    setExecutorArgs(
+                                                      processedArgs,
+                                                    );
+                                                  }}
+                                                  show={arg.value.show}
+                                                  title="Pick asset"
+                                                ></AssetPicker>
+                                              </div>
                                             </div>
                                           }
                                           fullWidth
