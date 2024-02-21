@@ -7,6 +7,9 @@ import { AccountClient, CoreAccount, CoreNode, Network } from "@repo/algocore";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/store";
 import { Explorer } from "@repo/algocore/src/explorer/explorer";
+import Dispenser from "../Dispenser/Dispenser";
+import { Tooltip } from "@mui/material";
+import { ShowerOutlined } from "@mui/icons-material";
 
 interface AccountBalanceProps {
   address: string;
@@ -43,12 +46,33 @@ function AccountBalance({ address }: AccountBalanceProps): ReactElement {
         }}
       >
         {account ? (
-          <NumericFormat
-            value={microalgosToAlgos(new CoreAccount(account).balance())}
-            displayType={"text"}
-            thousandSeparator={true}
-            prefix="BAL : "
-          ></NumericFormat>
+          <div className="account">
+            <div className="bal">
+              <NumericFormat
+                value={microalgosToAlgos(new CoreAccount(account).balance())}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix="BAL : "
+              ></NumericFormat>
+            </div>
+            <div className="dispense hover">
+              {selectedNode ? (
+                <Dispenser
+                  address={address}
+                  network={new Network(selectedNode)}
+                  onDispense={() => {
+                    getAccountDetails();
+                  }}
+                >
+                  <Tooltip title="Dispense Algos">
+                    <ShowerOutlined></ShowerOutlined>
+                  </Tooltip>
+                </Dispenser>
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
         ) : (
           ""
         )}

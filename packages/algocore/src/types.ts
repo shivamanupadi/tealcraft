@@ -1,4 +1,9 @@
-import { ABIArgumentType, AlgodTokenHeader, CustomTokenHeader } from "algosdk";
+import {
+  ABIArgumentType,
+  AlgodTokenHeader,
+  CustomTokenHeader,
+  KMDTokenHeader,
+} from "algosdk";
 
 export type AlgodConnectionParams = {
   url: string;
@@ -6,11 +11,18 @@ export type AlgodConnectionParams = {
   token: string | AlgodTokenHeader | CustomTokenHeader;
 };
 
+export type KmdConnectionParams = {
+  url: string;
+  port: string;
+  token: string | KMDTokenHeader | CustomTokenHeader;
+};
+
 export type NodeConnectionParams = {
   id: string;
   label: string;
   name: string;
   algod: AlgodConnectionParams;
+  kmd?: KmdConnectionParams;
 };
 
 export type A_VersionsCheck = {

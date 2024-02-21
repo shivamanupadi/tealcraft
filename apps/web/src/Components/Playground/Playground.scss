@@ -40,8 +40,12 @@
             justify-content: flex-start;
             align-items: center;
             column-gap: 15px;
-            .app-id {
-              font-size: 15px;
+            .app-details {
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+              column-gap: 5px;
+              font-size: 14px;
             }
             .greyed {
               color: map-get($grey-colors, "A7A9AC");

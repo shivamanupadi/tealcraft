@@ -3,11 +3,23 @@
 
 .account-balance-wrapper {
   .account-balance-container {
-    &:hover {
-      cursor: pointer;
-      text-decoration: underline;
+    .account {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      column-gap: 10px;
+      .bal {
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+        font-size: 14px;
+        color: map-get($grey-colors, "A7A9AC");
+      }
+      .dispense {
+        font-size: 14px;
+        color: map-get($grey-colors, "A7A9AC");
+      }
     }
-    font-size: 14px;
-    color: map-get($grey-colors, "A7A9AC");
   }
 }

@@ -1,7 +1,7 @@
 import "./Playground.scss";
 import { ReactElement, useEffect, useState } from "react";
 import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
-import { Close, PlayCircle } from "@mui/icons-material";
+import { Close, PlayCircle, ShowerOutlined } from "@mui/icons-material";
 import AccountPicker from "../AccountPicker/AccountPicker";
 import NodePicker from "../NodePicker/NodePicker";
 import {
@@ -16,6 +16,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
 } from "@mui/material";
 import {
   callApp,
@@ -56,6 +57,7 @@ import {
 import { ShadedInput, theme } from "@repo/theme";
 import { tableStyles } from "../../Pages/Contract/ContractConsole/ContractSchema/ContractSchema";
 import { getExceptionMsg } from "@repo/utils";
+import Dispenser from "../Dispenser/Dispenser";
 
 interface PlaygroundProps {
   appSpec: AppSpec;
@@ -148,7 +150,7 @@ export function Playground({
       resetMethodExecutionState();
       setExecutionProgress(true);
 
-      const algod = new Network(selectedNode).getClient();
+      const algod = new Network(selectedNode).getAlgodClient();
       const sp = await algod.getTransactionParams().do();
 
       if (isCreation) {
@@ -240,20 +242,40 @@ export function Playground({
                 Contract : {appSpec.contract.name}
               </div>
               <div className="app-spec-actions">
-                <div className="app-id greyed">
+                <div>
                   {appCreateResult ? (
-                    <div>
-                      Application :{" "}
-                      <span
-                        className="underline hover"
-                        onClick={() => {
-                          new Explorer(coreNodeInstance).openApplication(
-                            appCreateResult?.appId.toString(),
-                          );
-                        }}
-                      >
-                        {appCreateResult.appId.toString()}
-                      </span>
+                    <div className="app-details greyed">
+                      <div>Application : </div>
+                      <div>
+                        <span
+                          className="underline hover"
+                          onClick={() => {
+                            new Explorer(coreNodeInstance).openApplication(
+                              appCreateResult?.appId.toString(),
+                            );
+                          }}
+                        >
+                          {appCreateResult.appId.toString()}
+                        </span>
+                      </div>
+                      <div>
+                        {selectedNode ? (
+                          <Dispenser
+                            address={appCreateResult.appAddress}
+                            network={new Network(selectedNode)}
+                            onDispense={() => {}}
+                          >
+                            <Tooltip
+                              title="Dispense algos to app account"
+                              className="hover"
+                            >
+                              <ShowerOutlined></ShowerOutlined>
+                            </Tooltip>
+                          </Dispenser>
+                        ) : (
+                          ""
+                        )}
+                      </div>
                     </div>
                   ) : (
                     ""
@@ -306,7 +328,9 @@ export function Playground({
                                 appSpec.state.global.num_byte_slices,
                             },
                           };
-                          const algod = new Network(selectedNode).getClient();
+                          const algod = new Network(
+                            selectedNode,
+                          ).getAlgodClient();
                           const result = await createApp(params, algod);
                           setAppCreateResult(result);
                           hideLoader();

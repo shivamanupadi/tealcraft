@@ -8,7 +8,7 @@ export class NodeClient {
 
   constructor(network: Network) {
     this.network = network;
-    this.client = network.getClient();
+    this.client = network.getAlgodClient();
   }
 
   async versionsCheck(): Promise<A_VersionsCheck> {

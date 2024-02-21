@@ -20,6 +20,12 @@ export function getNodes(): NodeConnectionParams[] {
         token:
           "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       },
+      kmd: {
+        url: "http://localhost",
+        port: "4002",
+        token:
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      },
     },
     {
       id: "algonode_mainnet",

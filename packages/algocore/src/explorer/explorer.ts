@@ -26,4 +26,8 @@ export class Explorer {
   openApplication(id: string): void {
     this.getExplorer().openApplication(id);
   }
+
+  openDispenser(): void {
+    this.getExplorer().openDispenser();
+  }
 }

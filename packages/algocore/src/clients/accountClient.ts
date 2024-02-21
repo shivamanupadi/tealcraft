@@ -8,7 +8,7 @@ export class AccountClient {
 
   constructor(network: Network) {
     this.network = network;
-    this.client = network.getClient();
+    this.client = network.getAlgodClient();
   }
 
   async getAccountInformation(address: string): Promise<AccountResult> {
