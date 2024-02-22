@@ -70,7 +70,6 @@ import { getExceptionMsg, isNumber } from "@repo/utils";
 import Dispenser from "../Dispenser/Dispenser";
 import { AssetResult } from "@algorandfoundation/algokit-utils/types/indexer";
 import AssetPicker from "../AssetPicker/AssetPicker";
-import { AlgoAmount } from "@algorandfoundation/algokit-utils/types/amount";
 
 const txnFieldStyles = {
   marginTop: "15px",
@@ -219,7 +218,7 @@ export function Playground({
           callType: getMethodCallConfigValue(method, appSpec),
           from: mnemonicAccount(selectedAccount.mnemonic),
           populateAppCallResources: true,
-          fee: new AlgoAmount({ algos: Number(txnFee) }),
+          transactionParams: sp,
           args: {
             method: method,
             methodArgs: convertExecutorArgsToMethodArgs(
