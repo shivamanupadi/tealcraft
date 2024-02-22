@@ -113,6 +113,26 @@ export const theme = createTheme({
         },
       },
     },
+    MuiMenu: {
+      styleOverrides: {
+        root: {
+          "&.classic-menu": {
+            ".MuiMenuItem-root": {
+              fontSize: "13px",
+              color: GreyColors.FormLabel,
+              svg: {
+                color: GreyColors.FormLabel,
+              },
+              ".MuiListItemText-root": {
+                ".MuiTypography-root": {
+                  fontSize: "14px",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
     MuiAlert: {
       styleOverrides: {
         root: {
@@ -144,15 +164,17 @@ export const theme = createTheme({
             backgroundColor: ThemeColors.SecondaryLight,
             color: `#58595B`,
           },
+          "&.warning-light-alert": {
+            backgroundColor: ThemeColors.WarningLight,
+            color: `#58595B`,
+          },
           "&.success-snack-bar": {
             backgroundColor: ThemeColors.SecondaryLight,
-            color: BaseColors.Black,
-            marginTop: "-12px",
+            color: GreyColors.FormValue,
           },
           "&.error-snack-bar": {
-            backgroundColor: ThemeColors.WarningLight,
-            color: BaseColors.Black,
-            marginTop: "-12px",
+            backgroundColor: "#FAECEA",
+            color: GreyColors.FormValue,
           },
         },
       },
@@ -195,6 +217,35 @@ export const theme = createTheme({
           },
           "& .MuiButtonBase-root.Mui-selected": {
             color: GreyColors.FormLabel,
+          },
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          "&.classic-select": {
+            fontSize: "13px",
+            marginTop: "5px",
+            color: GreyColors.A7A9AC,
+            background: GreyColors.F8F8F9,
+            ".MuiInputBase-input": {
+              padding: "10px",
+            },
+            "&:hover": {
+              fieldset: {
+                border: `none !important`,
+              },
+            },
+            "&:active": {
+              fieldset: {
+                border: `none !important`,
+              },
+            },
+            fieldset: {
+              borderRadius: "5px",
+              border: `none !important`,
+            },
           },
         },
       },

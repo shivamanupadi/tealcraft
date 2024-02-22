@@ -1,0 +1,173 @@
+@import "@repo/styles";
+@import "../../scss/constants";
+
+.playground-wrapper {
+  .playground-container {
+    .playground-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      border-bottom: 1px solid map-get($grey-colors, "light-grey");
+      .title {
+        font-size: 16px;
+        color: map-get($grey-colors, "A7A9AC");
+      }
+      .actions {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        column-gap: 15px;
+        .close {
+          color: map-get($grey-colors, "form-label");
+        }
+      }
+    }
+    .playground-body {
+      .app-spec {
+        .app-spec-header {
+          border-bottom: 1px solid map-get($grey-colors, "light-grey");
+          padding: 10px 20px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .contract-title {
+            font-size: 14px;
+            color: map-get($grey-colors, "A7A9AC");
+          }
+          .app-spec-actions {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            column-gap: 15px;
+            .app-details {
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+              column-gap: 5px;
+              font-size: 14px;
+            }
+            .greyed {
+              color: map-get($grey-colors, "A7A9AC");
+            }
+          }
+        }
+        .app-spec-body {
+          .no-app-info {
+            font-size: 14px;
+            color: map-get($grey-colors, "A7A9AC");
+            margin-top: 20px;
+          }
+          .method-executor {
+            min-height: calc(100vh - 120px);
+            display: flex;
+            column-gap: 0;
+            background: map-get($grey-colors, "F8F8F9");
+            .method-executor-body {
+              padding: 20px;
+              flex: 1;
+              background: #ffffff !important;
+            }
+            .result-wrapper {
+              padding: 20px;
+              border-left: 1px solid map-get($grey-colors, "light-grey");
+              background: map-get($grey-colors, "F8F8F9");
+              flex: 1;
+              .result-container {
+                &:focus-visible {
+                  border: none !important;
+                  outline: none !important;
+                }
+                .execution-final-result {
+                  font-size: 14px;
+                  border-radius: 5px;
+                  font-weight: normal;
+                }
+                .error-msg {
+                  color: map-get($grey-colors, "A7A9AC");
+                  font-size: 14px;
+                  line-height: 1.3;
+                  word-break: break-all;
+                  margin-top: 10px;
+                }
+                .title {
+                  color: map-get($grey-colors, "A7A9AC");
+                  font-size: 18px;
+                  margin-bottom: 20px;
+                }
+                .details {
+                  .section {
+                    margin: 20px 0;
+                    .key {
+                      font-size: 14px;
+                      color: map-get($grey-colors, "form-value");
+                    }
+                    .value {
+                      font-size: 13px;
+                      margin-top: 5px;
+                      color: map-get($grey-colors, "form-label");
+                      word-break: break-all;
+                      line-height: 1.3;
+                    }
+                  }
+                }
+              }
+            }
+            .app-create-info {
+              margin-top: 15px;
+              color: map-get($grey-colors, "A7A9AC");
+              font-size: 14px;
+              line-height: 1.3;
+            }
+            .method-selector {
+              color: map-get($grey-colors, "A7A9AC");
+              margin-bottom: 10px;
+              display: inline-block;
+            }
+            .abi-method-execute {
+              margin-top: 20px;
+            }
+            .abi-method-args-form-wrapper {
+              .abi-method-args-form-container {
+                margin-top: 20px;
+                .advanced-config {
+                  .accordion {
+                    box-shadow: none;
+                    border: 1px solid map-get($grey-colors, "light-grey");
+                    .title {
+                      font-size: 14px;
+                      color: map-get($grey-colors, "A7A9AC");
+                    }
+                  }
+                  .advanced-config-body {
+                    margin-top: -15px;
+                  }
+                }
+
+                .abi-method-args-form-title {
+                  color: map-get($grey-colors, "A7A9AC");
+                  margin-bottom: 10px;
+                }
+                .abi-method-arg {
+                  margin-bottom: 15px;
+                  .asset-edit {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    column-gap: 10px;
+                  }
+                  .arg-transaction-wrapper {
+                    margin-top: 10px;
+                    padding: 15px;
+                    border-radius: 5px;
+                    border: 1px solid map-get($grey-colors, "light-grey");
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

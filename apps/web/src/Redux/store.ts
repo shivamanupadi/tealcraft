@@ -5,6 +5,9 @@ import portalReducer from "./portal/portalReducer";
 import workspaceReducer from "./portal/workspaceReducer";
 import contractReducer from "./portal/contractReducer";
 import compilerReducer from "./portal/compilerReducer";
+import nodesReducer from "./network/nodesReducer";
+import accountReducer from "./portal/accountReducer";
+import nodeReducer from "./network/nodeReducer";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +16,9 @@ export const store = configureStore({
     workspace: workspaceReducer,
     contract: contractReducer,
     compiler: compilerReducer,
+    nodes: nodesReducer,
+    accounts: accountReducer,
+    node: nodeReducer,
   },
 });
 

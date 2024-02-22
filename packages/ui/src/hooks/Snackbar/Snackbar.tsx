@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import "./Snackbar.scss";
-import { Alert, AlertColor, Snackbar } from "@mui/material";
+import { Alert, AlertColor, Slide, Snackbar } from "@mui/material";
 import { getExceptionMsg } from "@repo/utils";
 
 interface SnackbarState {
@@ -74,12 +74,13 @@ export function SnackbarProvider({ children }: any) {
     <Snackbar
       open={snackbar.visible}
       autoHideDuration={snackbar.duration}
-      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       onClose={handleClose}
+      TransitionComponent={(props) => <Slide {...props} direction="left" />}
     >
       <Alert
         icon={false}
-        className={`chip ${extraClass}`}
+        className={`chip custom-snack-bar ${extraClass}`}
         severity={snackbar.severity}
         onClose={handleClose}
       >

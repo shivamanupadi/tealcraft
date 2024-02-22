@@ -1,8 +1,18 @@
-import { Project } from "ts-morph";
 import { VERSION } from "@algorandfoundation/tealscript/dist/version";
-import axios from "axios";
 import { A_CompileResult, A_Contract } from "../../../../types";
-import { Compiler } from "@algorandfoundation/tealscript";
+import { Compiler, Project } from "@algorandfoundation/tealscript";
+// @ts-ignore
+import indexContent from "!!raw-loader!@algorandfoundation/tealscript/dist/lib/index.ts";
+// @ts-ignore
+import compilerContent from "!!raw-loader!@algorandfoundation/tealscript/dist/lib/compiler.ts";
+// @ts-ignore
+import contractContent from "!!raw-loader!@algorandfoundation/tealscript/dist/lib/contract.ts";
+// @ts-ignore
+import optimizeContent from "!!raw-loader!@algorandfoundation/tealscript/dist/lib/optimize.ts";
+// @ts-ignore
+import lsigContent from "!!raw-loader!@algorandfoundation/tealscript/dist/lib/lsig.ts";
+// @ts-ignore
+import typesContent from "!!raw-loader!@algorandfoundation/tealscript/types/global.d.ts";
 
 export class TealScriptCompiler {
   async getCompilerVersion(): Promise<string> {
@@ -26,25 +36,16 @@ export class TealScriptCompiler {
     const indexPath = `${libDir}/index.ts`;
     const compilerPath = `${libDir}/compiler.ts`;
     const contractPath = `${libDir}/contract.ts`;
+    const optimizePath = `${libDir}/optimize.ts`;
     const lsigPath = `${libDir}/lsig.ts`;
-
     const typesPath = "types/global.d.ts";
 
-    const tealScriptVersion: string = await this.getCompilerVersion();
-    const promises = [
-      indexPath,
-      typesPath,
-      contractPath,
-      lsigPath,
-      compilerPath,
-    ].map(async (p) => {
-      const url = `https://raw.githubusercontent.com/algorandfoundation/TEALScript/${tealScriptVersion}/${p}`;
-      const response = await axios.get(url);
-      const text = response.data;
-      project.createSourceFile(p, text);
-    });
-
-    await Promise.all(promises);
+    project.createSourceFile(indexPath, indexContent);
+    project.createSourceFile(compilerPath, compilerContent);
+    project.createSourceFile(contractPath, contractContent);
+    project.createSourceFile(optimizePath, optimizeContent);
+    project.createSourceFile(lsigPath, lsigContent);
+    project.createSourceFile(typesPath, typesContent);
 
     return project;
   }

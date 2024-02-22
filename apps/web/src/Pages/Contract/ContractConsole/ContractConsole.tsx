@@ -11,6 +11,7 @@ import ContractSchema from "./ContractSchema/ContractSchema";
 import ContractPrograms from "./ContractPrograms/ContractPrograms";
 import { RootState } from "../../../Redux/store";
 import JsonViewer from "../../../Components/JsonViewer/JsonViewer";
+import PlaygroundPanel from "../../../Components/PlaygroundPanel/PlaygroundPanel";
 
 function ContractConsole(): ReactElement {
   const { compile } = useSelector((state: RootState) => state.contract);
@@ -18,6 +19,8 @@ function ContractConsole(): ReactElement {
 
   const [tab, setTab] = useState<string>("abi");
   const [isAppSpecJsonVisible, setAppSpecJsonVisibility] =
+    useState<boolean>(false);
+  const [isPlaygroundVisible, setPlaygroundVisibility] =
     useState<boolean>(false);
 
   return (
@@ -82,6 +85,30 @@ function ContractConsole(): ReactElement {
                             title={"Application spec"}
                             fileName={`${result.appSpec?.contract.name}.application`}
                           ></JsonViewer>
+                        </div>
+                        <div>
+                          <Button
+                            color={"secondary"}
+                            onClick={() => {
+                              setPlaygroundVisibility(true);
+                            }}
+                            variant={"contained"}
+                            className="small-button"
+                            size={"small"}
+                          >
+                            Play
+                          </Button>
+                          {result.appSpec ? (
+                            <PlaygroundPanel
+                              appSpec={result.appSpec}
+                              show={isPlaygroundVisible}
+                              onClose={() => {
+                                setPlaygroundVisibility(false);
+                              }}
+                            ></PlaygroundPanel>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </div>
                     </div>

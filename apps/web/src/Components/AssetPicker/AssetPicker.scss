@@ -1,0 +1,56 @@
+@import "@repo/styles";
+@import "../../scss/constants";
+
+.asset-picker-wrapper {
+  .asset-picker-container {
+    height: 500px;
+    .asset-tabs {
+      margin-bottom: 20px;
+      border-bottom: 1px solid map-get($grey-colors, "light-grey");
+    }
+    .searching {
+      height: 400px;
+      overflow: auto;
+      text-align: center;
+      .text {
+        margin-top: 20px;
+      }
+    }
+    .no-results {
+      height: 250px;
+      text-align: center;
+      padding-top: 150px;
+      color: map-get($grey-colors, "A7A9AC");
+    }
+    .searched-assets {
+      max-height: 400px;
+      overflow: auto;
+      .asset {
+        padding: 10px;
+        border-top: 1px solid map-get($grey-colors, "light-grey");
+        font-size: 13px;
+        position: relative;
+        color: map-get($grey-colors, "A7A9AC");
+        &:hover {
+          background: map-get($grey-colors, "light-grey");
+          cursor: pointer;
+        }
+        svg {
+          position: absolute;
+          right: 15px;
+          top: 30px;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .create-actions {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      column-gap: 10px;
+    }
+  }
+}

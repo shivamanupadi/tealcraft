@@ -20,22 +20,9 @@ import {
 import CreateWorkspace from "../CreateWorkspace/CreateWorkspace";
 import { loadWorkspaces } from "../../Redux/portal/portalReducer";
 import { useConfirm } from "material-ui-confirm";
-import { confirmationProps, GreyColors } from "@repo/theme";
+import { confirmationProps } from "@repo/theme";
 import { useLoader, useSnackbar } from "@repo/ui";
 import { useNavigate, useParams } from "react-router-dom";
-
-export const workspacesMenu = {
-  ".MuiPaper-root": {
-    boxShadow:
-      "0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%) !important",
-  },
-};
-
-export const workspaceItem = {
-  fontSize: "14px",
-  color: GreyColors.FormLabel,
-  svg: {},
-};
 
 function WorkspacePicker(): ReactElement {
   const dispatch = useAppDispatch();
@@ -106,15 +93,13 @@ function WorkspacePicker(): ReactElement {
           onClose={() => {
             setWorkspaceAnchorEl(null);
           }}
-          className="workspaces-list"
-          sx={workspacesMenu}
+          className="classic-menu workspaces-list"
         >
           {workspaces.map((workspace, index) => {
             const workspaceInstance = new CoreWorkspace(workspace);
             return (
               <MenuItem
                 key={`${workspaceInstance.getId()}-${index}`}
-                sx={workspaceItem}
                 selected={false}
                 onClick={async (e) => {
                   e.preventDefault();

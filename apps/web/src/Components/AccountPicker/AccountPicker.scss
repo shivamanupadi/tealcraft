@@ -1,0 +1,27 @@
+@import "@repo/styles";
+@import "../../scss/constants";
+
+.accounts-list {
+  .account-picker-name {
+    display: flex;
+    justify-content: flex-start;
+    column-gap: 10px;
+    align-items: center;
+    font-size: 12px;
+  }
+}
+
+.account-picker-wrapper {
+  .account-picker-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 10px;
+    .picker-actions {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      column-gap: 10px;
+    }
+  }
+}

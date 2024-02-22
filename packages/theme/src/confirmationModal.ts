@@ -30,6 +30,7 @@ export const confirmationProps: ConfirmOptions = {
       ".MuiDialogContentText-root": {
         fontSize: "14px",
         color: GreyColors.FormLabel,
+        wordBreak: "break-word",
       },
       ".MuiDialogActions-root": {
         display: "block",

@@ -18,6 +18,26 @@ export class TealCraft {
     localStorage.removeItem(LOCAL_STORAGE.workspaceId);
   }
 
+  saveNodeId(id: string) {
+    localStorage.setItem(LOCAL_STORAGE.nodeId, id);
+  }
+
+  getNodeId(): string {
+    return localStorage.getItem(LOCAL_STORAGE.nodeId) || "algonode_mainnet";
+  }
+
+  saveAccountId(id: string) {
+    localStorage.setItem(LOCAL_STORAGE.accountId, id);
+  }
+
+  getAccountId(): string | null {
+    return localStorage.getItem(LOCAL_STORAGE.accountId);
+  }
+
+  removeAccountId(): void {
+    localStorage.removeItem(LOCAL_STORAGE.accountId);
+  }
+
   isValidContractName(name: string): boolean {
     const minLength = 5;
     const maxLength = 30;

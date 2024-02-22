@@ -1,6 +1,13 @@
 import { saveAs } from "file-saver";
 import copy from "copy-to-clipboard";
 
+export function ellipseString(str: string = "", width: number = 10): string {
+  if (width >= str.length) {
+    return str;
+  }
+  return `${str.slice(0, width)}...`;
+}
+
 export function getExceptionMsg(e: any): string {
   return e?.response?.data?.message || e?.message;
 }
@@ -40,4 +47,35 @@ export function getBaseUrl(): string {
 
 export function convertUTCDateToLocalDate(date: Date): Date {
   return new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
+}
+
+export function debounce(task: any, ms: number) {
+  let t = { promise: null, cancel: () => void 0 };
+  return async (...args: any) => {
+    try {
+      // @ts-ignore
+      t.cancel();
+      t = deferred(ms);
+      await t.promise;
+      await task(...args);
+    } catch (_) {
+      /* prevent memory leak */
+    }
+  };
+}
+
+export function deferred(ms: number): any {
+  let cancel,
+    promise = new Promise((resolve, reject) => {
+      cancel = reject;
+      setTimeout(resolve, ms);
+    });
+  return { promise, cancel };
+}
+
+export async function sleep(ms: number): Promise<any> {
+  await new Promise((resolve) => setTimeout(resolve, ms));
+}
+export function isNumber(n: any) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 }

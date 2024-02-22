@@ -2,7 +2,7 @@ import { A_CompileResult, A_Contract, A_Workspace } from "../../../types";
 import { getFramework } from "./frameworkUtils";
 import { TealScriptCompiler } from "./tealscript/TealScriptCompiler";
 import { PuyaCompiler } from "./puya/PuyaCompiler";
-import { WorkspaceClient } from "../../../clients/WorkspaceClient";
+import { WorkspaceClient } from "../../../database/clients/WorkspaceClient";
 
 export class TealCraftCompiler {
   getCompiler(

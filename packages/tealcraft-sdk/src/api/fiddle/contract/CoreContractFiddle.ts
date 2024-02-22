@@ -1,6 +1,6 @@
 import { ContractFiddleParams } from "@repo/types";
 import { getBaseUrl } from "@repo/utils";
-import { ContractClient } from "../../../clients/ContractClient";
+import { ContractClient } from "../../../database/clients/ContractClient";
 import { A_Contract, A_Framework, A_Workspace } from "../../../types";
 import { CoreWorkspace } from "../../../core/CoreWorkspace";
 import { getFramework } from "../../compiler/frameworks/frameworkUtils";
