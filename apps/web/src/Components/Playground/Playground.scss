@@ -117,6 +117,20 @@
             .abi-method-args-form-wrapper {
               .abi-method-args-form-container {
                 margin-top: 20px;
+                .advanced-config {
+                  .accordion {
+                    box-shadow: none;
+                    border: 1px solid map-get($grey-colors, "light-grey");
+                    .title {
+                      font-size: 14px;
+                      color: map-get($grey-colors, "A7A9AC");
+                    }
+                  }
+                  .advanced-config-body {
+                    margin-top: -15px;
+                  }
+                }
+
                 .abi-method-args-form-title {
                   color: map-get($grey-colors, "A7A9AC");
                   margin-bottom: 10px;

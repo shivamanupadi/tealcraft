@@ -1,10 +1,19 @@
 import "./Playground.scss";
-import { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
-import { Close, Edit, PlayCircle, ShowerOutlined } from "@mui/icons-material";
+import {
+  Close,
+  Edit,
+  ExpandMore,
+  PlayCircle,
+  ShowerOutlined,
+} from "@mui/icons-material";
 import AccountPicker from "../AccountPicker/AccountPicker";
 import NodePicker from "../NodePicker/NodePicker";
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Button,
   CircularProgress,
   FormLabel,
@@ -52,11 +61,12 @@ import {
   ABIMethod,
   ABIMethodParams,
   abiTypeIsTransaction,
+  algosToMicroalgos,
   TransactionType,
 } from "algosdk";
-import { ShadedInput, theme } from "@repo/theme";
+import { GreyColors, ShadedInput, theme } from "@repo/theme";
 import { tableStyles } from "../../Pages/Contract/ContractConsole/ContractSchema/ContractSchema";
-import { getExceptionMsg } from "@repo/utils";
+import { getExceptionMsg, isNumber } from "@repo/utils";
 import Dispenser from "../Dispenser/Dispenser";
 import { AssetResult } from "@algorandfoundation/algokit-utils/types/indexer";
 import AssetPicker from "../AssetPicker/AssetPicker";
@@ -101,6 +111,8 @@ export function Playground({
   const [isExecutionCompleted, setExecutionCompletion] =
     useState<boolean>(false);
   const [executionErrorMsg, setExecutionErrorMsg] = useState<string>("");
+
+  const [txnFee, setTxnFee] = useState<string>("");
 
   const { showLoader, hideLoader } = useLoader();
   const { showSnack, showException } = useSnackbar();
@@ -154,6 +166,13 @@ export function Playground({
       }
     }
 
+    if (txnFee) {
+      if (!isNumber(txnFee)) {
+        showSnack("Transaction fee should be a number", "error");
+        return;
+      }
+    }
+
     try {
       resetMethodExecutionState();
       setExecutionProgress(true);
@@ -161,11 +180,17 @@ export function Playground({
       const algod = new Network(selectedNode).getAlgodClient();
       const sp = await algod.getTransactionParams().do();
 
+      if (txnFee) {
+        sp.fee = algosToMicroalgos(Number(txnFee));
+        sp.flatFee = true;
+      }
+
       if (isCreation) {
         const params: CreateAppParams = {
           approvalProgram: atob(appSpec.source.approval),
           clearStateProgram: atob(appSpec.source.clear),
           from: mnemonicAccount(selectedAccount.mnemonic),
+          transactionParams: sp,
           schema: {
             globalInts: appSpec.state.global.num_uints,
             localInts: appSpec.state.local.num_uints,
@@ -193,7 +218,7 @@ export function Playground({
           callType: getMethodCallConfigValue(method, appSpec),
           from: mnemonicAccount(selectedAccount.mnemonic),
           populateAppCallResources: true,
-          fee: new AlgoAmount({ algos: 0.1 }),
+          fee: new AlgoAmount({ algos: Number(txnFee) }),
           args: {
             method: method,
             methodArgs: convertExecutorArgsToMethodArgs(
@@ -465,6 +490,7 @@ export function Playground({
                                                     processedArgs,
                                                   );
                                                 }}
+                                                endAdornment={<div>Algo</div>}
                                                 fullWidth
                                               />
                                             </div>
@@ -733,6 +759,40 @@ export function Playground({
                               );
                             })}
 
+                            <div className="advanced-config">
+                              <Accordion className="accordion">
+                                <AccordionSummary
+                                  expandIcon={
+                                    <ExpandMore
+                                      sx={{ color: GreyColors.A7A9AC }}
+                                    />
+                                  }
+                                >
+                                  <div className="title">
+                                    Advanced configuration
+                                  </div>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                  <div className="advanced-config-body">
+                                    <FormLabel
+                                      className="classic-label"
+                                      sx={txnFieldStyles}
+                                    >
+                                      Transaction fee
+                                    </FormLabel>
+                                    <ShadedInput
+                                      placeholder="Amount"
+                                      value={txnFee}
+                                      onChange={(ev) => {
+                                        setTxnFee(ev.target.value);
+                                      }}
+                                      endAdornment={<div>Algo</div>}
+                                      fullWidth
+                                    />
+                                  </div>
+                                </AccordionDetails>
+                              </Accordion>
+                            </div>
                             <div className="abi-method-execute">
                               <Button
                                 color={"primary"}
