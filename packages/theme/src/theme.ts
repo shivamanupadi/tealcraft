@@ -170,13 +170,11 @@ export const theme = createTheme({
           },
           "&.success-snack-bar": {
             backgroundColor: ThemeColors.SecondaryLight,
-            color: BaseColors.Black,
-            marginTop: "-12px",
+            color: GreyColors.FormValue,
           },
           "&.error-snack-bar": {
-            backgroundColor: ThemeColors.WarningLight,
-            color: BaseColors.Black,
-            marginTop: "-12px",
+            backgroundColor: "#FAECEA",
+            color: GreyColors.FormValue,
           },
         },
       },
