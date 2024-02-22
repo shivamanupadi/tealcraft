@@ -13,6 +13,8 @@ import { loadSelectedNode } from "../../Redux/network/nodesReducer";
 import { BaseColors, theme } from "@repo/theme";
 import { RootState, useAppDispatch } from "../../Redux/store";
 import { useSelector } from "react-redux";
+import { useLoader, useSnackbar } from "@repo/ui";
+import { Network } from "@repo/algocore";
 
 interface NodePickerProps {
   onPick: () => void;
@@ -26,6 +28,9 @@ function NodePicker({ onPick }: NodePickerProps): ReactElement {
   const [networkAnchorEl, setNetworkAnchorEl] = useState<null | HTMLElement>(
     null,
   );
+
+  const { showLoader, hideLoader } = useLoader();
+  const { showException } = useSnackbar();
   return (
     <div className="node-picker-wrapper">
       <div className="node-picker-container">
@@ -73,10 +78,19 @@ function NodePicker({ onPick }: NodePickerProps): ReactElement {
                 onClick={async (e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  setNetworkAnchorEl(null);
-                  new TealCraft().saveNodeId(node.id);
-                  dispatch(loadSelectedNode());
-                  onPick();
+                  try {
+                    showLoader("Connecting to node ...");
+                    const algod = new Network(node).getAlgodClient();
+                    await algod.status().do();
+                    setNetworkAnchorEl(null);
+                    new TealCraft().saveNodeId(node.id);
+                    dispatch(loadSelectedNode());
+                    onPick();
+                    hideLoader();
+                  } catch (e) {
+                    hideLoader();
+                    showException(e);
+                  }
                 }}
               >
                 {selectedNode ? (
