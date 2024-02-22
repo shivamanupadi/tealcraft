@@ -1,5 +1,5 @@
 import "./Playground.scss";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { AppSpec } from "@algorandfoundation/algokit-utils/types/app-spec";
 import {
   Close,
@@ -88,6 +88,7 @@ export function Playground({
 }: PlaygroundProps): ReactElement {
   const { selectedNode } = useSelector((state: RootState) => state.nodes);
   const { selectedAccount } = useSelector((state: RootState) => state.accounts);
+  const resultDivRef = useRef(null);
 
   const [appCreateResult, setAppCreateResult] = useState<
     | null
@@ -246,8 +247,15 @@ export function Playground({
       const msg = getExceptionMsg(e) || "";
       setExecutionErrorMsg(msg);
     }
+    focusResult();
   }
 
+  function focusResult() {
+    if (resultDivRef.current) {
+      // @ts-ignore
+      resultDivRef.current.focus();
+    }
+  }
   return (
     <div className={"playground-wrapper"}>
       <div className={"playground-container"}>
@@ -822,7 +830,11 @@ export function Playground({
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                       <div className="result-wrapper">
-                        <div className="result-container">
+                        <div
+                          className="result-container"
+                          ref={resultDivRef}
+                          tabIndex={-1}
+                        >
                           <div className="title">Result</div>
                           {isExecutionInProgress ? (
                             <LoadingTile></LoadingTile>
