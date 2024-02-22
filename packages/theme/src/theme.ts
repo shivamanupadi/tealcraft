@@ -221,6 +221,35 @@ export const theme = createTheme({
         },
       },
     },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          "&.classic-select": {
+            fontSize: "13px",
+            marginTop: "5px",
+            color: GreyColors.A7A9AC,
+            background: GreyColors.F8F8F9,
+            ".MuiInputBase-input": {
+              padding: "10px",
+            },
+            "&:hover": {
+              fieldset: {
+                border: `none !important`,
+              },
+            },
+            "&:active": {
+              fieldset: {
+                border: `none !important`,
+              },
+            },
+            fieldset: {
+              borderRadius: "5px",
+              border: `none !important`,
+            },
+          },
+        },
+      },
+    },
   },
 });
 

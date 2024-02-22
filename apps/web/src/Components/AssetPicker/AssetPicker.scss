@@ -4,6 +4,10 @@
 .asset-picker-wrapper {
   .asset-picker-container {
     height: 500px;
+    .asset-tabs {
+      margin-bottom: 20px;
+      border-bottom: 1px solid map-get($grey-colors, "light-grey");
+    }
     .searching {
       height: 400px;
       overflow: auto;
@@ -40,6 +44,13 @@
           }
         }
       }
+    }
+    .create-actions {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      column-gap: 10px;
     }
   }
 }
