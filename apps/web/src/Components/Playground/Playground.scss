@@ -53,18 +53,31 @@
           }
         }
         .app-spec-body {
-          padding: 20px 20px;
           .no-app-info {
             font-size: 14px;
             color: map-get($grey-colors, "A7A9AC");
             margin-top: 20px;
           }
           .method-executor {
+            min-height: calc(100vh - 120px);
+            display: flex;
+            column-gap: 0;
+            background: map-get($grey-colors, "F8F8F9");
+            .method-executor-body {
+              padding: 20px;
+              flex: 1;
+              background: #ffffff !important;
+            }
             .result-wrapper {
+              padding: 20px;
+              border-left: 1px solid map-get($grey-colors, "light-grey");
+              background: map-get($grey-colors, "F8F8F9");
+              flex: 1;
               .result-container {
-                padding: 0 20px;
-                border-left: 1px solid map-get($grey-colors, "light-grey");
-                min-height: 500px;
+                &:focus-visible {
+                  border: none !important;
+                  outline: none !important;
+                }
                 .execution-final-result {
                   font-size: 14px;
                   border-radius: 5px;

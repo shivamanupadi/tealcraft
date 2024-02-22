@@ -17,7 +17,6 @@ import {
   Button,
   CircularProgress,
   FormLabel,
-  Grid,
   Paper,
   Table,
   TableBody,
@@ -390,588 +389,567 @@ export function Playground({
             <div className="app-spec-body">
               {appCreateResult || hasCreationMethod(appSpec) ? (
                 <div className="method-executor">
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                      <FormLabel className="method-selector">
-                        Select method
-                      </FormLabel>
-                      <MethodPicker
-                        onPick={(method) => {
-                          resetMethodExecutionState();
-                          setCurrentMethod(method);
-                        }}
-                        selectedMethod={currentMethod}
-                        appSpec={appSpec}
-                      ></MethodPicker>
+                  <div className="method-executor-body">
+                    <FormLabel className="method-selector">
+                      Select method
+                    </FormLabel>
+                    <MethodPicker
+                      onPick={(method) => {
+                        resetMethodExecutionState();
+                        setCurrentMethod(method);
+                        setTxnFee("");
+                      }}
+                      selectedMethod={currentMethod}
+                      appSpec={appSpec}
+                    ></MethodPicker>
 
-                      {currentMethod ? (
-                        <div className="app-create-info">
-                          {isCreateMethod(currentMethod, appSpec) ? (
+                    {currentMethod ? (
+                      <div className="app-create-info">
+                        {isCreateMethod(currentMethod, appSpec) ? (
+                          <div>
+                            This is a app create method. Executing this method
+                            will deploy a new application and set the deployed
+                            application to the current context.
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                    {currentMethod ? (
+                      <div className="abi-method-args-form-wrapper">
+                        <div className="abi-method-args-form-container">
+                          {executorArgs.length > 0 ? (
+                            <div className="abi-method-args-form-title">
+                              Arguments
+                            </div>
+                          ) : (
+                            ""
+                          )}
+
+                          {executorArgs.map((arg, index) => {
+                            const argType = arg.type.toString();
+                            const normalInput =
+                              !abiTypeIsTransaction(arg.type.toString()) &&
+                              argType != "asset";
+                            return (
+                              <div className="abi-method-arg" key={arg.name}>
+                                <FormLabel className="classic-label">{`${arg.name} (${argType})`}</FormLabel>
+                                {abiTypeIsTransaction(arg.type.toString()) ? (
+                                  <div>
+                                    <div className="arg-transaction-wrapper">
+                                      <div className="arg-transaction-container">
+                                        {arg.type.toString() ===
+                                        TransactionType.pay ? (
+                                          <div>
+                                            <FormLabel className="classic-label">
+                                              To
+                                            </FormLabel>
+                                            <ShadedInput
+                                              placeholder="To address"
+                                              multiline
+                                              rows={2}
+                                              value={arg.value.to}
+                                              onChange={(ev) => {
+                                                const processedArgs = [
+                                                  ...executorArgs,
+                                                ];
+                                                processedArgs[index] = {
+                                                  ...arg,
+                                                  value: {
+                                                    ...arg.value,
+                                                    to: ev.target.value,
+                                                  },
+                                                };
+
+                                                setExecutorArgs(processedArgs);
+                                              }}
+                                              fullWidth
+                                            />
+
+                                            <FormLabel
+                                              className="classic-label"
+                                              sx={txnFieldStyles}
+                                            >
+                                              Amount
+                                            </FormLabel>
+                                            <ShadedInput
+                                              placeholder="Amount"
+                                              value={arg.value.amount}
+                                              onChange={(ev) => {
+                                                const processedArgs = [
+                                                  ...executorArgs,
+                                                ];
+                                                processedArgs[index] = {
+                                                  ...arg,
+                                                  value: {
+                                                    ...arg.value,
+                                                    amount: ev.target.value,
+                                                  },
+                                                };
+
+                                                setExecutorArgs(processedArgs);
+                                              }}
+                                              endAdornment={<div>Algo</div>}
+                                              fullWidth
+                                            />
+                                          </div>
+                                        ) : (
+                                          ""
+                                        )}
+
+                                        {arg.type.toString() ===
+                                        TransactionType.axfer ? (
+                                          <div>
+                                            <FormLabel className="classic-label">
+                                              Asset ID
+                                            </FormLabel>
+                                            <ShadedInput
+                                              placeholder="Asset ID"
+                                              value={arg.value.assetId}
+                                              fullWidth
+                                              disabled
+                                              endAdornment={
+                                                <div className="asset-edit">
+                                                  <div>
+                                                    {
+                                                      arg.value?.asset
+                                                        ?.params?.["unit-name"]
+                                                    }
+                                                  </div>
+                                                  <div>
+                                                    <Edit
+                                                      className="hover"
+                                                      fontSize={"small"}
+                                                      color={"primary"}
+                                                      onClick={() => {
+                                                        const processedArgs = [
+                                                          ...executorArgs,
+                                                        ];
+                                                        processedArgs[index] = {
+                                                          ...arg,
+                                                          value: {
+                                                            ...arg.value,
+                                                            show: true,
+                                                          },
+                                                        };
+
+                                                        setExecutorArgs(
+                                                          processedArgs,
+                                                        );
+                                                      }}
+                                                    ></Edit>
+                                                    <AssetPicker
+                                                      onPick={(
+                                                        asset: AssetResult,
+                                                      ) => {
+                                                        const processedArgs = [
+                                                          ...executorArgs,
+                                                        ];
+                                                        processedArgs[index] = {
+                                                          ...arg,
+                                                          value: {
+                                                            ...arg.value,
+                                                            assetId:
+                                                              asset.index,
+                                                            asset: asset,
+                                                            show: false,
+                                                          },
+                                                        };
+                                                        setExecutorArgs(
+                                                          processedArgs,
+                                                        );
+                                                      }}
+                                                      onClose={() => {
+                                                        const processedArgs = [
+                                                          ...executorArgs,
+                                                        ];
+                                                        processedArgs[index] = {
+                                                          ...arg,
+                                                          value: {
+                                                            ...arg.value,
+                                                            show: false,
+                                                          },
+                                                        };
+                                                        setExecutorArgs(
+                                                          processedArgs,
+                                                        );
+                                                      }}
+                                                      show={arg.value.show}
+                                                      title="Pick asset"
+                                                    ></AssetPicker>
+                                                  </div>
+                                                </div>
+                                              }
+                                            />
+
+                                            <FormLabel
+                                              className="classic-label"
+                                              sx={txnFieldStyles}
+                                            >
+                                              To
+                                            </FormLabel>
+                                            <ShadedInput
+                                              placeholder="To address"
+                                              multiline
+                                              rows={2}
+                                              value={arg.value.to}
+                                              onChange={(ev) => {
+                                                const processedArgs = [
+                                                  ...executorArgs,
+                                                ];
+                                                processedArgs[index] = {
+                                                  ...arg,
+                                                  value: {
+                                                    ...arg.value,
+                                                    to: ev.target.value,
+                                                  },
+                                                };
+
+                                                setExecutorArgs(processedArgs);
+                                              }}
+                                              fullWidth
+                                            />
+
+                                            <FormLabel
+                                              className="classic-label"
+                                              sx={txnFieldStyles}
+                                            >
+                                              Amount
+                                            </FormLabel>
+                                            <ShadedInput
+                                              placeholder="Amount"
+                                              value={arg.value.amount}
+                                              onChange={(ev) => {
+                                                const processedArgs = [
+                                                  ...executorArgs,
+                                                ];
+                                                processedArgs[index] = {
+                                                  ...arg,
+                                                  value: {
+                                                    ...arg.value,
+                                                    amount: ev.target.value,
+                                                  },
+                                                };
+
+                                                setExecutorArgs(processedArgs);
+                                              }}
+                                              fullWidth
+                                            />
+                                          </div>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div>
+                                    {argType === "asset" ? (
+                                      <ShadedInput
+                                        placeholder={arg.type.toString()}
+                                        value={arg.value.assetId}
+                                        disabled
+                                        endAdornment={
+                                          <div className="asset-edit">
+                                            <div>
+                                              {
+                                                arg.value?.asset?.params?.[
+                                                  "unit-name"
+                                                ]
+                                              }
+                                            </div>
+                                            <div>
+                                              <Edit
+                                                className="hover"
+                                                fontSize={"small"}
+                                                color={"primary"}
+                                                onClick={() => {
+                                                  const processedArgs = [
+                                                    ...executorArgs,
+                                                  ];
+                                                  processedArgs[index] = {
+                                                    ...arg,
+                                                    value: {
+                                                      ...arg.value,
+                                                      show: true,
+                                                    },
+                                                  };
+
+                                                  setExecutorArgs(
+                                                    processedArgs,
+                                                  );
+                                                }}
+                                              ></Edit>
+                                              <AssetPicker
+                                                onPick={(
+                                                  asset: AssetResult,
+                                                ) => {
+                                                  const processedArgs = [
+                                                    ...executorArgs,
+                                                  ];
+                                                  processedArgs[index] = {
+                                                    ...arg,
+                                                    value: {
+                                                      ...arg.value,
+                                                      assetId: asset.index,
+                                                      asset: asset,
+                                                      show: false,
+                                                    },
+                                                  };
+                                                  setExecutorArgs(
+                                                    processedArgs,
+                                                  );
+                                                }}
+                                                onClose={() => {
+                                                  const processedArgs = [
+                                                    ...executorArgs,
+                                                  ];
+                                                  processedArgs[index] = {
+                                                    ...arg,
+                                                    value: {
+                                                      ...arg.value,
+                                                      show: false,
+                                                    },
+                                                  };
+                                                  setExecutorArgs(
+                                                    processedArgs,
+                                                  );
+                                                }}
+                                                show={arg.value.show}
+                                                title="Pick asset"
+                                              ></AssetPicker>
+                                            </div>
+                                          </div>
+                                        }
+                                        fullWidth
+                                      />
+                                    ) : (
+                                      ""
+                                    )}
+                                    {normalInput ? (
+                                      <ShadedInput
+                                        placeholder={arg.type.toString()}
+                                        value={arg.value}
+                                        onChange={(ev) => {
+                                          const processedArgs = [
+                                            ...executorArgs,
+                                          ];
+                                          processedArgs[index] = {
+                                            ...arg,
+                                            value: ev.target.value,
+                                          };
+
+                                          setExecutorArgs(processedArgs);
+                                        }}
+                                        fullWidth
+                                      />
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+
+                          <div className="advanced-config">
+                            <Accordion className="accordion">
+                              <AccordionSummary
+                                expandIcon={
+                                  <ExpandMore
+                                    sx={{ color: GreyColors.A7A9AC }}
+                                  />
+                                }
+                              >
+                                <div className="title">
+                                  Advanced configuration
+                                </div>
+                              </AccordionSummary>
+                              <AccordionDetails>
+                                <div className="advanced-config-body">
+                                  <FormLabel
+                                    className="classic-label"
+                                    sx={txnFieldStyles}
+                                  >
+                                    Transaction fee
+                                  </FormLabel>
+                                  <ShadedInput
+                                    placeholder="Amount"
+                                    value={txnFee}
+                                    onChange={(ev) => {
+                                      setTxnFee(ev.target.value);
+                                    }}
+                                    endAdornment={<div>Algo</div>}
+                                    fullWidth
+                                  />
+                                </div>
+                              </AccordionDetails>
+                            </Accordion>
+                          </div>
+                          <div className="abi-method-execute">
+                            <Button
+                              color={"primary"}
+                              variant={"contained"}
+                              onClick={() => {
+                                executeMethod(currentMethod);
+                              }}
+                              disabled={isExecutionInProgress}
+                              startIcon={
+                                isExecutionInProgress ? (
+                                  <CircularProgress
+                                    size={20}
+                                  ></CircularProgress>
+                                ) : (
+                                  <PlayCircle></PlayCircle>
+                                )
+                              }
+                            >
+                              Execute
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className="result-wrapper">
+                    <div
+                      className="result-container"
+                      ref={resultDivRef}
+                      tabIndex={-1}
+                    >
+                      <div className="title">Result</div>
+                      {isExecutionInProgress ? (
+                        <LoadingTile></LoadingTile>
+                      ) : (
+                        <div>
+                          {isExecutionCompleted ? (
                             <div>
-                              This is a app create method. Executing this method
-                              will deploy a new application and set the deployed
-                              application to the current context.
+                              <div>
+                                {isExecutionSuccessful ? (
+                                  <div
+                                    style={{
+                                      color: theme.palette.secondary.main,
+                                    }}
+                                    className="execution-final-result"
+                                  >
+                                    {currentMethod &&
+                                    isCreateMethod(currentMethod, appSpec)
+                                      ? `Application ${appCreateResult?.appId} deployed successfully`
+                                      : "Method execution successful"}
+                                  </div>
+                                ) : (
+                                  <div
+                                    style={{
+                                      color: theme.palette.warning.dark,
+                                    }}
+                                    className="execution-final-result"
+                                  >
+                                    Method execution failed
+                                  </div>
+                                )}
+                              </div>
+
+                              {isExecutionSuccessful ? (
+                                <div>
+                                  {executorResult ? (
+                                    <div className="details">
+                                      <div className="section">
+                                        <div className="key">Transaction</div>
+                                        <div
+                                          className="value underline hover"
+                                          onClick={() => {
+                                            new Explorer(
+                                              coreNodeInstance,
+                                            ).openTransaction(
+                                              executorResult?.transaction.txID(),
+                                            );
+                                          }}
+                                        >
+                                          {executorResult?.transaction.txID()}
+                                        </div>
+                                      </div>
+                                      <div className="section">
+                                        <div className="key">Return</div>
+                                        <div className="value">
+                                          {executorResult?.return?.returnValue?.toString() ||
+                                            "void"}
+                                        </div>
+                                      </div>
+                                      <div className="section">
+                                        <div className="key">
+                                          Global state delta
+                                        </div>
+                                        <div className="value">
+                                          {globalStateDelta &&
+                                          Object.keys(globalStateDelta).length >
+                                            0 ? (
+                                            <TableContainer
+                                              component={Paper}
+                                              sx={tableStyles}
+                                            >
+                                              <Table>
+                                                <TableHead>
+                                                  <TableRow>
+                                                    <TableCell>Key</TableCell>
+                                                    <TableCell>Type</TableCell>
+                                                  </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                  {Object.keys(
+                                                    globalStateDelta,
+                                                  ).map((globalStateKey) => {
+                                                    return (
+                                                      <TableRow
+                                                        key={`global_state_delta_key_${globalStateKey}`}
+                                                        sx={{
+                                                          "&:last-child td, &:last-child th":
+                                                            {
+                                                              border: 0,
+                                                            },
+                                                        }}
+                                                      >
+                                                        <TableCell>
+                                                          {globalStateKey}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                          {globalStateDelta[
+                                                            globalStateKey
+                                                          ]?.value?.toString()}
+                                                        </TableCell>
+                                                      </TableRow>
+                                                    );
+                                                  })}
+                                                </TableBody>
+                                              </Table>
+                                            </TableContainer>
+                                          ) : (
+                                            "--Empty--"
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              ) : (
+                                <div className="error-msg">
+                                  {executionErrorMsg}
+                                </div>
+                              )}
                             </div>
                           ) : (
                             ""
                           )}
                         </div>
-                      ) : (
-                        ""
                       )}
-                      {currentMethod ? (
-                        <div className="abi-method-args-form-wrapper">
-                          <div className="abi-method-args-form-container">
-                            {executorArgs.length > 0 ? (
-                              <div className="abi-method-args-form-title">
-                                Arguments
-                              </div>
-                            ) : (
-                              ""
-                            )}
-
-                            {executorArgs.map((arg, index) => {
-                              const argType = arg.type.toString();
-                              const normalInput =
-                                !abiTypeIsTransaction(arg.type.toString()) &&
-                                argType != "asset";
-                              return (
-                                <div className="abi-method-arg" key={arg.name}>
-                                  <FormLabel className="classic-label">{`${arg.name} (${argType})`}</FormLabel>
-                                  {abiTypeIsTransaction(arg.type.toString()) ? (
-                                    <div>
-                                      <div className="arg-transaction-wrapper">
-                                        <div className="arg-transaction-container">
-                                          {arg.type.toString() ===
-                                          TransactionType.pay ? (
-                                            <div>
-                                              <FormLabel className="classic-label">
-                                                To
-                                              </FormLabel>
-                                              <ShadedInput
-                                                placeholder="To address"
-                                                multiline
-                                                rows={2}
-                                                value={arg.value.to}
-                                                onChange={(ev) => {
-                                                  const processedArgs = [
-                                                    ...executorArgs,
-                                                  ];
-                                                  processedArgs[index] = {
-                                                    ...arg,
-                                                    value: {
-                                                      ...arg.value,
-                                                      to: ev.target.value,
-                                                    },
-                                                  };
-
-                                                  setExecutorArgs(
-                                                    processedArgs,
-                                                  );
-                                                }}
-                                                fullWidth
-                                              />
-
-                                              <FormLabel
-                                                className="classic-label"
-                                                sx={txnFieldStyles}
-                                              >
-                                                Amount
-                                              </FormLabel>
-                                              <ShadedInput
-                                                placeholder="Amount"
-                                                value={arg.value.amount}
-                                                onChange={(ev) => {
-                                                  const processedArgs = [
-                                                    ...executorArgs,
-                                                  ];
-                                                  processedArgs[index] = {
-                                                    ...arg,
-                                                    value: {
-                                                      ...arg.value,
-                                                      amount: ev.target.value,
-                                                    },
-                                                  };
-
-                                                  setExecutorArgs(
-                                                    processedArgs,
-                                                  );
-                                                }}
-                                                endAdornment={<div>Algo</div>}
-                                                fullWidth
-                                              />
-                                            </div>
-                                          ) : (
-                                            ""
-                                          )}
-
-                                          {arg.type.toString() ===
-                                          TransactionType.axfer ? (
-                                            <div>
-                                              <FormLabel className="classic-label">
-                                                Asset ID
-                                              </FormLabel>
-                                              <ShadedInput
-                                                placeholder="Asset ID"
-                                                value={arg.value.assetId}
-                                                fullWidth
-                                                disabled
-                                                endAdornment={
-                                                  <div className="asset-edit">
-                                                    <div>
-                                                      {
-                                                        arg.value?.asset
-                                                          ?.params?.[
-                                                          "unit-name"
-                                                        ]
-                                                      }
-                                                    </div>
-                                                    <div>
-                                                      <Edit
-                                                        className="hover"
-                                                        fontSize={"small"}
-                                                        color={"primary"}
-                                                        onClick={() => {
-                                                          const processedArgs =
-                                                            [...executorArgs];
-                                                          processedArgs[index] =
-                                                            {
-                                                              ...arg,
-                                                              value: {
-                                                                ...arg.value,
-                                                                show: true,
-                                                              },
-                                                            };
-
-                                                          setExecutorArgs(
-                                                            processedArgs,
-                                                          );
-                                                        }}
-                                                      ></Edit>
-                                                      <AssetPicker
-                                                        onPick={(
-                                                          asset: AssetResult,
-                                                        ) => {
-                                                          const processedArgs =
-                                                            [...executorArgs];
-                                                          processedArgs[index] =
-                                                            {
-                                                              ...arg,
-                                                              value: {
-                                                                ...arg.value,
-                                                                assetId:
-                                                                  asset.index,
-                                                                asset: asset,
-                                                                show: false,
-                                                              },
-                                                            };
-                                                          setExecutorArgs(
-                                                            processedArgs,
-                                                          );
-                                                        }}
-                                                        onClose={() => {
-                                                          const processedArgs =
-                                                            [...executorArgs];
-                                                          processedArgs[index] =
-                                                            {
-                                                              ...arg,
-                                                              value: {
-                                                                ...arg.value,
-                                                                show: false,
-                                                              },
-                                                            };
-                                                          setExecutorArgs(
-                                                            processedArgs,
-                                                          );
-                                                        }}
-                                                        show={arg.value.show}
-                                                        title="Pick asset"
-                                                      ></AssetPicker>
-                                                    </div>
-                                                  </div>
-                                                }
-                                              />
-
-                                              <FormLabel
-                                                className="classic-label"
-                                                sx={txnFieldStyles}
-                                              >
-                                                To
-                                              </FormLabel>
-                                              <ShadedInput
-                                                placeholder="To address"
-                                                multiline
-                                                rows={2}
-                                                value={arg.value.to}
-                                                onChange={(ev) => {
-                                                  const processedArgs = [
-                                                    ...executorArgs,
-                                                  ];
-                                                  processedArgs[index] = {
-                                                    ...arg,
-                                                    value: {
-                                                      ...arg.value,
-                                                      to: ev.target.value,
-                                                    },
-                                                  };
-
-                                                  setExecutorArgs(
-                                                    processedArgs,
-                                                  );
-                                                }}
-                                                fullWidth
-                                              />
-
-                                              <FormLabel
-                                                className="classic-label"
-                                                sx={txnFieldStyles}
-                                              >
-                                                Amount
-                                              </FormLabel>
-                                              <ShadedInput
-                                                placeholder="Amount"
-                                                value={arg.value.amount}
-                                                onChange={(ev) => {
-                                                  const processedArgs = [
-                                                    ...executorArgs,
-                                                  ];
-                                                  processedArgs[index] = {
-                                                    ...arg,
-                                                    value: {
-                                                      ...arg.value,
-                                                      amount: ev.target.value,
-                                                    },
-                                                  };
-
-                                                  setExecutorArgs(
-                                                    processedArgs,
-                                                  );
-                                                }}
-                                                fullWidth
-                                              />
-                                            </div>
-                                          ) : (
-                                            ""
-                                          )}
-                                        </div>
-                                      </div>
-                                    </div>
-                                  ) : (
-                                    <div>
-                                      {argType === "asset" ? (
-                                        <ShadedInput
-                                          placeholder={arg.type.toString()}
-                                          value={arg.value.assetId}
-                                          disabled
-                                          endAdornment={
-                                            <div className="asset-edit">
-                                              <div>
-                                                {
-                                                  arg.value?.asset?.params?.[
-                                                    "unit-name"
-                                                  ]
-                                                }
-                                              </div>
-                                              <div>
-                                                <Edit
-                                                  className="hover"
-                                                  fontSize={"small"}
-                                                  color={"primary"}
-                                                  onClick={() => {
-                                                    const processedArgs = [
-                                                      ...executorArgs,
-                                                    ];
-                                                    processedArgs[index] = {
-                                                      ...arg,
-                                                      value: {
-                                                        ...arg.value,
-                                                        show: true,
-                                                      },
-                                                    };
-
-                                                    setExecutorArgs(
-                                                      processedArgs,
-                                                    );
-                                                  }}
-                                                ></Edit>
-                                                <AssetPicker
-                                                  onPick={(
-                                                    asset: AssetResult,
-                                                  ) => {
-                                                    const processedArgs = [
-                                                      ...executorArgs,
-                                                    ];
-                                                    processedArgs[index] = {
-                                                      ...arg,
-                                                      value: {
-                                                        ...arg.value,
-                                                        assetId: asset.index,
-                                                        asset: asset,
-                                                        show: false,
-                                                      },
-                                                    };
-                                                    setExecutorArgs(
-                                                      processedArgs,
-                                                    );
-                                                  }}
-                                                  onClose={() => {
-                                                    const processedArgs = [
-                                                      ...executorArgs,
-                                                    ];
-                                                    processedArgs[index] = {
-                                                      ...arg,
-                                                      value: {
-                                                        ...arg.value,
-                                                        show: false,
-                                                      },
-                                                    };
-                                                    setExecutorArgs(
-                                                      processedArgs,
-                                                    );
-                                                  }}
-                                                  show={arg.value.show}
-                                                  title="Pick asset"
-                                                ></AssetPicker>
-                                              </div>
-                                            </div>
-                                          }
-                                          fullWidth
-                                        />
-                                      ) : (
-                                        ""
-                                      )}
-                                      {normalInput ? (
-                                        <ShadedInput
-                                          placeholder={arg.type.toString()}
-                                          value={arg.value}
-                                          onChange={(ev) => {
-                                            const processedArgs = [
-                                              ...executorArgs,
-                                            ];
-                                            processedArgs[index] = {
-                                              ...arg,
-                                              value: ev.target.value,
-                                            };
-
-                                            setExecutorArgs(processedArgs);
-                                          }}
-                                          fullWidth
-                                        />
-                                      ) : (
-                                        ""
-                                      )}
-                                    </div>
-                                  )}
-                                </div>
-                              );
-                            })}
-
-                            <div className="advanced-config">
-                              <Accordion className="accordion">
-                                <AccordionSummary
-                                  expandIcon={
-                                    <ExpandMore
-                                      sx={{ color: GreyColors.A7A9AC }}
-                                    />
-                                  }
-                                >
-                                  <div className="title">
-                                    Advanced configuration
-                                  </div>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                  <div className="advanced-config-body">
-                                    <FormLabel
-                                      className="classic-label"
-                                      sx={txnFieldStyles}
-                                    >
-                                      Transaction fee
-                                    </FormLabel>
-                                    <ShadedInput
-                                      placeholder="Amount"
-                                      value={txnFee}
-                                      onChange={(ev) => {
-                                        setTxnFee(ev.target.value);
-                                      }}
-                                      endAdornment={<div>Algo</div>}
-                                      fullWidth
-                                    />
-                                  </div>
-                                </AccordionDetails>
-                              </Accordion>
-                            </div>
-                            <div className="abi-method-execute">
-                              <Button
-                                color={"primary"}
-                                variant={"contained"}
-                                onClick={() => {
-                                  executeMethod(currentMethod);
-                                }}
-                                disabled={isExecutionInProgress}
-                                startIcon={
-                                  isExecutionInProgress ? (
-                                    <CircularProgress
-                                      size={20}
-                                    ></CircularProgress>
-                                  ) : (
-                                    <PlayCircle></PlayCircle>
-                                  )
-                                }
-                              >
-                                Execute
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                    </Grid>
-                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                      <div className="result-wrapper">
-                        <div
-                          className="result-container"
-                          ref={resultDivRef}
-                          tabIndex={-1}
-                        >
-                          <div className="title">Result</div>
-                          {isExecutionInProgress ? (
-                            <LoadingTile></LoadingTile>
-                          ) : (
-                            <div>
-                              {isExecutionCompleted ? (
-                                <div>
-                                  <div>
-                                    {isExecutionSuccessful ? (
-                                      <div
-                                        style={{
-                                          color: theme.palette.primary.main,
-                                        }}
-                                        className="execution-final-result"
-                                      >
-                                        {currentMethod &&
-                                        isCreateMethod(currentMethod, appSpec)
-                                          ? `Application ${appCreateResult?.appId} deployed successfully`
-                                          : "Method execution successful"}
-                                      </div>
-                                    ) : (
-                                      <div
-                                        style={{
-                                          color: theme.palette.error.main,
-                                        }}
-                                        className="execution-final-result"
-                                      >
-                                        Method execution failed
-                                      </div>
-                                    )}
-                                  </div>
-
-                                  {isExecutionSuccessful ? (
-                                    <div>
-                                      {executorResult ? (
-                                        <div className="details">
-                                          <div className="section">
-                                            <div className="key">
-                                              Transaction
-                                            </div>
-                                            <div
-                                              className="value underline hover"
-                                              onClick={() => {
-                                                new Explorer(
-                                                  coreNodeInstance,
-                                                ).openTransaction(
-                                                  executorResult?.transaction.txID(),
-                                                );
-                                              }}
-                                            >
-                                              {executorResult?.transaction.txID()}
-                                            </div>
-                                          </div>
-                                          <div className="section">
-                                            <div className="key">Return</div>
-                                            <div className="value">
-                                              {executorResult?.return?.returnValue?.toString() ||
-                                                "void"}
-                                            </div>
-                                          </div>
-                                          <div className="section">
-                                            <div className="key">
-                                              Global state delta
-                                            </div>
-                                            <div className="value">
-                                              {globalStateDelta &&
-                                              Object.keys(globalStateDelta)
-                                                .length > 0 ? (
-                                                <TableContainer
-                                                  component={Paper}
-                                                  sx={tableStyles}
-                                                >
-                                                  <Table>
-                                                    <TableHead>
-                                                      <TableRow>
-                                                        <TableCell>
-                                                          Key
-                                                        </TableCell>
-                                                        <TableCell>
-                                                          Type
-                                                        </TableCell>
-                                                      </TableRow>
-                                                    </TableHead>
-                                                    <TableBody>
-                                                      {Object.keys(
-                                                        globalStateDelta,
-                                                      ).map(
-                                                        (globalStateKey) => {
-                                                          return (
-                                                            <TableRow
-                                                              key={`global_state_delta_key_${globalStateKey}`}
-                                                              sx={{
-                                                                "&:last-child td, &:last-child th":
-                                                                  {
-                                                                    border: 0,
-                                                                  },
-                                                              }}
-                                                            >
-                                                              <TableCell>
-                                                                {globalStateKey}
-                                                              </TableCell>
-                                                              <TableCell>
-                                                                {globalStateDelta[
-                                                                  globalStateKey
-                                                                ]?.value?.toString()}
-                                                              </TableCell>
-                                                            </TableRow>
-                                                          );
-                                                        },
-                                                      )}
-                                                    </TableBody>
-                                                  </Table>
-                                                </TableContainer>
-                                              ) : (
-                                                "--Empty--"
-                                              )}
-                                            </div>
-                                          </div>
-                                        </div>
-                                      ) : (
-                                        ""
-                                      )}
-                                    </div>
-                                  ) : (
-                                    <div className="error-msg">
-                                      {executionErrorMsg}
-                                    </div>
-                                  )}
-                                </div>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </Grid>
-                  </Grid>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <div className="no-app-info">
