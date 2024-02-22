@@ -211,6 +211,10 @@ export function Playground({
           transactions: result.transactions,
         };
         setExecutorResult(appCallTxnResult);
+        if (result.confirmation?.globalStateDelta) {
+          const appState = decodeAppState(result.confirmation.globalStateDelta);
+          setGlobalStateDelta(appState);
+        }
       } else {
         const params: AppCallParams = {
           appId: appCreateResult?.appId || 0,
