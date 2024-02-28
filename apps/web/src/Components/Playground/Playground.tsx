@@ -197,7 +197,12 @@ export function Playground({
             globalByteSlices: appSpec.state.global.num_byte_slices,
           },
           args: {
-            methodArgs: [],
+            methodArgs: convertExecutorArgsToMethodArgs(
+              executorArgs,
+              method,
+              sp,
+              mnemonicAccount(selectedAccount.mnemonic),
+            ),
             method: method,
           },
         };
