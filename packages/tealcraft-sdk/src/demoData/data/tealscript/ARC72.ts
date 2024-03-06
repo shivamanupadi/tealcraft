@@ -1,6 +1,7 @@
 export const ARC72Contract = {
   name: "ARC72",
-  source: `type Token = { owner: Address; uri: StaticArray<byte, 256>; controller: Address };
+  source: `type Bytes256 = bytes<256>;
+type Token = { owner: Address; uri: Bytes256; controller: Address };
 type Control = { owner: Address; controller: Address };
 
 // eslint-disable-next-line no-unused-vars
@@ -31,7 +32,7 @@ class ARC72 extends Contract {
    * @returns URI to token metadata
    */
   @abi.readonly
-  arc72_tokenURI(tokenId: uint256): StaticArray<byte, 256> {
+  arc72_tokenURI(tokenId: uint256): Bytes256 {
     return this.tokenBox(tokenId).value.uri;
   }
 
@@ -83,7 +84,7 @@ class ARC72 extends Contract {
 
     const token: Token = {
       owner: to,
-      uri: 'https://github.com/algorandfoundation/ARCs' as StaticArray<byte, 256>,
+      uri: 'https://github.com/algorandfoundation/ARCs' as Bytes256,
       controller: Address.zeroAddress,
     };
 
