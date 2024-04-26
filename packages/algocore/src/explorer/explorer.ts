@@ -1,5 +1,6 @@
 import { DappflowExplorer } from "./dappflowExplorer";
 import { CoreNode } from "../CoreClasses/CoreNode";
+import { BlockPackExplorer } from "./blockPackExplorer";
 
 export class Explorer {
   private nodeInstance: CoreNode;
@@ -8,7 +9,7 @@ export class Explorer {
   }
 
   getExplorer() {
-    return new DappflowExplorer(this.nodeInstance);
+    return new BlockPackExplorer(this.nodeInstance);
   }
 
   openBlock(block: number): void {
@@ -28,6 +29,6 @@ export class Explorer {
   }
 
   openDispenser(): void {
-    this.getExplorer().openDispenser();
+    new DappflowExplorer(this.nodeInstance).openDispenser();
   }
 }

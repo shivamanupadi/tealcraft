@@ -6,10 +6,6 @@ export class DappflowExplorer {
     this.nodeInstance = nodeInstance;
   }
 
-  getExplorerUrl(): string {
-    return `${this.getBaseUrl()}explorer`;
-  }
-
   getBaseUrl(): string {
     if (this.nodeInstance.isMainnet()) {
       return "https://app.dappflow.org/setnetwork?name=algonode_mainnet&redirect=";
@@ -28,22 +24,6 @@ export class DappflowExplorer {
     }
 
     return "";
-  }
-
-  openBlock(block: number): void {
-    window.open(`${this.getExplorerUrl()}/block/${block}`, "_blank");
-  }
-
-  openTransaction(id: string): void {
-    window.open(`${this.getExplorerUrl()}/transaction/${id}`, "_blank");
-  }
-
-  openAddress(address: string): void {
-    window.open(`${this.getExplorerUrl()}/account/${address}`, "_blank");
-  }
-
-  openApplication(id: string): void {
-    window.open(`${this.getExplorerUrl()}/application/${id}`, "_blank");
   }
 
   openDispenser(): void {
