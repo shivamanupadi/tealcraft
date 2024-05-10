@@ -1,9 +1,0 @@
-version: '3'
-services:
-  api-container:
-    container_name: api-container
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - ./mount:/mount

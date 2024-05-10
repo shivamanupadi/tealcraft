@@ -1,12 +1,10 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import configuration from "./config/configuration";
-import { CompilerModule } from "./modules/compiler/compiler.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ContractEntity } from "./modules/database/Entities/contract.entity";
 import { DatabaseModule } from "./modules/database/database.module";
 import { FiddleModule } from "./modules/fiddle/fiddle.module";
-import { TealerModule } from "./modules/tealer/tealer.module";
 
 @Module({
   imports: [
@@ -29,8 +27,6 @@ import { TealerModule } from "./modules/tealer/tealer.module";
     }),
     DatabaseModule,
     FiddleModule,
-    CompilerModule,
-    TealerModule,
   ],
   controllers: [],
   providers: [],
